@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+﻿import { useState, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import {
   Loader2,
@@ -30,11 +30,11 @@ import {
 } from '../../components/ui/table';
 import { Skeleton } from '../../components/ui/skeleton';
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Constants â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const PAGE_SIZE = 50;
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function formatDateTime(isoString: string): { date: string; time: string } {
   const d = new Date(isoString);
@@ -74,15 +74,15 @@ function getActionBadgeClass(action: string): string {
     lower.includes('assign') ||
     lower.includes('reset')
   ) {
-    return 'bg-orange-50 dark:bg-orange-500/[0.1] text-orange-600 dark:text-orange-400 border-orange-200/70 dark:border-orange-500/20';
+    return 'bg-blue-50 dark:bg-blue-500/[0.1] text-blue-600 dark:text-blue-400 border-blue-200/70 dark:border-blue-500/20';
   }
   if (lower.includes('logout') || lower.includes('revoke') || lower.includes('disable')) {
-    return 'bg-yellow-50 dark:bg-yellow-500/[0.1] text-yellow-600 dark:text-yellow-400 border-yellow-200/70 dark:border-yellow-500/20';
+    return 'bg-sky-50 dark:bg-sky-500/[0.1] text-sky-600 dark:text-sky-400 border-sky-200/70 dark:border-sky-500/20';
   }
   return 'bg-gray-50 dark:bg-white/[0.05] text-gray-600 dark:text-gray-400 border-gray-200/70 dark:border-white/[0.05]';
 }
 
-// ─── Action label translations ────────────────────────────────────────────────
+// â”€â”€â”€ Action label translations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const ACTION_TRANSLATIONS: Record<string, string> = {
   'POS_BULK_PAYMENT':         "Kassa: Yuk to'lovi",
@@ -112,7 +112,7 @@ const ACTION_TRANSLATIONS: Record<string, string> = {
   'DELETED_CAROUSEL_ITEM':   'Karousel elementi o\'chirildi',
 };
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+// â”€â”€â”€ Sub-components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function ActionBadge({ action }: { action: string }) {
   const label = ACTION_TRANSLATIONS[action] ?? action;
@@ -136,7 +136,7 @@ function DetailsExpander({
   onToggle: () => void;
 }) {
   if (!details || Object.keys(details).length === 0) {
-    return <span className="text-[12px] text-gray-400 dark:text-gray-600 italic">—</span>;
+    return <span className="text-[12px] text-gray-400 dark:text-gray-600 italic">â€”</span>;
   }
 
   return (
@@ -144,7 +144,7 @@ function DetailsExpander({
       <button
         type="button"
         onClick={onToggle}
-        className="flex items-center gap-1.5 text-[11px] font-medium text-orange-500 hover:text-orange-600 transition-colors"
+        className="flex items-center gap-1.5 text-[11px] font-medium text-blue-500 hover:text-blue-600 transition-colors"
       >
         <FileJson className="w-3.5 h-3.5" />
         <span>{isExpanded ? 'Yopish' : 'Ko\'rish'}</span>
@@ -173,7 +173,7 @@ function DetailsExpander({
   );
 }
 
-// ─── Skeletons ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Skeletons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function TableSkeletons() {
   return (
@@ -201,7 +201,7 @@ function CardSkeletons() {
   );
 }
 
-// ─── Desktop Row ──────────────────────────────────────────────────────────────
+// â”€â”€â”€ Desktop Row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function AuditDesktopRow({
   log,
@@ -262,7 +262,7 @@ function AuditDesktopRow({
             {log.ip_address}
           </div>
         ) : (
-          <span className="text-[12px] text-gray-400 dark:text-gray-600 italic">—</span>
+          <span className="text-[12px] text-gray-400 dark:text-gray-600 italic">â€”</span>
         )}
       </TableCell>
 
@@ -278,7 +278,7 @@ function AuditDesktopRow({
   );
 }
 
-// ─── Mobile Card ──────────────────────────────────────────────────────────────
+// â”€â”€â”€ Mobile Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function AuditMobileCard({
   log,
@@ -349,7 +349,7 @@ function AuditMobileCard({
   );
 }
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export default function AdminAuditLogsPage() {
   const [page, setPage] = useState(1);
@@ -423,32 +423,32 @@ export default function AdminAuditLogsPage() {
   };
 
   const inputClass =
-    'w-full px-3 py-2.5 bg-white dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] rounded-xl text-[13px] focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/50 transition-all outline-none text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600';
+    'w-full px-3 py-2.5 bg-white dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] rounded-xl text-[13px] focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all outline-none text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600';
 
   return (
     <div className="space-y-6">
 
-      {/* ── Header ── */}
+      {/* â”€â”€ Header â”€â”€ */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-[22px] font-bold text-gray-900 dark:text-white tracking-tight">
             Tizim Jurnali
           </h1>
           <p className="text-[13px] text-gray-500 dark:text-gray-500 mt-1">
-            Audit Logs — barcha admin harakatlari tarixi
+            Audit Logs â€” barcha admin harakatlari tarixi
           </p>
         </div>
         <button
           onClick={() => refetch()}
           disabled={isFetching}
-          className="self-start sm:self-center flex items-center gap-2 px-3.5 py-2 rounded-xl text-[12px] font-medium text-gray-500 dark:text-gray-400 bg-white dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] hover:border-orange-300 dark:hover:border-orange-500/30 hover:text-orange-600 dark:hover:text-orange-400 transition-all disabled:opacity-50"
+          className="self-start sm:self-center flex items-center gap-2 px-3.5 py-2 rounded-xl text-[12px] font-medium text-gray-500 dark:text-gray-400 bg-white dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] hover:border-blue-300 dark:hover:border-blue-500/30 hover:text-blue-600 dark:hover:text-blue-400 transition-all disabled:opacity-50"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isFetching ? 'animate-spin' : ''}`} />
           Yangilash
         </button>
       </div>
 
-      {/* ── Filter Bar ── */}
+      {/* â”€â”€ Filter Bar â”€â”€ */}
       <div className="bg-white dark:bg-[#111] rounded-[18px] border border-black/[0.05] dark:border-white/[0.06] p-4 shadow-sm">
         <div className="flex items-center gap-2 mb-3">
           <Search className="w-3.5 h-3.5 text-gray-400" />
@@ -456,8 +456,8 @@ export default function AdminAuditLogsPage() {
             Filtr
           </span>
           {hasActiveFilters && (
-            <span className="ml-auto flex items-center gap-1 text-[10px] font-semibold text-orange-500">
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-500 inline-block" />
+            <span className="ml-auto flex items-center gap-1 text-[10px] font-semibold text-blue-500">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 inline-block" />
               Faol filtr
             </span>
           )}
@@ -504,7 +504,7 @@ export default function AdminAuditLogsPage() {
           <button
             type="button"
             onClick={applyFilters}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white text-[12px] font-semibold rounded-xl transition-all shadow-sm shadow-orange-500/20"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white text-[12px] font-semibold rounded-xl transition-all shadow-sm shadow-blue-500/20"
           >
             <Search className="w-3.5 h-3.5" />
             Izlash
@@ -522,7 +522,7 @@ export default function AdminAuditLogsPage() {
         </div>
       </div>
 
-      {/* ── Content ── */}
+      {/* â”€â”€ Content â”€â”€ */}
       {isError ? (
         <div className="flex flex-col items-center justify-center py-16 gap-3 bg-white dark:bg-[#111] rounded-[20px] border border-black/[0.05] dark:border-white/[0.06]">
           <AlertCircle className="w-10 h-10 text-red-400" strokeWidth={1.5} />
@@ -531,7 +531,7 @@ export default function AdminAuditLogsPage() {
           </p>
           <button
             onClick={() => refetch()}
-            className="text-[12px] text-orange-500 hover:text-orange-600 font-medium"
+            className="text-[12px] text-blue-500 hover:text-blue-600 font-medium"
           >
             Qayta urinish
           </button>
@@ -615,7 +615,7 @@ export default function AdminAuditLogsPage() {
         </>
       )}
 
-      {/* ── Pagination ── */}
+      {/* â”€â”€ Pagination â”€â”€ */}
       {!isLoading && !isError && (
         <div className="flex items-center justify-between pb-8">
           <div className="text-[12px] text-gray-400 dark:text-gray-600">
@@ -632,20 +632,20 @@ export default function AdminAuditLogsPage() {
             <button
               onClick={goToPreviousPage}
               disabled={page === 1 || isFetching}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12px] font-medium bg-white dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] text-gray-600 dark:text-gray-400 hover:border-orange-300 dark:hover:border-orange-500/30 hover:text-orange-600 dark:hover:text-orange-400 transition-all disabled:opacity-40 disabled:pointer-events-none"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12px] font-medium bg-white dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] text-gray-600 dark:text-gray-400 hover:border-blue-300 dark:hover:border-blue-500/30 hover:text-blue-600 dark:hover:text-blue-400 transition-all disabled:opacity-40 disabled:pointer-events-none"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
               Oldingi
             </button>
 
-            <span className="px-3 py-2 rounded-xl text-[12px] font-semibold text-gray-700 dark:text-gray-300 bg-orange-50 dark:bg-orange-500/[0.08] border border-orange-100 dark:border-orange-500/20">
+            <span className="px-3 py-2 rounded-xl text-[12px] font-semibold text-gray-700 dark:text-gray-300 bg-blue-50 dark:bg-blue-500/[0.08] border border-blue-100 dark:border-blue-500/20">
               {isFetching ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : `${page} / ${totalPages}`}
             </span>
 
             <button
               onClick={goToNextPage}
               disabled={isLastPage || isFetching}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12px] font-medium bg-white dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] text-gray-600 dark:text-gray-400 hover:border-orange-300 dark:hover:border-orange-500/30 hover:text-orange-600 dark:hover:text-orange-400 transition-all disabled:opacity-40 disabled:pointer-events-none"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12px] font-medium bg-white dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] text-gray-600 dark:text-gray-400 hover:border-blue-300 dark:hover:border-blue-500/30 hover:text-blue-600 dark:hover:text-blue-400 transition-all disabled:opacity-40 disabled:pointer-events-none"
             >
               Keyingi
               <ChevronRight className="w-3.5 h-3.5" />
@@ -656,3 +656,4 @@ export default function AdminAuditLogsPage() {
     </div>
   );
 }
+

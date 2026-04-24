@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Users, LogOut, Sun, Moon, Layers, CalendarDays } from 'lucide-react';
 import SearchAndFilterBar from '../../components/manager/SearchAndFilterBar';
@@ -57,7 +57,7 @@ export default function ManagerPage({ onNavigate, onLogout }: ManagerPageProps) 
         setJwtClaims(getAdminJwtClaims());
       })
       .catch(() => {
-        // Non-fatal — continue with existing token
+        // Non-fatal â€” continue with existing token
       });
     return () => { cancelled = true; };
   }, []);
@@ -115,8 +115,8 @@ export default function ManagerPage({ onNavigate, onLogout }: ManagerPageProps) 
                 <ArrowLeft className="w-4 h-4" />
               </button>
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-orange-100 dark:bg-orange-500/10 flex items-center justify-center">
-                  <Users className="w-4 h-4 text-orange-500" />
+                <div className="w-7 h-7 rounded-lg bg-blue-100 dark:bg-blue-500/10 flex items-center justify-center">
+                  <Users className="w-4 h-4 text-blue-500" />
                 </div>
                 <div>
                   <h1 className="text-[15px] font-bold text-gray-900 dark:text-white leading-tight">
@@ -136,22 +136,22 @@ export default function ManagerPage({ onNavigate, onLogout }: ManagerPageProps) 
                 {jwtClaims.role_name}
               </span>
 
-              {/* Carousel management — only visible when the JWT contains carousel:read */}
+              {/* Carousel management â€” only visible when the JWT contains carousel:read */}
               {jwtClaims.permissions.has('carousel:read') && (
                 <button
                   onClick={() => onNavigate('admin-carousel')}
-                  className="w-8 h-8 rounded-xl flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 transition-colors"
+                  className="w-8 h-8 rounded-xl flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 transition-colors"
                   title="Karusel boshqaruvi"
                 >
                   <Layers className="w-4 h-4" />
                 </button>
               )}
 
-              {/* Flight schedule — visible for both read-only and manage roles */}
+              {/* Flight schedule â€” visible for both read-only and manage roles */}
               {(jwtClaims.isSuperAdmin || jwtClaims.permissions.has('flight_schedule:manage') || jwtClaims.permissions.has('flight_schedule:read')) && (
                 <button
                   onClick={() => onNavigate('flight-schedule-admin')}
-                  className="w-8 h-8 rounded-xl flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 transition-colors"
+                  className="w-8 h-8 rounded-xl flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 transition-colors"
                   title="Reys jadvali"
                 >
                   <CalendarDays className="w-4 h-4" />
@@ -203,3 +203,4 @@ export default function ManagerPage({ onNavigate, onLogout }: ManagerPageProps) 
     </div>
   );
 }
+

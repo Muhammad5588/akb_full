@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -694,14 +694,14 @@ export default function ClientForm({
       )}
 
       <div className="w-full max-w-3xl mx-auto px-4 sm:px-6">
-        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 lg:p-10 border border-orange-200/50 relative overflow-hidden">
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 lg:p-10 border border-blue-200/50 relative overflow-hidden">
           {/* Decorative blur effects */}
-          <div className="absolute top-0 left-0 w-64 h-64 bg-orange-400/10 rounded-full blur-3xl -z-10" />
-          <div className="absolute bottom-0 right-0 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl -z-10" />
+          <div className="absolute top-0 left-0 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl -z-10" />
+          <div className="absolute bottom-0 right-0 w-64 h-64 bg-sky-400/10 rounded-full blur-3xl -z-10" />
 
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-2">
+            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent mb-2">
               {t(mode === "add" ? "client.addTitle" : "client.editTitle")}
             </h1>
             {mode === "edit" && clientData?.full_name && (
@@ -721,13 +721,13 @@ export default function ClientForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-gray-700 font-medium flex items-center gap-2">
-                      <Hash className="w-4 h-4 text-orange-500" />
+                      <Hash className="w-4 h-4 text-blue-500" />
                       {t("client.telegramId")}
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="bg-orange-50/50 text-gray-900 placeholder:text-gray-400"
+                        className="bg-blue-50/50 text-gray-900 placeholder:text-gray-400"
                         placeholder={t("client.telegramIdPlaceholder")}
                       />
                     </FormControl>
@@ -746,7 +746,7 @@ export default function ClientForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-gray-700 font-medium flex items-center gap-2">
-                      <Hash className="w-4 h-4 text-orange-500" />
+                      <Hash className="w-4 h-4 text-blue-500" />
                       {t("client.clientId")}
                     </FormLabel>
                     <FormControl>
@@ -757,7 +757,7 @@ export default function ClientForm({
                           const cleanedCode = e.target.value.toUpperCase().replace(/[^A-Z0-9_]/g, "");
                           field.onChange(cleanedCode);
                         }}
-                        className="bg-orange-50/50 text-gray-900 placeholder:text-gray-400 uppercase"
+                        className="bg-blue-50/50 text-gray-900 placeholder:text-gray-400 uppercase"
                         placeholder={t("client.clientIdPlaceholder")}
                       />
                     </FormControl>
@@ -776,14 +776,14 @@ export default function ClientForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-gray-700 font-medium flex items-center gap-2">
-                      <User className="w-4 h-4 text-orange-500" />
+                      <User className="w-4 h-4 text-blue-500" />
                       {t("client.fullName")}{" "}
                       <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="bg-orange-50/50 text-gray-900 placeholder:text-gray-400"
+                        className="bg-blue-50/50 text-gray-900 placeholder:text-gray-400"
                         placeholder={t("client.fullNamePlaceholder")}
                         maxLength={256}
                       />
@@ -815,7 +815,7 @@ export default function ClientForm({
                           field.onChange(formatted);
                         }}
                         maxLength={9}
-                        className="bg-orange-50/50 text-gray-900 placeholder:text-gray-400 uppercase"
+                        className="bg-blue-50/50 text-gray-900 placeholder:text-gray-400 uppercase"
                       />
                     </FormControl>
                     {form.formState.errors.passport_series && (
@@ -848,7 +848,7 @@ export default function ClientForm({
                           field.onChange(cleaned);
                         }}
                         maxLength={14}
-                        className="bg-orange-50/50 text-gray-900 placeholder:text-gray-400"
+                        className="bg-blue-50/50 text-gray-900 placeholder:text-gray-400"
                       />
                     </FormControl>
                     {form.formState.errors.pinfl && (
@@ -889,16 +889,16 @@ export default function ClientForm({
                               setDateInputValue("");
                             }
                           }}
-                          className="bg-orange-50/50 text-gray-900 placeholder:text-gray-400 pr-10"
+                          className="bg-blue-50/50 text-gray-900 placeholder:text-gray-400 pr-10"
                         />
                         <PopoverTrigger asChild>
                           <Button
                             type="button"
                             variant="ghost"
                             size="icon"
-                            className="absolute right-0 top-0 h-full hover:bg-orange-50"
+                            className="absolute right-0 top-0 h-full hover:bg-blue-50"
                           >
-                            <CalendarIcon className="h-4 w-4 text-orange-500" />
+                            <CalendarIcon className="h-4 w-4 text-blue-500" />
                           </Button>
                         </PopoverTrigger>
                       </div>
@@ -940,7 +940,7 @@ export default function ClientForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-gray-700 font-medium flex items-center gap-2">
-                      <Globe className="w-4 h-4 text-orange-500" />
+                      <Globe className="w-4 h-4 text-blue-500" />
                       {t("client.region")}
                     </FormLabel>
                     <Select
@@ -948,7 +948,7 @@ export default function ClientForm({
                       value={field.value || ""}
                     >
                       <FormControl>
-                        <SelectTrigger className="w-full bg-orange-50/50 border-orange-200 focus:border-orange-500 focus:ring-orange-500">
+                        <SelectTrigger className="w-full bg-blue-50/50 border-blue-200 focus:border-blue-500 focus:ring-blue-500">
                           <SelectValue
                             placeholder={t("client.regionPlaceholder")}
                           />
@@ -959,7 +959,7 @@ export default function ClientForm({
                           <SelectItem
                             key={region.value}
                             value={region.value}
-                            className="cursor-pointer hover:bg-orange-50 focus:bg-orange-100"
+                            className="cursor-pointer hover:bg-blue-50 focus:bg-blue-100"
                           >
                             {t(region.label)}
                           </SelectItem>
@@ -982,7 +982,7 @@ export default function ClientForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-gray-700 font-medium flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-orange-500" />
+                      <MapPin className="w-4 h-4 text-blue-500" />
                       {t("client.district")}
                     </FormLabel>
                     <Select
@@ -991,7 +991,7 @@ export default function ClientForm({
                       disabled={!selectedRegion}
                     >
                       <FormControl>
-                        <SelectTrigger className="w-full bg-orange-50/50 border-orange-200 focus:border-orange-500 focus:ring-orange-500">
+                        <SelectTrigger className="w-full bg-blue-50/50 border-blue-200 focus:border-blue-500 focus:ring-blue-500">
                           <SelectValue
                             placeholder={t("client.districtPlaceholder")}
                           />
@@ -1005,7 +1005,7 @@ export default function ClientForm({
                             <SelectItem
                               key={dist.value}
                               value={dist.value}
-                              className="cursor-pointer hover:bg-orange-50 focus:bg-orange-100"
+                              className="cursor-pointer hover:bg-blue-50 focus:bg-blue-100"
                             >
                               {t(dist.label)}
                             </SelectItem>
@@ -1021,8 +1021,8 @@ export default function ClientForm({
                     {selectedDistrict && (
                       <div className="mt-2 animate-in fade-in slide-in-from-top-1">
                         {isLoadingPreview ? (
-                          <span className="text-orange-500 text-sm flex items-center gap-2 animate-pulse">
-                            <div className="w-3 h-3 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+                          <span className="text-blue-500 text-sm flex items-center gap-2 animate-pulse">
+                            <div className="w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
                             Hisoblanmoqda...
                           </span>
                         ) : previewCode ? (
@@ -1046,7 +1046,7 @@ export default function ClientForm({
 
               {/* Kod avto-yangilansinmi? Toggle - faqat edit rejimda va tuman tanlanganda */}
               {selectedDistrict && (
-                <div className="flex items-center justify-between rounded-lg border border-orange-200 bg-orange-50/50 px-4 py-3">
+                <div className="flex items-center justify-between rounded-lg border border-blue-200 bg-blue-50/50 px-4 py-3">
                   <span className="text-sm font-medium text-gray-700">
                     {t("client.autoUpdateCode", "Kod avto-yangilansinmi?")}
                   </span>
@@ -1077,14 +1077,14 @@ export default function ClientForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-gray-700 font-medium flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-orange-500" />
+                      <MapPin className="w-4 h-4 text-blue-500" />
                       {t("client.address")}
                     </FormLabel>
                     <FormControl>
                       <textarea
                         {...field}
                         rows={4}
-                        className="w-full px-3 py-2 bg-orange-50/50 border border-orange-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:border-orange-500 focus:ring-orange-500 focus:outline-none resize-none"
+                        className="w-full px-3 py-2 bg-blue-50/50 border border-blue-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500 focus:outline-none resize-none"
                         placeholder={t("client.addressPlaceholder")}
                         maxLength={512}
                       />
@@ -1105,7 +1105,7 @@ export default function ClientForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-gray-700 font-medium flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-orange-500" />
+                      <Phone className="w-4 h-4 text-blue-500" />
                       {t("client.phone")}
                     </FormLabel>
                     <FormControl>
@@ -1113,7 +1113,7 @@ export default function ClientForm({
                         <span className="text-gray-700 font-medium">+998</span>
                         <Input
                           {...field}
-                          className="bg-orange-50/50 text-gray-900 placeholder:text-gray-400"
+                          className="bg-blue-50/50 text-gray-900 placeholder:text-gray-400"
                           placeholder={t("client.phonePlaceholder")}
                           maxLength={9}
                         />
@@ -1176,7 +1176,7 @@ export default function ClientForm({
                     <FormControl>
                       <Input
                         {...field}
-                        className="bg-orange-50/50 text-gray-900 placeholder:text-gray-400"
+                        className="bg-blue-50/50 text-gray-900 placeholder:text-gray-400"
                         placeholder={t("client.referrerTelegramIdPlaceholder")}
                       />
                     </FormControl>
@@ -1204,7 +1204,7 @@ export default function ClientForm({
                     <FormControl>
                       <Input
                         {...field}
-                        className="bg-orange-50/50 text-gray-900 placeholder:text-gray-400 uppercase"
+                        className="bg-blue-50/50 text-gray-900 placeholder:text-gray-400 uppercase"
                         placeholder={t("client.referrerClientCodePlaceholder")}
                       />
                     </FormControl>
@@ -1226,7 +1226,7 @@ export default function ClientForm({
                   <label className="text-gray-700 font-medium mb-2 block">
                     {t("client.registrationDate")}
                   </label>
-                  <p className="text-gray-600 bg-orange-50/50 px-3 py-2 rounded-lg border border-orange-200">
+                  <p className="text-gray-600 bg-blue-50/50 px-3 py-2 rounded-lg border border-blue-200">
                     {clientData.created_at}
                   </p>
                 </div>
@@ -1234,7 +1234,7 @@ export default function ClientForm({
 
               {/* Balance Adjustment Section (Edit mode only) */}
               {mode === "edit" && (
-                <div className="p-4 border border-orange-200 rounded-xl bg-white space-y-4">
+                <div className="p-4 border border-blue-200 rounded-xl bg-white space-y-4">
                   <div className="flex items-center justify-between">
                     <h3 className="text-sm font-semibold text-gray-700">
                       Balans boshqaruvi
@@ -1267,19 +1267,19 @@ export default function ClientForm({
                           value={field.value || ""}
                         >
                           <FormControl>
-                            <SelectTrigger className="bg-orange-50/50">
+                            <SelectTrigger className="bg-blue-50/50">
                               <SelectValue placeholder="Tanlang..." />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
                             <SelectItem value="bonus">
-                              🎁 Bonus berish
+                              ðŸŽ Bonus berish
                             </SelectItem>
                             <SelectItem value="penalty">
-                              🛑 Jarima / Pul yechish
+                              ðŸ›‘ Jarima / Pul yechish
                             </SelectItem>
                             <SelectItem value="silent">
-                              🤫 Yashirin tahrirlash (Kassa)
+                              ðŸ¤« Yashirin tahrirlash (Kassa)
                             </SelectItem>
                           </SelectContent>
                         </Select>
@@ -1304,7 +1304,7 @@ export default function ClientForm({
                                   step="0.01"
                                   min="0"
                                   placeholder="0.00"
-                                  className="bg-orange-50/50 text-gray-900 placeholder:text-gray-400"
+                                  className="bg-blue-50/50 text-gray-900 placeholder:text-gray-400"
                                   {...field}
                                 />
                               </FormControl>
@@ -1324,7 +1324,7 @@ export default function ClientForm({
                                 <Input
                                   type="text"
                                   placeholder="Sababni yozing..."
-                                  className="bg-orange-50/50 text-gray-900 placeholder:text-gray-400"
+                                  className="bg-blue-50/50 text-gray-900 placeholder:text-gray-400"
                                   {...field}
                                 />
                               </FormControl>
@@ -1337,10 +1337,10 @@ export default function ClientForm({
               )}
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap gap-4 pt-6 border-t border-orange-200">
+              <div className="flex flex-wrap gap-4 pt-6 border-t border-blue-200">
                 <Button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
+                  className="flex-1 bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
                   disabled={submitStatus === "loading"}
                 >
                   {t("client.submit")}
@@ -1364,3 +1364,4 @@ export default function ClientForm({
     </>
   );
 }
+

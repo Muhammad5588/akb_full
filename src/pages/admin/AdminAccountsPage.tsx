@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo, memo } from 'react';
+﻿import { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -33,7 +33,7 @@ import type {
   RoleResponse,
 } from '../../api/services/adminManagement';
 
-// ─── Hooks ───────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Hooks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function useIsDesktop(): boolean {
   const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 768);
@@ -45,7 +45,7 @@ function useIsDesktop(): boolean {
   return isDesktop;
 }
 
-// ─── Zod Schemas ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ Zod Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const createAdminSchema = z.object({
   client_code: z.string().min(1, "Mijoz kodini kiriting"),
@@ -69,7 +69,7 @@ type PinResetFormValues = z.infer<typeof pinResetSchema>;
 
 type DetailTab = 'info' | 'pin' | 'danger';
 
-// ─── Helper ───────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Helper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('uz-UZ', {
@@ -77,7 +77,7 @@ function formatDate(iso: string): string {
   });
 }
 
-// ─── Status Badge ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ Status Badge â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const StatusBadge = memo(({ isActive }: { isActive: boolean }) => (
   <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium ${
@@ -91,7 +91,7 @@ const StatusBadge = memo(({ isActive }: { isActive: boolean }) => (
 ));
 StatusBadge.displayName = 'StatusBadge';
 
-// ─── Desktop Table Row ────────────────────────────────────────────────────────
+// â”€â”€â”€ Desktop Table Row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface AdminTableRowProps {
   admin: AdminAccountResponse;
@@ -109,8 +109,8 @@ const AdminTableRow = memo(({
   >
     <td className="px-4 py-3">
       <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-500/10 flex items-center justify-center flex-shrink-0">
-          <UserCircle className="w-4 h-4 text-orange-500" />
+        <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+          <UserCircle className="w-4 h-4 text-blue-500" />
         </div>
         <div>
           <p className="text-[13px] font-medium text-gray-900 dark:text-white">
@@ -123,12 +123,12 @@ const AdminTableRow = memo(({
       </div>
     </td>
     <td className="px-4 py-3 text-[13px] text-gray-600 dark:text-gray-400">
-      {admin.client?.client_code ?? '—'}
+      {admin.client?.client_code ?? 'â€”'}
     </td>
     <td className="px-4 py-3">
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400">
         <Shield className="w-3 h-3" />
-        {admin.role_name ?? '—'}
+        {admin.role_name ?? 'â€”'}
       </span>
     </td>
     <td className="px-4 py-3">
@@ -149,7 +149,7 @@ const AdminTableRow = memo(({
 ));
 AdminTableRow.displayName = 'AdminTableRow';
 
-// ─── Mobile Card ──────────────────────────────────────────────────────────────
+// â”€â”€â”€ Mobile Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface AdminMobileCardProps {
   admin: AdminAccountResponse;
@@ -167,8 +167,8 @@ const AdminMobileCard = memo(({
   >
     <div className="flex items-start justify-between gap-3">
       <div className="flex items-center gap-3 min-w-0">
-        <div className="w-9 h-9 rounded-full bg-orange-100 dark:bg-orange-500/10 flex items-center justify-center flex-shrink-0">
-          <UserCircle className="w-5 h-5 text-orange-500" />
+        <div className="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+          <UserCircle className="w-5 h-5 text-blue-500" />
         </div>
         <div className="min-w-0">
           <p className="text-[14px] font-semibold text-gray-900 dark:text-white truncate">
@@ -193,7 +193,7 @@ const AdminMobileCard = memo(({
     <div className="mt-3 flex flex-wrap items-center gap-2">
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400">
         <Shield className="w-3 h-3" />
-        {admin.role_name ?? '—'}
+        {admin.role_name ?? 'â€”'}
       </span>
       <StatusBadge isActive={admin.is_active} />
       {admin.client?.client_code && (
@@ -209,7 +209,7 @@ const AdminMobileCard = memo(({
 ));
 AdminMobileCard.displayName = 'AdminMobileCard';
 
-// ─── Create Admin Form ────────────────────────────────────────────────────────
+// â”€â”€â”€ Create Admin Form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface CreateAdminFormProps {
   roles: RoleResponse[];
@@ -229,7 +229,7 @@ const CreateAdminForm = memo(({ roles, onSuccess, onClose }: CreateAdminFormProp
     resolver: zodResolver(createAdminSchema),
   });
 
-  // Portal target for LightSelect — must be inside this component's DOM so
+  // Portal target for LightSelect â€” must be inside this component's DOM so
   // Radix FocusScope (used by the surrounding Dialog/Drawer) does not block it.
   const [lsPortalEl, setLsPortalEl] = useState<HTMLDivElement | null>(null);
 
@@ -259,7 +259,7 @@ const CreateAdminForm = memo(({ roles, onSuccess, onClose }: CreateAdminFormProp
         <input
           {...register('client_code')}
           placeholder="M-000000"
-          className="w-full h-10 px-3 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.04] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/50 text-[13px] transition-all"
+          className="w-full h-10 px-3 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.04] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 text-[13px] transition-all"
         />
         {errors.client_code && (
           <p className="mt-1 text-[11px] text-red-500">{errors.client_code.message}</p>
@@ -273,7 +273,7 @@ const CreateAdminForm = memo(({ roles, onSuccess, onClose }: CreateAdminFormProp
         <input
           {...register('system_username')}
           placeholder="username"
-          className="w-full h-10 px-3 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.04] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/50 text-[13px] transition-all"
+          className="w-full h-10 px-3 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.04] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 text-[13px] transition-all"
         />
         {errors.system_username && (
           <p className="mt-1 text-[11px] text-red-500">{errors.system_username.message}</p>
@@ -287,8 +287,8 @@ const CreateAdminForm = memo(({ roles, onSuccess, onClose }: CreateAdminFormProp
         <input
           {...register('pin')}
           type="password"
-          placeholder="••••"
-          className="w-full h-10 px-3 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.04] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/50 text-[13px] transition-all"
+          placeholder="â€¢â€¢â€¢â€¢"
+          className="w-full h-10 px-3 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.04] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 text-[13px] transition-all"
         />
         {errors.pin && (
           <p className="mt-1 text-[11px] text-red-500">{errors.pin.message}</p>
@@ -328,7 +328,7 @@ const CreateAdminForm = memo(({ roles, onSuccess, onClose }: CreateAdminFormProp
         <button
           type="submit"
           disabled={isPending}
-          className="flex-1 h-10 rounded-xl bg-orange-500 text-white text-[13px] font-semibold hover:bg-orange-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+          className="flex-1 h-10 rounded-xl bg-blue-500 text-white text-[13px] font-semibold hover:bg-blue-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
         >
           {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
           Yaratish
@@ -339,7 +339,7 @@ const CreateAdminForm = memo(({ roles, onSuccess, onClose }: CreateAdminFormProp
 });
 CreateAdminForm.displayName = 'CreateAdminForm';
 
-// ─── Detail Sheet ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ Detail Sheet â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface AdminDetailSheetProps {
   admin: AdminAccountResponse | null;
@@ -362,7 +362,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
     [roles]
   );
 
-  // ── Edit form ──
+  // â”€â”€ Edit form â”€â”€
   const {
     register: registerEdit,
     handleSubmit: handleEditSubmit,
@@ -377,7 +377,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
     },
   });
 
-  // ── PIN form ──
+  // â”€â”€ PIN form â”€â”€
   const {
     register: registerPin,
     handleSubmit: handlePinSubmit,
@@ -406,7 +406,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
     }
   }, [onClose]);
 
-  // ── Mutations ──
+  // â”€â”€ Mutations â”€â”€
   const { mutate: updateAdmin, isPending: isUpdatingAdmin } = useMutation({
     mutationFn: (values: EditAdminFormValues) =>
       updateAdminAccount(admin!.id, {
@@ -476,7 +476,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
               activeTab === tab.key
                 ? tab.key === 'danger'
                   ? 'bg-red-500/10 text-red-600 dark:text-red-400'
-                  : 'bg-orange-500/10 text-orange-600 dark:text-orange-400'
+                  : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
                 : 'text-gray-500 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-white/[0.04]'
             }`}
           >
@@ -504,8 +504,8 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
                   Asosiy ma'lumotlar
                 </h3>
                 {[
-                  { label: "To'liq ism", value: admin.client?.full_name ?? '—' },
-                  { label: "Mijoz kodi", value: admin.client?.client_code ?? '—' },
+                  { label: "To'liq ism", value: admin.client?.full_name ?? 'â€”' },
+                  { label: "Mijoz kodi", value: admin.client?.client_code ?? 'â€”' },
                   { label: "Yaratilgan", value: formatDate(admin.created_at) },
                   {
                     label: "Muvaffaqiyatsiz urinishlar",
@@ -541,7 +541,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
                   </label>
                   <input
                     {...registerEdit('system_username')}
-                    className="w-full h-10 px-3 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.04] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/50 text-[13px] transition-all"
+                    className="w-full h-10 px-3 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.04] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 text-[13px] transition-all"
                   />
                   {editErrors.system_username && (
                     <p className="mt-1 text-[11px] text-red-500">{editErrors.system_username.message}</p>
@@ -573,7 +573,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
                 <button
                   type="submit"
                   disabled={isUpdatingAdmin}
-                  className="w-full h-10 rounded-xl bg-orange-500 text-white text-[13px] font-semibold hover:bg-orange-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full h-10 rounded-xl bg-blue-500 text-white text-[13px] font-semibold hover:bg-blue-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {isUpdatingAdmin && <Loader2 className="w-4 h-4 animate-spin" />}
                   Saqlash
@@ -637,8 +637,8 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
                   <input
                     {...registerPin('new_pin')}
                     type="password"
-                    placeholder="••••"
-                    className="w-full h-10 px-3 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.04] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/50 text-[13px] transition-all"
+                    placeholder="â€¢â€¢â€¢â€¢"
+                    className="w-full h-10 px-3 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.04] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 text-[13px] transition-all"
                   />
                   {pinErrors.new_pin && (
                     <p className="mt-1 text-[11px] text-red-500">{pinErrors.new_pin.message}</p>
@@ -648,7 +648,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
                 <button
                   type="submit"
                   disabled={isResettingPin}
-                  className="w-full h-10 rounded-xl bg-orange-500 text-white text-[13px] font-semibold hover:bg-orange-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full h-10 rounded-xl bg-blue-500 text-white text-[13px] font-semibold hover:bg-blue-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {isResettingPin && <Loader2 className="w-4 h-4 animate-spin" />}
                   PIN yangilash
@@ -752,14 +752,14 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
           isDesktop ? 'max-w-lg' : 'w-full'
         }`}
       >
-        {/* LightSelect dropdown portal target — inside SheetContent so Radix
+        {/* LightSelect dropdown portal target â€” inside SheetContent so Radix
             FocusScope does not intercept pointer events on the dropdown. */}
         <div ref={setLsPortalEl} />
         <SheetHeader className="px-4 py-3 border-b border-black/[0.06] dark:border-white/[0.06] flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-orange-100 dark:bg-orange-500/10 flex items-center justify-center">
-                <UserCircle className="w-5 h-5 text-orange-500" />
+              <div className="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-500/10 flex items-center justify-center">
+                <UserCircle className="w-5 h-5 text-blue-500" />
               </div>
               <div>
                 <SheetTitle className="text-[15px] font-semibold text-gray-900 dark:text-white">
@@ -788,7 +788,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
 });
 AdminDetailSheet.displayName = 'AdminDetailSheet';
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export default function AdminAccountsPage() {
   const isDesktop = useIsDesktop();
@@ -863,7 +863,7 @@ export default function AdminAccountsPage() {
         </div>
         <button
           onClick={() => setIsCreateOpen(true)}
-          className="self-start sm:self-auto flex items-center gap-2 h-9 px-4 rounded-xl bg-orange-500 text-white text-[13px] font-semibold hover:bg-orange-600 transition-colors"
+          className="self-start sm:self-auto flex items-center gap-2 h-9 px-4 rounded-xl bg-blue-500 text-white text-[13px] font-semibold hover:bg-blue-600 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Yangi Admin
@@ -988,7 +988,7 @@ export default function AdminAccountsPage() {
           </CreateHeader>
           {isLoadingRoles ? (
             <div className="flex items-center justify-center py-10">
-              <Loader2 className="w-5 h-5 animate-spin text-orange-500" />
+              <Loader2 className="w-5 h-5 animate-spin text-blue-500" />
             </div>
           ) : (
             <CreateAdminForm

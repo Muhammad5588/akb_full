@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+﻿import { useState, useEffect, useCallback } from "react";
 import {
   Warehouse,
   LogOut,
@@ -24,7 +24,7 @@ import MarkTakenModal from "../../components/warehouse/MarkTakenModal";
 import WarehouseOfflineManager from "../../components/warehouse/WarehouseOfflineManager";
 import { useBroadcastChannel, type BroadcastMessage } from "../../hooks/useBroadcastChannel";
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+// â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 type ActiveTab = "transactions" | "my-activity";
 
@@ -33,7 +33,7 @@ interface WarehousePageProps {
   onLogout: () => void;
 }
 
-// ── Theme helper ──────────────────────────────────────────────────────────────
+// â”€â”€ Theme helper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function getInitialTheme(): boolean {
   return (
@@ -43,7 +43,7 @@ function getInitialTheme(): boolean {
   );
 }
 
-// ── Component ─────────────────────────────────────────────────────────────────
+// â”€â”€ Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function AccessDenied() {
   return (
@@ -114,7 +114,7 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
         setJwtClaims(getAdminJwtClaims());
       })
       .catch(() => {
-        /* Non-fatal — continue with existing token */
+        /* Non-fatal â€” continue with existing token */
       });
     return () => {
       cancelled = true;
@@ -192,7 +192,7 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
   return (
     <div className="min-h-screen bg-[#f5f5f4] dark:bg-[#0a0a0a]">
 
-      {/* ── Sticky Header ──────────────────────────────────────────────────── */}
+      {/* â”€â”€ Sticky Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="sticky top-0 z-20 bg-white dark:bg-[#111] border-b border-gray-200 dark:border-white/[0.08]">
         <div className="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3">
 
@@ -208,8 +208,8 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
               </button>
 
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-orange-100 dark:bg-orange-500/10 flex items-center justify-center">
-                  <Warehouse className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-500" />
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-blue-100 dark:bg-blue-500/10 flex items-center justify-center">
+                  <Warehouse className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-500" />
                 </div>
                 <div>
                   <h1 className="text-[14px] sm:text-[15px] font-bold text-gray-900 dark:text-white leading-tight">
@@ -258,7 +258,7 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
             </div>
           </div>
 
-          {/* Tab switcher — full-width on mobile for larger tap targets */}
+          {/* Tab switcher â€” full-width on mobile for larger tap targets */}
           <div className="flex gap-1 bg-gray-100 dark:bg-white/[0.05] rounded-xl p-1 mb-2 sm:mb-3 w-full sm:w-fit">
             <button
               onClick={() => setActiveTab("transactions")}
@@ -284,12 +284,12 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
             </button>
           </div>
 
-          {/* Filters — only shown on Transactions tab */}
+          {/* Filters â€” only shown on Transactions tab */}
           {activeTab === "transactions" && <WarehouseFilters />}
         </div>
       </div>
 
-      {/* ── Main Content ───────────────────────────────────────────────────── */}
+      {/* â”€â”€ Main Content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="max-w-6xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
         {activeTab === "transactions" ? (
           !isFlightMode && !isSearchMode ? (
@@ -299,9 +299,9 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
               animate={{ opacity: 1, y: 0 }}
               className="py-24 text-center"
             >
-              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-orange-50 dark:bg-orange-500/[0.08] border border-orange-100 dark:border-orange-500/15 flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-blue-50 dark:bg-blue-500/[0.08] border border-blue-100 dark:border-blue-500/15 flex items-center justify-center">
                 <Plane
-                  className="w-8 h-8 text-orange-400 dark:text-orange-500"
+                  className="w-8 h-8 text-blue-400 dark:text-blue-500"
                   strokeWidth={1.5}
                 />
               </div>
@@ -309,7 +309,7 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
                 Reys yoki mijoz kodini kiriting
               </h2>
               <p className="text-[13px] text-gray-400 dark:text-gray-500 max-w-xs mx-auto">
-                Reys tanlang yoki mijoz kodini yozing — reyzsiz ham barcha yuklar bo'yicha qidiradi
+                Reys tanlang yoki mijoz kodini yozing â€” reyzsiz ham barcha yuklar bo'yicha qidiradi
               </p>
             </motion.div>
           ) : (
@@ -356,7 +356,7 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
         )}
       </div>
 
-      {/* ── Mark Taken Modal ──────────────────────────────────────────────── */}
+      {/* â”€â”€ Mark Taken Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {modalTxIds.length > 0 && (
         <MarkTakenModal
           transactionIds={modalTxIds}
@@ -368,8 +368,9 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
         />
       )}
 
-      {/* ── Background upload queue manager ───────────────────────────────── */}
+      {/* â”€â”€ Background upload queue manager â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <WarehouseOfflineManager />
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
+﻿import { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
 import { offlineStorage } from "@/utils/offlineStorage";
 import { uploadPhoto } from "@/api/services/cargo";
 import { Button } from "@/components/ui/button";
@@ -28,9 +28,9 @@ import { useToast } from "@/hooks/useToast";
 import { useTranslation } from "react-i18next";
 import { getAdminJwtClaims } from "@/api/services/adminManagement";
 
-/* ───────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Types
-   ─────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 interface AddCargoFormProps {
   flightName: string;
   onBack: () => void;
@@ -55,9 +55,9 @@ interface SelectOption {
   label: string;
 }
 
-/* ───────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Lightweight Searchable Select (no radix overhead)
-   ─────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 interface LightSelectProps {
   options: SelectOption[];
   value: string;
@@ -116,7 +116,7 @@ const LightSelect = memo(function LightSelect({
     };
   }, [open]);
 
-  // focus search when opened — only on non-touch devices
+  // focus search when opened â€” only on non-touch devices
   useEffect(() => {
     if (open && searchRef.current) {
       const isMobile = "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -156,9 +156,9 @@ const LightSelect = memo(function LightSelect({
           "bg-gray-50 dark:bg-white/5",
           "text-gray-900 dark:text-white",
           "transition-colors duration-100",
-          "active:bg-orange-50 dark:active:bg-orange-500/10",
+          "active:bg-blue-50 dark:active:bg-blue-500/10",
           disabled ? "opacity-40 pointer-events-none" : "cursor-pointer",
-          open ? "border-orange-500 ring-2 ring-orange-500/20" : "",
+          open ? "border-blue-500 ring-2 ring-blue-500/20" : "",
         ].join(" ")}
       >
         {icon && <span className="mr-2 shrink-0">{icon}</span>}
@@ -178,13 +178,13 @@ const LightSelect = memo(function LightSelect({
           className={[
             "absolute z-50 mt-1 w-full",
             "bg-white dark:bg-[#1a1209]",
-            "border border-gray-200 dark:border-orange-500/20",
+            "border border-gray-200 dark:border-blue-500/20",
             "rounded-xl shadow-lg shadow-black/10 dark:shadow-black/40",
             "overflow-hidden",
             "animate-in fade-in zoom-in-95 duration-100",
           ].join(" ")}
         >
-          {/* Search — only show if > 6 options */}
+          {/* Search â€” only show if > 6 options */}
           {options.length > 6 && (
             <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-100 dark:border-white/5">
               <Search className="w-4 h-4 text-gray-400 shrink-0" />
@@ -226,14 +226,14 @@ const LightSelect = memo(function LightSelect({
                   className={[
                     "flex items-center w-full px-3 py-2.5 text-sm text-left",
                     "transition-colors duration-75",
-                    "active:bg-orange-100 dark:active:bg-orange-500/20",
+                    "active:bg-blue-100 dark:active:bg-blue-500/20",
                     opt.value === value
-                      ? "text-orange-600 dark:text-orange-400 bg-orange-50/70 dark:bg-orange-500/10 font-medium"
+                      ? "text-blue-600 dark:text-blue-400 bg-blue-50/70 dark:bg-blue-500/10 font-medium"
                       : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/5",
                   ].join(" ")}
                 >
                   <Check
-                    className={`w-4 h-4 mr-2 shrink-0 ${opt.value === value ? "opacity-100 text-orange-500" : "opacity-0"}`}
+                    className={`w-4 h-4 mr-2 shrink-0 ${opt.value === value ? "opacity-100 text-blue-500" : "opacity-0"}`}
                   />
                   <span className="truncate">{opt.label}</span>
                 </button>
@@ -246,9 +246,9 @@ const LightSelect = memo(function LightSelect({
   );
 });
 
-/* ───────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Helpers
-   ─────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const INPUT_CLS = [
   "h-12 rounded-xl",
@@ -257,7 +257,7 @@ const INPUT_CLS = [
   "text-gray-900 dark:text-white",
   "placeholder:text-gray-400 dark:placeholder:text-gray-500",
   "transition-colors duration-100",
-  "focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:ring-offset-0 focus:outline-none",
+  "focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:ring-offset-0 focus:outline-none",
 ].join(" ");
 
 const ERR_CLS = "border-red-500 focus:border-red-500 focus:ring-red-500/20";
@@ -269,9 +269,9 @@ const MAX_RETRIES = 2;
 /** Delay between retries in ms (doubles each attempt) */
 const RETRY_BASE_DELAY = 2000;
 
-/* ───────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Queue Status (memoised to avoid repainting form)
-   ─────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const QueueStatus = memo(function QueueStatus({
   queue,
   t,
@@ -361,9 +361,9 @@ const QueueStatus = memo(function QueueStatus({
   );
 });
 
-/* ───────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Main Form
-   ─────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export default function AddCargoForm({
   flightName,
   onBack,
@@ -371,7 +371,7 @@ export default function AddCargoForm({
 }: AddCargoFormProps) {
   const { t } = useTranslation();
 
-  // ── Form state ──
+  // â”€â”€ Form state â”€â”€
   const [clientId, setClientId] = useState("");
   const [region, setRegion] = useState("");
   const [district, setDistrict] = useState("");
@@ -381,17 +381,17 @@ export default function AddCargoForm({
   const [photos, setPhotos] = useState<File[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // ── Mode toggles ──
+  // â”€â”€ Mode toggles â”€â”€
   const [fastMode, setFastMode] = useState(false);
   const [autoCamera, setAutoCamera] = useState(true);
 
-  // ── Keep client/region toggle (default: ON → saqlanadi) ──
+  // â”€â”€ Keep client/region toggle (default: ON â†’ saqlanadi) â”€â”€
   const [keepClientRegion, setKeepClientRegion] = useState(true);
 
-  // ── Upload queue ──
+  // â”€â”€ Upload queue â”€â”€
   const [uploadQueue, setUploadQueue] = useState<QueuedUpload[]>([]);
 
-  // ── Refs ──
+  // â”€â”€ Refs â”€â”€
   const clientIdRef = useRef<HTMLInputElement>(null);
   const weightRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef<MultiPhotoUploadHandle>(null);
@@ -435,7 +435,7 @@ export default function AddCargoForm({
     });
   }, []);
 
-  /* ── Memoised option lists ── */
+  /* â”€â”€ Memoised option lists â”€â”€ */
   const regionOptions = useMemo<SelectOption[]>(
     () => regions.map((r) => ({ value: r.value, label: t(r.label) })),
     [t],
@@ -449,7 +449,7 @@ export default function AddCargoForm({
     [region, t],
   );
 
-  /* ── Handlers (stable refs) ── */
+  /* â”€â”€ Handlers (stable refs) â”€â”€ */
   const clearError = useCallback((key: string) => {
     setErrors((prev) => {
       if (!prev[key]) return prev;
@@ -553,7 +553,7 @@ export default function AddCargoForm({
     [clearError],
   );
 
-  /* ── Keep toggle handler ── */
+  /* â”€â”€ Keep toggle handler â”€â”€ */
   const handleKeepToggle = useCallback((checked: boolean) => {
     setKeepClientRegion(checked);
     // Toggle o'chirilganda darhol tozala
@@ -564,7 +564,7 @@ export default function AddCargoForm({
     }
   }, []);
 
-  /* ── Validation ── */
+  /* â”€â”€ Validation â”€â”€ */
   const validate = useCallback((): boolean => {
     const e: Record<string, string> = {};
     if (!clientId.trim())
@@ -581,7 +581,7 @@ export default function AddCargoForm({
     return Object.keys(e).length === 0;
   }, [clientId, photos, weightKg, pricePerKg, t]);
 
-  /* ── Fast-mode camera warm-up ── */
+  /* â”€â”€ Fast-mode camera warm-up â”€â”€ */
   useEffect(() => {
     if (fastMode && !prevFastRef.current) {
       cameraRef.current?.prepareStream();
@@ -589,7 +589,7 @@ export default function AddCargoForm({
     prevFastRef.current = fastMode;
   }, [fastMode]);
 
-  /* ── Submit ── */
+  /* â”€â”€ Submit â”€â”€ */
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
@@ -601,7 +601,7 @@ export default function AddCargoForm({
       ).length;
       if (activeCount >= MAX_QUEUE_SIZE) {
         toast({
-          title: "⚠️ Navbat to'ldi",
+          title: "âš ï¸ Navbat to'ldi",
           description: `Iltimos, ${MAX_QUEUE_SIZE} ta yuklash tugashini kuting.`,
           variant: "warning",
           duration: 3000,
@@ -625,7 +625,7 @@ export default function AddCargoForm({
 
       if (fastMode) {
         if (keepClientRegion) {
-          // Faqat prefixni saqlаb, raqamli qismini tozala
+          // Faqat prefixni saqlÐ°b, raqamli qismini tozala
           setClientId((prev) => {
             const { district: d, region: r } = getRegionAndDistrictFromCode(prev);
             if (d && AVIA_CODES[d] && prev.startsWith(AVIA_CODES[d])) {
@@ -674,7 +674,7 @@ export default function AddCargoForm({
     ],
   );
 
-  /* ── Background queue processor ── */
+  /* â”€â”€ Background queue processor â”€â”€ */
   useEffect(() => {
     if (processingRef.current) return;
 
@@ -727,8 +727,8 @@ export default function AddCargoForm({
           ),
         );
         toast({
-          title: `✅ ${t("cargo.messages.uploadSuccess")}`,
-          description: `${t("cargo.photoCard.client")} ${pending.clientId} — ${pending.photos.length} ${t("cargo.photos")}`,
+          title: `âœ… ${t("cargo.messages.uploadSuccess")}`,
+          description: `${t("cargo.photoCard.client")} ${pending.clientId} â€” ${pending.photos.length} ${t("cargo.photos")}`,
           variant: "success",
           duration: 2000,
         });
@@ -757,8 +757,8 @@ export default function AddCargoForm({
           if (pending.retryCount < MAX_RETRIES) {
             const delay = RETRY_BASE_DELAY * Math.pow(2, pending.retryCount);
             toast({
-              title: "🔄 Qayta urinish...",
-              description: `${pending.clientId} — ${pending.retryCount + 1}/${MAX_RETRIES}`,
+              title: "ðŸ”„ Qayta urinish...",
+              description: `${pending.clientId} â€” ${pending.retryCount + 1}/${MAX_RETRIES}`,
               variant: "warning",
               duration: delay,
             });
@@ -788,8 +788,8 @@ export default function AddCargoForm({
                 return;
               }
               toast({
-                title: "⚠️ Internet yo'q",
-                description: `${pending.clientId} — oflayn xotiraga saqlandi.`,
+                title: "âš ï¸ Internet yo'q",
+                description: `${pending.clientId} â€” oflayn xotiraga saqlandi.`,
                 variant: "warning",
                 duration: 3000,
               });
@@ -826,14 +826,14 @@ export default function AddCargoForm({
     run();
   }, [uploadQueue, fastMode, onSuccess, toast, t, safeTimeout]);
 
-  /* ── Auto-focus clientId after photos ── */
+  /* â”€â”€ Auto-focus clientId after photos â”€â”€ */
   useEffect(() => {
     if (photos.length > 0 && !clientId) {
       focusClientIdEnd();
     }
   }, [photos.length, clientId, focusClientIdEnd]);
 
-  /* ── Permission guard — must be after all hooks ── */
+  /* â”€â”€ Permission guard â€” must be after all hooks â”€â”€ */
   const jwtClaims = getAdminJwtClaims();
   const canCreate = jwtClaims.isSuperAdmin || jwtClaims.permissions.has('flights:create');
   if (!canCreate) {
@@ -852,15 +852,15 @@ export default function AddCargoForm({
     );
   }
 
-  /* ── Render ── */
+  /* â”€â”€ Render â”€â”€ */
   return (
     <>
       <ToastRenderer />
 
       <div className="w-full max-w-xl mx-auto p-4 sm:p-6 lg:p-8">
-        <div className="relative bg-white dark:bg-[#0d0a04] rounded-3xl border border-orange-100/80 dark:border-orange-500/15 overflow-hidden shadow-xl">
+        <div className="relative bg-white dark:bg-[#0d0a04] rounded-3xl border border-blue-100/80 dark:border-blue-500/15 overflow-hidden shadow-xl">
           {/* accent bar */}
-          <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
+          <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
 
           {/* dot grid */}
           <div
@@ -878,18 +878,18 @@ export default function AddCargoForm({
               <button
                 type="button"
                 onClick={onBack}
-                className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-500 transition-colors mb-6 active:scale-95"
+                className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 transition-colors mb-6 active:scale-95"
               >
                 <ArrowLeft className="w-5 h-5" />
                 <span className="font-medium">{t("cargo.flight")}</span>
               </button>
 
               <div className="flex items-center gap-4 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/40">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-sky-500 flex items-center justify-center shadow-lg shadow-blue-500/40">
                   <Camera className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl sm:text-2xl font-black tracking-tight bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 bg-clip-text text-transparent">
+                  <h1 className="text-xl sm:text-2xl font-black tracking-tight bg-gradient-to-r from-blue-500 via-sky-400 to-blue-600 bg-clip-text text-transparent">
                     {t("cargo.addTitle")}
                   </h1>
                   <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -902,8 +902,8 @@ export default function AddCargoForm({
               </div>
             </div>
 
-            {/* ── Fast Mode ── */}
-            <div className="mb-8 bg-orange-50/50 dark:bg-orange-500/5 border border-orange-200 dark:border-orange-500/20 rounded-2xl p-5">
+            {/* â”€â”€ Fast Mode â”€â”€ */}
+            <div className="mb-8 bg-blue-50/50 dark:bg-blue-500/5 border border-blue-200 dark:border-blue-500/20 rounded-2xl p-5">
               <div className="flex flex-col gap-4">
                 <label className="flex items-center gap-4 cursor-pointer group">
                   <div className="relative">
@@ -913,12 +913,12 @@ export default function AddCargoForm({
                       onChange={(e) => setFastMode(e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-12 h-7 bg-gray-200 dark:bg-gray-800 rounded-full peer-checked:bg-orange-500 dark:peer-checked:bg-orange-600 transition-all border border-gray-300 dark:border-gray-700 peer-checked:border-orange-500/50" />
+                    <div className="w-12 h-7 bg-gray-200 dark:bg-gray-800 rounded-full peer-checked:bg-blue-500 dark:peer-checked:bg-blue-600 transition-all border border-gray-300 dark:border-gray-700 peer-checked:border-blue-500/50" />
                     <div className="absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow-sm peer-checked:translate-x-5 transition-transform" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-2 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
-                      <Camera className="w-4 h-4 text-orange-500" />
+                    <p className="text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      <Camera className="w-4 h-4 text-blue-500" />
                       {t("cargo.fastMode")}
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 leading-relaxed">
@@ -949,7 +949,7 @@ export default function AddCargoForm({
               </div>
             </div>
 
-            {/* ── Form ── */}
+            {/* â”€â”€ Form â”€â”€ */}
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Photos */}
               <MultiPhotoUpload
@@ -965,10 +965,10 @@ export default function AddCargoForm({
                 }}
               />
 
-              {/* ── Keep Client/Region toggle ── */}
+              {/* â”€â”€ Keep Client/Region toggle â”€â”€ */}
               <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/10">
                 <div className="flex items-center gap-2.5">
-                  <MapPin className="w-4 h-4 text-orange-500 shrink-0" />
+                  <MapPin className="w-4 h-4 text-blue-500 shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 leading-none">
                       Viloyat va kodni saqlash
@@ -988,7 +988,7 @@ export default function AddCargoForm({
                     onChange={(e) => handleKeepToggle(e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-200 dark:bg-gray-800 rounded-full peer-checked:bg-orange-500 dark:peer-checked:bg-orange-600 border border-gray-300 dark:border-gray-700 peer-checked:border-orange-500/50 transition-all" />
+                  <div className="w-11 h-6 bg-gray-200 dark:bg-gray-800 rounded-full peer-checked:bg-blue-500 dark:peer-checked:bg-blue-600 border border-gray-300 dark:border-gray-700 peer-checked:border-blue-500/50 transition-all" />
                   <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-sm peer-checked:translate-x-5 transition-transform" />
                 </label>
               </div>
@@ -1005,7 +1005,7 @@ export default function AddCargoForm({
                   placeholder="Viloyatni tanlang"
                   searchPlaceholder="Qidirish..."
                   emptyText="Viloyat topilmadi."
-                  icon={<MapPin className="w-5 h-5 text-orange-500" />}
+                  icon={<MapPin className="w-5 h-5 text-blue-500" />}
                 />
               </div>
 
@@ -1023,7 +1023,7 @@ export default function AddCargoForm({
                   emptyText="Tuman topilmadi."
                   disabled={!region || districtOptions.length === 0}
                   icon={
-                    <MapPin className="w-5 h-5 text-orange-500 opacity-60" />
+                    <MapPin className="w-5 h-5 text-blue-500 opacity-60" />
                   }
                 />
               </div>
@@ -1038,13 +1038,13 @@ export default function AddCargoForm({
                   ref={clientIdRef}
                   type="text"
                   // When the region/district prefix is locked in, the admin only
-                  // types the numeric suffix → show a numpad for speed.
-                  // When the toggle is off they need to type letters too → normal keyboard.
+                  // types the numeric suffix â†’ show a numpad for speed.
+                  // When the toggle is off they need to type letters too â†’ normal keyboard.
                   inputMode={keepClientRegion ? "numeric" : "text"}
                   value={clientId}
                   onChange={(e) => handleClientIdChange(e.target.value)}
                   placeholder={t("cargo.clientCodePlaceholder")}
-                  className={`${INPUT_CLS} text-lg uppercase font-mono tracking-widest placeholder:tracking-normal placeholder:font-normal caret-orange-500 ${errors.client_id ? ERR_CLS : ""}`}
+                  className={`${INPUT_CLS} text-lg uppercase font-mono tracking-widest placeholder:tracking-normal placeholder:font-normal caret-blue-500 ${errors.client_id ? ERR_CLS : ""}`}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
@@ -1073,11 +1073,11 @@ export default function AddCargoForm({
                       value={weightKg}
                       onChange={(e) => handleWeightChange(e.target.value)}
                       placeholder={t("cargo.weightPlaceholder")}
-                      className={`${INPUT_CLS} pr-12 caret-orange-500 ${errors.weight_kg ? ERR_CLS : ""}`}
+                      className={`${INPUT_CLS} pr-12 caret-blue-500 ${errors.weight_kg ? ERR_CLS : ""}`}
                     />
                     <button
                       type="submit"
-                      className="absolute right-1 top-1 bottom-1 w-10 flex items-center justify-center bg-orange-500 hover:bg-orange-600 active:scale-95 text-white rounded-[10px] transition-all shadow-sm"
+                      className="absolute right-1 top-1 bottom-1 w-10 flex items-center justify-center bg-blue-500 hover:bg-blue-600 active:scale-95 text-white rounded-[10px] transition-all shadow-sm"
                       title={fastMode ? t("cargo.saveAndNext") : t("cargo.submit")}
                     >
                       <Send className="w-4 h-4 ml-0.5" />
@@ -1099,7 +1099,7 @@ export default function AddCargoForm({
                     value={pricePerKg}
                     onChange={(e) => handlePriceChange(e.target.value)}
                     placeholder={t("cargo.pricePerKgPlaceholder")}
-                    className={`${INPUT_CLS} caret-orange-500 ${errors.price_per_kg ? ERR_CLS : ""}`}
+                    className={`${INPUT_CLS} caret-blue-500 ${errors.price_per_kg ? ERR_CLS : ""}`}
                   />
                   {errors.price_per_kg && (
                     <p className="text-sm font-medium text-red-500 dark:text-red-400 mt-1.5">
@@ -1128,7 +1128,7 @@ export default function AddCargoForm({
                 <div className="flex gap-3">
                   <Button
                     type="submit"
-                    className="flex-1 h-14 bg-gradient-to-r from-orange-500 to-amber-500 hover:opacity-90 active:brightness-95 active:scale-[0.98] text-white font-bold text-base tracking-wide rounded-xl shadow-md shadow-orange-500/30 transition-all duration-100 disabled:opacity-50 disabled:cursor-not-allowed border-0"
+                    className="flex-1 h-14 bg-gradient-to-r from-blue-500 to-sky-500 hover:opacity-90 active:brightness-95 active:scale-[0.98] text-white font-bold text-base tracking-wide rounded-xl shadow-md shadow-blue-500/30 transition-all duration-100 disabled:opacity-50 disabled:cursor-not-allowed border-0"
                   >
                     <div className="flex items-center justify-center gap-2">
                       <Save className="w-5 h-5" />
@@ -1165,3 +1165,4 @@ export default function AddCargoForm({
     </>
   );
 }
+

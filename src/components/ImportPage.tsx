@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Upload, FileSpreadsheet, Database } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -107,18 +107,18 @@ export default function ImportPage() {
       )}
 
       <div className="w-full max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 lg:p-10 border border-orange-100 relative overflow-hidden">
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 lg:p-10 border border-blue-100 relative overflow-hidden">
           {/* Decorative blur effects */}
-          <div className="absolute top-0 left-0 w-64 h-64 bg-orange-300/20 rounded-full blur-3xl -z-10 animate-pulse" />
-          <div className="absolute bottom-0 right-0 w-64 h-64 bg-amber-300/20 rounded-full blur-3xl -z-10 animate-pulse animation-delay-2000" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-orange-200/10 rounded-full blur-3xl -z-10 animate-pulse animation-delay-4000" />
+          <div className="absolute top-0 left-0 w-64 h-64 bg-blue-300/20 rounded-full blur-3xl -z-10 animate-pulse" />
+          <div className="absolute bottom-0 right-0 w-64 h-64 bg-sky-300/20 rounded-full blur-3xl -z-10 animate-pulse animation-delay-2000" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-200/10 rounded-full blur-3xl -z-10 animate-pulse animation-delay-4000" />
 
           {/* Header */}
           <div className="text-center mb-8 relative z-10">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full mb-4 shadow-lg">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-sky-500 rounded-full mb-4 shadow-lg">
               <Database className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent mb-2">
+            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent mb-2">
               {t('import.title')}
             </h1>
           </div>
@@ -130,7 +130,7 @@ export default function ImportPage() {
               onClick={() => handleTabChange('uz')}
               className={`flex-1 py-4 px-6 rounded-xl font-semibold transition-all duration-300 ${
                 activeTab === 'uz'
-                  ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg transform scale-[1.02]'
+                  ? 'bg-gradient-to-r from-blue-500 to-sky-500 text-white shadow-lg transform scale-[1.02]'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
@@ -141,7 +141,7 @@ export default function ImportPage() {
               onClick={() => handleTabChange('china')}
               className={`flex-1 py-4 px-6 rounded-xl font-semibold transition-all duration-300 ${
                 activeTab === 'china'
-                  ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg transform scale-[1.02]'
+                  ? 'bg-gradient-to-r from-blue-500 to-sky-500 text-white shadow-lg transform scale-[1.02]'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
@@ -157,8 +157,8 @@ export default function ImportPage() {
               onDragLeave={handleDragLeave}
               className={`group relative border-2 border-dashed rounded-xl p-8 transition-all duration-300 backdrop-blur-sm ${
                 isDragging
-                  ? 'border-orange-500 bg-orange-50/50 scale-[1.02] shadow-lg'
-                  : 'border-gray-300 hover:border-orange-400 hover:bg-orange-50/30'
+                  ? 'border-blue-500 bg-blue-50/50 scale-[1.02] shadow-lg'
+                  : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50/30'
               }`}
             >
               <input
@@ -180,7 +180,7 @@ export default function ImportPage() {
                       </div>
                     </div>
                   ) : (
-                    <Upload className="w-16 h-16 text-orange-500" />
+                    <Upload className="w-16 h-16 text-blue-500" />
                   )}
                 </div>
 
@@ -206,15 +206,15 @@ export default function ImportPage() {
               </div>
 
               {/* Inner blur effects */}
-              <div className="absolute top-2 left-2 w-24 h-24 bg-orange-400/10 rounded-full blur-2xl -z-10" />
-              <div className="absolute bottom-2 right-2 w-24 h-24 bg-amber-400/10 rounded-full blur-2xl -z-10" />
+              <div className="absolute top-2 left-2 w-24 h-24 bg-blue-400/10 rounded-full blur-2xl -z-10" />
+              <div className="absolute bottom-2 right-2 w-24 h-24 bg-sky-400/10 rounded-full blur-2xl -z-10" />
             </div>
 
             {/* Submit Button */}
             <Button
               type="submit"
               disabled={!selectedFile || submitStatus === 'loading'}
-              className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold py-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white font-semibold py-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {t('import.submit')}
             </Button>
@@ -224,3 +224,4 @@ export default function ImportPage() {
     </>
   );
 }
+

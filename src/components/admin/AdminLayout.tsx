@@ -113,7 +113,7 @@ export default function AdminLayout({ children, currentPage, onNavigate, onLogou
         {/* Brand */}
         <div className="p-6 pb-5 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/20">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#38bdf8] flex items-center justify-center shadow-lg shadow-[#3b82f6]/20">
               <Shield className="w-5 h-5 text-white" strokeWidth={2} />
             </div>
             <div>
@@ -144,27 +144,27 @@ export default function AdminLayout({ children, currentPage, onNavigate, onLogou
                 whileTap={{ scale: 0.97 }}
                 className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-medium transition-all relative ${
                   isActive
-                    ? 'bg-orange-500/[0.08] dark:bg-orange-500/[0.12] text-orange-600 dark:text-orange-400'
+                    ? 'bg-[#dbeafe] dark:bg-[#3b82f6]/20 text-[#3b82f6] dark:text-[#60a5fa]'
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100/70 dark:hover:bg-white/[0.04]'
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="sidebar-active"
-                    className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-orange-500 rounded-full"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-[#3b82f6] rounded-full"
                     transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                   />
                 )}
                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
                   isActive
-                    ? 'bg-orange-500/[0.12] dark:bg-orange-500/[0.15]'
+                    ? 'bg-[#bfdbfe] dark:bg-[#3b82f6]/25'
                     : 'bg-gray-100/80 dark:bg-white/[0.05]'
                 }`}>
-                  <Icon className={`w-[16px] h-[16px] ${isActive ? 'text-orange-500' : ''}`} strokeWidth={2} />
+                  <Icon className={`w-[16px] h-[16px] ${isActive ? 'text-[#3b82f6]' : ''}`} strokeWidth={2} />
                 </div>
                 <div className="text-left">
                   <div className="leading-tight">{item.label}</div>
-                  <div className={`text-[10px] font-normal mt-px ${isActive ? 'text-orange-500/60' : 'text-gray-400 dark:text-gray-600'}`}>
+                  <div className={`text-[10px] font-normal mt-px ${isActive ? 'text-[#60a5fa]' : 'text-gray-400 dark:text-gray-600'}`}>
                     {item.description}
                   </div>
                 </div>
@@ -241,9 +241,9 @@ export default function AdminLayout({ children, currentPage, onNavigate, onLogou
           </button>
           <button
             onClick={onLogout}
-            className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-medium text-red-500/80 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/[0.08] transition-colors"
+            className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-medium text-[#3b82f6] hover:text-[#38bdf8] hover:bg-[#dbeafe] dark:hover:bg-[#3b82f6]/20 transition-colors"
           >
-            <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/[0.08] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#dbeafe] dark:bg-[#3b82f6]/20 flex items-center justify-center">
               <LogOut className="w-4 h-4" />
             </div>
             Chiqish
@@ -257,7 +257,7 @@ export default function AdminLayout({ children, currentPage, onNavigate, onLogou
         {/* Mobile Header */}
         <header className="md:hidden flex items-center justify-between px-4 py-3 bg-white/80 dark:bg-[#0f0f0f]/80 backdrop-blur-2xl border-b border-black/[0.05] dark:border-white/[0.06] z-20 shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#3b82f6] to-[#38bdf8] flex items-center justify-center">
               <Shield className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-[15px] text-gray-900 dark:text-white">Admin</span>
@@ -271,7 +271,7 @@ export default function AdminLayout({ children, currentPage, onNavigate, onLogou
             </button>
             <button
               onClick={onLogout}
-              className="p-2 text-red-500/80 active:bg-red-50 dark:active:bg-red-500/10 rounded-lg transition-colors"
+              className="p-2 text-[#3b82f6] active:bg-[#dbeafe] dark:active:bg-[#3b82f6]/20 rounded-lg transition-colors"
             >
               <LogOut className="w-[18px] h-[18px]" />
             </button>
@@ -313,17 +313,17 @@ export default function AdminLayout({ children, currentPage, onNavigate, onLogou
                 {isActive && (
                   <motion.div
                     layoutId="mobile-active"
-                    className="absolute -top-1 w-6 h-[3px] bg-orange-500 rounded-full"
+                    className="absolute -top-1 w-6 h-[3px] bg-[#3b82f6] rounded-full"
                     transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                   />
                 )}
                 <div className={`p-1.5 rounded-xl transition-all duration-200 ${
-                  isActive ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'
+                  isActive ? 'text-[#3b82f6]' : 'text-gray-400 dark:text-gray-500'
                 }`}>
                   <Icon className="w-[22px] h-[22px]" strokeWidth={isActive ? 2.2 : 1.8} />
                 </div>
                 <span className={`text-[9px] mt-0.5 font-semibold transition-colors duration-200 truncate w-full text-center ${
-                  isActive ? 'text-orange-600 dark:text-orange-400' : 'text-gray-400 dark:text-gray-600'
+                  isActive ? 'text-[#3b82f6] dark:text-[#60a5fa]' : 'text-gray-400 dark:text-gray-600'
                 }`}>
                   {item.label}
                 </span>
@@ -339,19 +339,19 @@ export default function AdminLayout({ children, currentPage, onNavigate, onLogou
             {showPagesMenu && (
               <motion.div
                 layoutId="mobile-active"
-                className="absolute -top-1 w-6 h-[3px] bg-orange-500 rounded-full"
+                className="absolute -top-1 w-6 h-[3px] bg-[#3b82f6] rounded-full"
                 transition={{ type: 'spring', stiffness: 300, damping: 25 }}
               />
             )}
             <div className={`p-1.5 rounded-xl transition-all duration-200 ${
               showPagesMenu
-                ? 'text-orange-500 bg-orange-50 dark:bg-orange-500/10'
+                ? 'text-[#3b82f6] bg-[#dbeafe] dark:bg-[#3b82f6]/20'
                 : 'text-gray-400 dark:text-gray-500'
             }`}>
               <LayoutGrid className="w-[22px] h-[22px]" strokeWidth={showPagesMenu ? 2.2 : 1.8} />
             </div>
             <span className={`text-[9px] mt-0.5 font-semibold truncate w-full text-center ${
-              showPagesMenu ? 'text-orange-600 dark:text-orange-400' : 'text-gray-400 dark:text-gray-600'
+              showPagesMenu ? 'text-[#3b82f6] dark:text-[#60a5fa]' : 'text-gray-400 dark:text-gray-600'
             }`}>
               Barchasi
             </span>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { webauthnCreate } from '../../utils/webauthn';
 import { Fingerprint, Smartphone, Loader2, CheckCircle, Info, Sparkles, KeyRound, ArrowLeft } from 'lucide-react';
@@ -59,9 +59,9 @@ export default function AdminProfilePage({ onBack }: AdminProfilePageProps) {
   };
 
   const features = [
-    { icon: '🔐', title: 'Parolsiz kirish', desc: 'PIN eslab qolish shart emas' },
-    { icon: '⚡', title: 'Tezkor', desc: '1 soniyada tizimga kirish' },
-    { icon: '🛡️', title: 'Xavfsiz', desc: 'End-to-end shifrlangan' },
+    { icon: 'ðŸ”', title: 'Parolsiz kirish', desc: 'PIN eslab qolish shart emas' },
+    { icon: 'âš¡', title: 'Tezkor', desc: '1 soniyada tizimga kirish' },
+    { icon: 'ðŸ›¡ï¸', title: 'Xavfsiz', desc: 'End-to-end shifrlangan' },
   ];
 
   const alreadyRegistered = hasCurrentDevicePasskey;
@@ -91,7 +91,7 @@ export default function AdminProfilePage({ onBack }: AdminProfilePageProps) {
         className="bg-white dark:bg-[#111] rounded-[22px] shadow-sm border border-black/[0.06] dark:border-white/[0.06] overflow-hidden relative"
       >
         {/* Top gradient accent */}
-        <div className="h-32 bg-gradient-to-br from-orange-500 via-amber-500 to-orange-400 relative overflow-hidden">
+        <div className="h-32 bg-gradient-to-br from-blue-500 via-sky-500 to-blue-400 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.15),transparent_60%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.1),transparent_50%)]" />
 
@@ -110,7 +110,7 @@ export default function AdminProfilePage({ onBack }: AdminProfilePageProps) {
 
           {/* Icon badge */}
           <div className="w-16 h-16 rounded-2xl bg-white dark:bg-[#1a1a1a] shadow-xl shadow-black/[0.08] flex items-center justify-center mb-6 border border-black/[0.05] dark:border-white/[0.08]">
-            <Fingerprint className="w-8 h-8 text-orange-500" strokeWidth={1.8} />
+            <Fingerprint className="w-8 h-8 text-blue-500" strokeWidth={1.8} />
           </div>
 
           <h2 className="text-[18px] font-bold text-gray-900 dark:text-white mb-2 tracking-tight">
@@ -168,7 +168,7 @@ export default function AdminProfilePage({ onBack }: AdminProfilePageProps) {
                 w-full sm:w-auto flex items-center justify-center gap-3 px-7 py-3.5 rounded-2xl font-semibold text-[14px] transition-all shadow-lg
                 ${alreadyRegistered
                   ? 'bg-emerald-500 text-white shadow-emerald-500/20 cursor-default'
-                  : 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-orange-500/25 hover:shadow-orange-500/35 disabled:opacity-60'
+                  : 'bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white shadow-blue-500/25 hover:shadow-blue-500/35 disabled:opacity-60'
                 }
               `}
             >
@@ -229,8 +229,8 @@ export default function AdminProfilePage({ onBack }: AdminProfilePageProps) {
               <ArrowLeft className="w-4 h-4" />
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-orange-100 dark:bg-orange-500/10 flex items-center justify-center">
-                <KeyRound className="w-4 h-4 text-orange-500" />
+              <div className="w-7 h-7 rounded-lg bg-blue-100 dark:bg-blue-500/10 flex items-center justify-center">
+                <KeyRound className="w-4 h-4 text-blue-500" />
               </div>
               <h1 className="text-[15px] font-bold text-gray-900 dark:text-white leading-tight">
                 Profil va Xavfsizlik

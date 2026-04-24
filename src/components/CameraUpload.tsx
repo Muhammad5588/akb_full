@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useCallback } from 'react';
+﻿import { useRef, useState, useEffect, useCallback } from 'react';
 import { Camera, X, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
@@ -75,7 +75,7 @@ export default function CameraUpload({
    * iOS-SPECIFIC HANDLING:
    * - playsInline is REQUIRED (without it, iOS opens fullscreen native player)
    * - muted is REQUIRED (iOS won't autoplay videos with audio)
-   * - facingMode: 'environment' may fail on some iOS devices → we fallback to 'user'
+   * - facingMode: 'environment' may fail on some iOS devices â†’ we fallback to 'user'
    * - Must be triggered by user interaction (button click)
    */
   const openCamera = useCallback(async () => {
@@ -150,7 +150,7 @@ export default function CameraUpload({
 
           // SUCCESS: Video is ready when dimensions are available
           if (video.videoWidth > 0 && video.videoHeight > 0) {
-            console.log('✅ Camera ready:', video.videoWidth, 'x', video.videoHeight);
+            console.log('âœ… Camera ready:', video.videoWidth, 'x', video.videoHeight);
             setIsCameraReady(true); // Update state to hide loader
 
             return; // Stop polling
@@ -158,7 +158,7 @@ export default function CameraUpload({
 
           // TIMEOUT: Prevent infinite polling
           if (pollAttempts >= maxPollAttempts) {
-            console.error('❌ Camera ready timeout after', maxPollAttempts, 'attempts');
+            console.error('âŒ Camera ready timeout after', maxPollAttempts, 'attempts');
             setIsCameraReady(false);
 
             // Show error to user
@@ -366,7 +366,7 @@ export default function CameraUpload({
               type="button"
               onClick={capturePhoto}
               size="lg"
-              className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 shadow-lg"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-8 shadow-lg"
               disabled={isCapturing || !isCameraReady}
             >
               {isCapturing ? (
@@ -395,11 +395,11 @@ export default function CameraUpload({
           <button
             type="button"
             onClick={openCamera}
-            className="relative border-2 border-dashed border-orange-300 rounded-lg p-8 cursor-pointer transition-all duration-300 hover:border-orange-500 hover:bg-orange-50 active:scale-95"
+            className="relative border-2 border-dashed border-blue-300 rounded-lg p-8 cursor-pointer transition-all duration-300 hover:border-blue-500 hover:bg-blue-50 active:scale-95"
           >
             <div className="flex flex-col items-center justify-center space-y-3">
-              <div className="p-3 rounded-full bg-orange-100">
-                <Camera className="w-8 h-8 text-orange-500" />
+              <div className="p-3 rounded-full bg-blue-100">
+                <Camera className="w-8 h-8 text-blue-500" />
               </div>
               <p className="text-sm font-medium text-gray-700">{t('camera.openCamera')}</p>
             </div>
@@ -432,7 +432,7 @@ export default function CameraUpload({
 
       {/* Photo preview (after capture or selection) */}
       {preview && !isCameraOpen && (
-        <div className="relative group rounded-lg overflow-hidden border-2 border-orange-200 hover:border-orange-400 transition-all duration-300 h-[280px]">
+        <div className="relative group rounded-lg overflow-hidden border-2 border-blue-200 hover:border-blue-400 transition-all duration-300 h-[280px]">
           <img
             src={preview}
             alt={label}
@@ -470,3 +470,4 @@ export default function CameraUpload({
     </div>
   );
 }
+

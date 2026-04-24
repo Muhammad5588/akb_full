@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, KeyRound, LogOut, Shield, ShieldCheck, ShieldOff, Loader2, Sun, Moon } from 'lucide-react';
 import { toast } from 'sonner';
@@ -16,7 +16,7 @@ interface PasskeyPageProps {
   onLogout: () => void;
 }
 
-// Stable device name derived from the browser UA — used as the passkey identifier.
+// Stable device name derived from the browser UA â€” used as the passkey identifier.
 function getDeviceName(): string {
   const ua = navigator.userAgent;
   if (/iPhone/.test(ua)) return 'iPhone';
@@ -67,7 +67,7 @@ export default function PasskeyPage({ onLogout }: PasskeyPageProps) {
         localStorage.setItem('access_token', data.access_token);
         setJwtClaims(getAdminJwtClaims());
       })
-      .catch(() => { /* Non-fatal — continue with existing token */ });
+      .catch(() => { /* Non-fatal â€” continue with existing token */ });
     return () => { cancelled = true; };
   }, []);
 
@@ -232,10 +232,10 @@ export default function PasskeyPage({ onLogout }: PasskeyPageProps) {
 
         {/* No permission notice */}
         {!canRegisterPasskey && !isLoading && (
-          <div className="bg-amber-50 dark:bg-amber-500/[0.08] rounded-2xl border border-amber-200 dark:border-amber-500/20 p-4">
+          <div className="bg-sky-50 dark:bg-sky-500/[0.08] rounded-2xl border border-sky-200 dark:border-sky-500/20 p-4">
             <div className="flex items-start gap-3">
-              <Shield className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
-              <p className="text-[12px] text-amber-700 dark:text-amber-400">
+              <Shield className="w-4 h-4 text-sky-500 mt-0.5 flex-shrink-0" />
+              <p className="text-[12px] text-sky-700 dark:text-sky-400">
                 Passkey ro&apos;yxatdan o&apos;tkazish uchun ruxsat yo&apos;q.
                 Agar kerak bo&apos;lsa, super-admin bilan bog&apos;laning.
               </p>
@@ -246,7 +246,7 @@ export default function PasskeyPage({ onLogout }: PasskeyPageProps) {
         {/* Info box */}
         <div className="bg-blue-50 dark:bg-blue-500/[0.06] rounded-2xl border border-blue-100 dark:border-blue-500/20 p-4">
           <p className="text-[12px] text-blue-600 dark:text-blue-400 leading-relaxed">
-            Passkey — bu PIN o&apos;rniga ishlatiluvchi zamonaviy xavfsizlik usuli.
+            Passkey â€” bu PIN o&apos;rniga ishlatiluvchi zamonaviy xavfsizlik usuli.
             Barmoq izi, yuz tanish yoki qurilma qulfi orqali tezda kira olasiz.
           </p>
         </div>
@@ -254,3 +254,4 @@ export default function PasskeyPage({ onLogout }: PasskeyPageProps) {
     </div>
   );
 }
+

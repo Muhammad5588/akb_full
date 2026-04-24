@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+﻿import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { getFlightPhotos, deleteCargo, getCargoImageMetadata, exportFlightCargoExcel, uploadPhoto, type CargoPhoto } from '@/api/services/cargo';
 import { getFlightByName, type Flight } from '@/api/services/flight';
 import { Button } from '@/components/ui/button';
@@ -27,9 +27,9 @@ function useDebounce<T>(value: T, delay: number): T {
 type FilterStatus = 'all' | 'sent' | 'pending';
 type SortOrder = 'newest' | 'oldest';
 
-// ─────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // PhotoViewerModal
-// ─────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 interface PhotoViewerModalProps {
   photo: CargoPhoto;
   onClose: () => void;
@@ -75,16 +75,16 @@ function PhotoViewerModal({ photo, onClose, onEdit, onDelete, isDeleting, format
       <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 animate-in fade-in duration-200" onClick={onClose} />
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
         <div
-          className="relative bg-white dark:bg-[#0d0a04] rounded-3xl shadow-2xl shadow-black/40 max-w-lg w-full max-h-[92vh] overflow-hidden pointer-events-auto animate-in zoom-in-95 duration-200 border border-orange-100/80 dark:border-orange-500/15"
+          className="relative bg-white dark:bg-[#0d0a04] rounded-3xl shadow-2xl shadow-black/40 max-w-lg w-full max-h-[92vh] overflow-hidden pointer-events-auto animate-in zoom-in-95 duration-200 border border-blue-100/80 dark:border-blue-500/15"
           onClick={e => e.stopPropagation()}
         >
           {/* accent bar */}
-          <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-transparent via-orange-500 to-transparent z-10" />
+          <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-transparent via-blue-500 to-transparent z-10" />
 
           {/* Header */}
           <div className="flex items-center justify-between px-5 pt-6 pb-4">
             <div className="flex items-center gap-2.5">
-              <span className="bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black px-3 py-1 rounded-xl text-sm tracking-wide shadow-sm shadow-orange-500/30">
+              <span className="bg-gradient-to-r from-blue-500 to-sky-500 text-white font-black px-3 py-1 rounded-xl text-sm tracking-wide shadow-sm shadow-blue-500/30">
                 {photo.client_id}
               </span>
               {photo.is_sent ? (
@@ -92,7 +92,7 @@ function PhotoViewerModal({ photo, onClose, onEdit, onDelete, isDeleting, format
                   <CheckCircle className="w-3 h-3" />Yuborilgan
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-200/60 dark:border-amber-400/20">
+                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-700 dark:text-sky-400 bg-sky-100 dark:bg-sky-400/10 px-2.5 py-1 rounded-full border border-sky-200/60 dark:border-sky-400/20">
                   <Clock className="w-3 h-3" />Kutilmoqda
                 </span>
               )}
@@ -107,7 +107,7 @@ function PhotoViewerModal({ photo, onClose, onEdit, onDelete, isDeleting, format
           <div className="relative bg-gray-50 dark:bg-black/40 mx-4 rounded-2xl overflow-hidden h-64 flex items-center justify-center">
             {isLoadingImages ? (
               <div className="flex flex-col items-center gap-3">
-                <div className="w-8 h-8 border-[3px] border-orange-200 border-t-orange-500 rounded-full animate-spin" />
+                <div className="w-8 h-8 border-[3px] border-blue-200 border-t-blue-500 rounded-full animate-spin" />
                 <p className="text-xs text-gray-400">Yuklanmoqda...</p>
               </div>
             ) : currentImageUrl ? (
@@ -149,9 +149,9 @@ function PhotoViewerModal({ photo, onClose, onEdit, onDelete, isDeleting, format
                   </div>
                 )}
                 {photo.price_per_kg && (
-                  <div className="flex-1 bg-orange-50 dark:bg-orange-500/5 border border-orange-100 dark:border-orange-500/15 rounded-xl px-3 py-2">
-                    <p className="text-[10px] text-orange-400 uppercase tracking-widest font-semibold mb-0.5">Narx/kg</p>
-                    <p className="text-base font-black text-orange-600 dark:text-orange-400">${photo.price_per_kg}/kg</p>
+                  <div className="flex-1 bg-blue-50 dark:bg-blue-500/5 border border-blue-100 dark:border-blue-500/15 rounded-xl px-3 py-2">
+                    <p className="text-[10px] text-blue-400 uppercase tracking-widest font-semibold mb-0.5">Narx/kg</p>
+                    <p className="text-base font-black text-blue-600 dark:text-blue-400">${photo.price_per_kg}/kg</p>
                   </div>
                 )}
               </div>
@@ -164,7 +164,7 @@ function PhotoViewerModal({ photo, onClose, onEdit, onDelete, isDeleting, format
             <p className="text-xs text-gray-400 dark:text-gray-500">{formatDate(photo.created_at)}</p>
             <div className="flex gap-2.5 pt-1">
               <Button onClick={onEdit}
-                className="flex-1 h-11 bg-gradient-to-r from-orange-500 to-amber-500 hover:opacity-90 active:scale-[0.98] text-white font-bold rounded-xl shadow-md shadow-orange-500/30 border-0 transition-all">
+                className="flex-1 h-11 bg-gradient-to-r from-blue-500 to-sky-500 hover:opacity-90 active:scale-[0.98] text-white font-bold rounded-xl shadow-md shadow-blue-500/30 border-0 transition-all">
                 <Edit2 className="w-4 h-4 mr-2" />Tahrirlash
               </Button>
               <Button onClick={onDelete} disabled={isDeleting} variant="outline"
@@ -181,9 +181,9 @@ function PhotoViewerModal({ photo, onClose, onEdit, onDelete, isDeleting, format
   );
 }
 
-// ─────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // PhotoCard
-// ─────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 interface PhotoCardProps {
   photo: CargoPhoto;
   onView: () => void;
@@ -200,15 +200,15 @@ function PhotoCard({ photo, onView, onDelete, onEdit, isDeleting, formatDate, ca
 
   return (
     <div
-      className="bg-white dark:bg-[#0d0a04] rounded-2xl border border-orange-100/60 dark:border-orange-500/10 shadow-sm cursor-pointer hover:border-orange-300/70 dark:hover:border-orange-500/25 hover:shadow-md transition-all overflow-hidden"
+      className="bg-white dark:bg-[#0d0a04] rounded-2xl border border-blue-100/60 dark:border-blue-500/10 shadow-sm cursor-pointer hover:border-blue-300/70 dark:hover:border-blue-500/25 hover:shadow-md transition-all overflow-hidden"
       onClick={onView}
     >
       {/* Top accent line */}
-      <div className={`h-[2px] ${photo.is_sent ? 'bg-gradient-to-r from-transparent via-green-400/50 dark:via-green-500/30 to-transparent' : 'bg-gradient-to-r from-transparent via-amber-400/50 dark:via-amber-500/30 to-transparent'}`} />
+      <div className={`h-[2px] ${photo.is_sent ? 'bg-gradient-to-r from-transparent via-green-400/50 dark:via-green-500/30 to-transparent' : 'bg-gradient-to-r from-transparent via-sky-400/50 dark:via-sky-500/30 to-transparent'}`} />
 
       {/* Row 1: client ID + status + actions */}
       <div className="flex items-center gap-3 px-4 pt-3.5 pb-2">
-        <span className={`w-2 h-2 rounded-full shrink-0 ${photo.is_sent ? 'bg-green-500' : 'bg-amber-400'}`} />
+        <span className={`w-2 h-2 rounded-full shrink-0 ${photo.is_sent ? 'bg-green-500' : 'bg-sky-400'}`} />
         <span className="text-[15px] font-black text-gray-900 dark:text-white font-mono flex-1 min-w-0 truncate tracking-wide">
           {photo.client_id}
         </span>
@@ -217,7 +217,7 @@ function PhotoCard({ photo, onView, onDelete, onEdit, isDeleting, formatDate, ca
             Yuborilgan
           </span>
         ) : (
-          <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 border border-amber-200/60 dark:border-amber-500/15 px-2 py-0.5 rounded-full shrink-0">
+          <span className="text-[10px] font-bold text-sky-700 dark:text-sky-400 bg-sky-50 dark:bg-sky-500/10 border border-sky-200/60 dark:border-sky-500/15 px-2 py-0.5 rounded-full shrink-0">
             Kutilmoqda
           </span>
         )}
@@ -230,10 +230,10 @@ function PhotoCard({ photo, onView, onDelete, onEdit, isDeleting, formatDate, ca
             {photo.weight_kg} kg
           </span>
         ) : (
-          <span className="text-[12px] text-gray-300 dark:text-gray-600 px-2.5 py-1">—</span>
+          <span className="text-[12px] text-gray-300 dark:text-gray-600 px-2.5 py-1">â€”</span>
         )}
         {photo.price_per_kg && (
-          <span className="text-[12px] font-bold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-500/10 border border-orange-200/60 dark:border-orange-500/20 px-2.5 py-1 rounded-lg">
+          <span className="text-[12px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 border border-blue-200/60 dark:border-blue-500/20 px-2.5 py-1 rounded-lg">
             ${photo.price_per_kg}/kg
           </span>
         )}
@@ -250,13 +250,13 @@ function PhotoCard({ photo, onView, onDelete, onEdit, isDeleting, formatDate, ca
         </span>
       </div>
 
-      {/* Divider + action row — only shown when user has at least one action */}
+      {/* Divider + action row â€” only shown when user has at least one action */}
       {(canEdit || canDelete) && (
         <div className="border-t border-gray-50 dark:border-white/[0.04] flex">
           {canEdit && (
             <button
               onClick={e => { e.stopPropagation(); onEdit(); }}
-              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[12px] font-semibold text-gray-400 dark:text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-orange-50/50 dark:hover:bg-orange-500/[0.05] transition-colors"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[12px] font-semibold text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/50 dark:hover:bg-blue-500/[0.05] transition-colors"
             >
               <Edit2 className="w-3.5 h-3.5" />
               Tahrirlash
@@ -281,13 +281,13 @@ function PhotoCard({ photo, onView, onDelete, onEdit, isDeleting, formatDate, ca
   );
 }
 
-// ─────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // StatPill
-// ─────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const PILL_COLOR: Record<string, string> = {
   gray:  'text-gray-600  dark:text-gray-400  bg-gray-100  dark:bg-white/[0.06]  border-gray-200/60  dark:border-white/[0.08]',
   green: 'text-green-700 dark:text-green-400 bg-green-50  dark:bg-green-500/10  border-green-200/60 dark:border-green-500/15',
-  amber: 'text-amber-700 dark:text-amber-400 bg-amber-50  dark:bg-amber-500/10  border-amber-200/60 dark:border-amber-500/15',
+  sky: 'text-sky-700 dark:text-sky-400 bg-sky-50  dark:bg-sky-500/10  border-sky-200/60 dark:border-sky-500/15',
   blue:  'text-blue-700  dark:text-blue-400  bg-blue-50   dark:bg-blue-500/10   border-blue-200/60  dark:border-blue-500/15',
 };
 
@@ -299,9 +299,9 @@ function StatPill({ label, color }: { label: string; color: keyof typeof PILL_CO
   );
 }
 
-// ─────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // AccessDenied
-// ─────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function AccessDenied() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 text-center px-6">
@@ -318,9 +318,9 @@ function AccessDenied() {
   );
 }
 
-// ─────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // CargoListPage
-// ─────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 interface CargoListPageProps {
   flightName: string;
   onBack: () => void;
@@ -338,7 +338,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
   const [photos, setPhotos] = useState<CargoPhoto[]>([]);
   const [flight, setFlight] = useState<Flight | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  // Separate flag for search/page re-fetches — avoids tearing down the DOM
+  // Separate flag for search/page re-fetches â€” avoids tearing down the DOM
   // (and losing keyboard focus) every time the user types in the search box.
   const [isFetching, setIsFetching] = useState(false);
   const isFirstLoad = useRef(true);
@@ -373,7 +373,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
         localStorage.setItem('access_token', data.access_token);
         setJwtClaims(getAdminJwtClaims());
       })
-      .catch(() => { /* ignore — keep existing token */ });
+      .catch(() => { /* ignore â€” keep existing token */ });
     return () => { cancelled = true; };
   }, []);
 
@@ -398,7 +398,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
       setTotalPages(photosData.total_pages ?? 1);
 
     } catch {
-      toast({ title: "❌ Ma'lumotlarni yuklashda xatolik", description: 'Qayta urinib ko\'ring', variant: 'error' });
+      toast({ title: "âŒ Ma'lumotlarni yuklashda xatolik", description: 'Qayta urinib ko\'ring', variant: 'error' });
     } finally {
       setIsLoading(false);
       setIsFetching(false);
@@ -433,8 +433,8 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
     }
     setFailedItems(remainingItems);
     setIsRetrying(false);
-    if (successCount > 0) { toast({ title: `✅ ${successCount} ta yuk qayta yuklandi`, description: '', variant: 'success' }); loadData(); }
-    if (remainingItems.length > 0) toast({ title: `⚠️ ${remainingItems.length} ta yuk yuklanmadi`, description: "Internetni tekshirib qayta urinib ko'ring", variant: 'warning' });
+    if (successCount > 0) { toast({ title: `âœ… ${successCount} ta yuk qayta yuklandi`, description: '', variant: 'success' }); loadData(); }
+    if (remainingItems.length > 0) toast({ title: `âš ï¸ ${remainingItems.length} ta yuk yuklanmadi`, description: "Internetni tekshirib qayta urinib ko'ring", variant: 'warning' });
   };
 
   // Search is now server-side; only apply client-side status filter and sort
@@ -447,7 +447,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
       });
   }, [photos, filterStatus, sortOrder]);
 
-  // All hooks called — safe to guard now
+  // All hooks called â€” safe to guard now
   if (!canView) return <AccessDenied />;
 
   const handleDelete = async (cargoId: string) => {
@@ -464,9 +464,9 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
       setPhotos(prev => prev.filter(p => p.id !== cargoId));
       setTotalPhotos(prev => prev - 1);
       if (viewingPhoto?.id === cargoId) setViewingPhoto(null);
-      toast({ title: "✅ Muvaffaqiyatli o'chirildi", description: '', variant: 'success' });
+      toast({ title: "âœ… Muvaffaqiyatli o'chirildi", description: '', variant: 'success' });
     } catch (error: unknown) {
-      toast({ title: "❌ O'chirishda xatolik yuz berdi", description: (error as { message?: string })?.message ?? "Qayta urinib ko'ring", variant: 'error' });
+      toast({ title: "âŒ O'chirishda xatolik yuz berdi", description: (error as { message?: string })?.message ?? "Qayta urinib ko'ring", variant: 'error' });
     } finally { setDeletingId(null); }
   };
 
@@ -480,7 +480,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
     setIsExporting(true);
     try {
       await exportFlightCargoExcel(flightName);
-      toast({ title: '✅ Excel fayl yuklab olindi', description: '', variant: 'success' });
+      toast({ title: 'âœ… Excel fayl yuklab olindi', description: '', variant: 'success' });
     } catch (err: unknown) {
       const e = err as { message?: string; status?: number };
       let msg = "Excel yuklab olishda xatolik yuz berdi";
@@ -488,7 +488,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
       else if (e.message === 'no_data' || e.status === 404) msg = "Bu reys uchun ma'lumot topilmadi";
       else if (e.message === 'network_error' || e.status === 0) msg = "Internet aloqasi yo'q";
       else if (e.message && e.message !== 'Export failed') msg = e.message;
-      toast({ title: '❌ Excel yuklab olishda xatolik', description: msg, variant: 'error' });
+      toast({ title: 'âŒ Excel yuklab olishda xatolik', description: msg, variant: 'error' });
     } finally { setIsExporting(false); }
   };
 
@@ -501,7 +501,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-[#080604] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-[3px] border-orange-200 border-t-orange-500 rounded-full animate-spin" />
+          <div className="w-12 h-12 border-[3px] border-blue-200 border-t-blue-500 rounded-full animate-spin" />
           <p className="text-sm text-gray-400 font-medium">Yuklanmoqda...</p>
         </div>
       </div>
@@ -518,32 +518,32 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
 
           {/* Offline Banner */}
           {failedItems.length > 0 && (
-            <div className="mb-5 relative bg-white dark:bg-[#0d0a04] border border-amber-200 dark:border-amber-500/20 rounded-2xl p-4 shadow-sm overflow-hidden animate-in slide-in-from-top-2 duration-200">
-              <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
+            <div className="mb-5 relative bg-white dark:bg-[#0d0a04] border border-sky-200 dark:border-sky-500/20 rounded-2xl p-4 shadow-sm overflow-hidden animate-in slide-in-from-top-2 duration-200">
+              <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-transparent via-sky-500 to-transparent" />
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="relative w-10 h-10 bg-amber-100 dark:bg-amber-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                  <div className="relative w-10 h-10 bg-sky-100 dark:bg-sky-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <AlertTriangle className="w-5 h-5 text-sky-600 dark:text-sky-400" />
                     {/* Pulsing live indicator */}
                     <span className="absolute -top-1 -right-1 w-3 h-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500" />
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500" />
                     </span>
                   </div>
                   <div>
                     <p className="font-black text-gray-800 dark:text-gray-200 text-sm">Saqlanmagan yuklar</p>
-                    <p className="text-xs text-amber-600 dark:text-amber-400/80 mt-0.5">
+                    <p className="text-xs text-sky-600 dark:text-sky-400/80 mt-0.5">
                       <span className="font-black">{failedItems.length}</span> ta yuk serverga yuborilmagan
                     </p>
                   </div>
                 </div>
                 <div className="flex gap-2 w-full sm:w-auto">
                   <button onClick={() => setShowOfflineManager(true)}
-                    className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 text-xs font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 hover:bg-amber-100 dark:hover:bg-amber-500/15 border border-amber-200 dark:border-amber-500/20 px-3 py-2 rounded-xl transition-colors active:scale-95">
+                    className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 text-xs font-bold text-sky-700 dark:text-sky-400 bg-sky-50 dark:bg-sky-500/10 hover:bg-sky-100 dark:hover:bg-sky-500/15 border border-sky-200 dark:border-sky-500/20 px-3 py-2 rounded-xl transition-colors active:scale-95">
                     <SlidersHorizontal className="w-3.5 h-3.5" />Boshqarish
                   </button>
                   <button onClick={handleRetryAll} disabled={isRetrying}
-                    className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 text-xs font-black text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 disabled:opacity-60 px-3 py-2 rounded-xl transition-all shadow-sm shadow-amber-500/30 active:scale-95">
+                    className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 text-xs font-black text-white bg-gradient-to-r from-sky-500 to-blue-500 hover:opacity-90 disabled:opacity-60 px-3 py-2 rounded-xl transition-all shadow-sm shadow-sky-500/30 active:scale-95">
                     {isRetrying
                       ? <><div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />Yuklanmoqda</>
                       : <><RefreshCw className="w-3.5 h-3.5" />Yuborish</>}
@@ -564,7 +564,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
           <div className="mb-5">
             <div className="flex items-center justify-between mb-3">
               <button onClick={onBack}
-                className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-gray-400 dark:text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors active:scale-95">
+                className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors active:scale-95">
                 <ArrowLeft className="w-3.5 h-3.5" />Reyslar
               </button>
               {onLogout && (
@@ -587,7 +587,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
                 <div className="flex items-center gap-2 mt-2 flex-wrap">
                   <StatPill label={`${totalPhotos} ta yuk`} color="gray" />
                   <StatPill label={`${statisitcs.sent_count} yuborilgan`} color="green" />
-                  <StatPill label={`${statisitcs.unsent_count} kutilmoqda`} color="amber" />
+                  <StatPill label={`${statisitcs.unsent_count} kutilmoqda`} color="sky" />
                   <StatPill label={`${uniqueClients} ta mijoz`} color="blue" />
                 </div>
               </div>
@@ -602,7 +602,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
                 </button>
                 {canCreate && (
                   <button onClick={onAddCargo}
-                    className="flex items-center gap-1.5 h-9 px-4 text-[12px] font-black text-white bg-gradient-to-r from-orange-500 to-amber-500 hover:opacity-90 active:scale-[0.98] rounded-xl shadow-md shadow-orange-500/25 transition-all border-0">
+                    className="flex items-center gap-1.5 h-9 px-4 text-[12px] font-black text-white bg-gradient-to-r from-blue-500 to-sky-500 hover:opacity-90 active:scale-[0.98] rounded-xl shadow-md shadow-blue-500/25 transition-all border-0">
                     <Plus className="w-3.5 h-3.5" />Yuk qo'shish
                   </button>
                 )}
@@ -611,17 +611,17 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
           </div>
 
           {/* Search + Filters */}
-          <div className="relative bg-white dark:bg-[#0d0a04] rounded-2xl border border-orange-100/60 dark:border-orange-500/10 shadow-sm p-4 mb-5 overflow-hidden">
-            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-orange-400/30 dark:via-orange-500/20 to-transparent" />
+          <div className="relative bg-white dark:bg-[#0d0a04] rounded-2xl border border-blue-100/60 dark:border-blue-500/10 shadow-sm p-4 mb-5 overflow-hidden">
+            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-blue-400/30 dark:via-blue-500/20 to-transparent" />
 
             <div className="relative mb-3">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Mijoz kodi bo'yicha qidirish..."
-                className="w-full h-11 pl-10 pr-9 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-sm text-gray-800 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all" />
-              {/* Subtle fetch spinner — keeps search input mounted so focus is never lost */}
+                className="w-full h-11 pl-10 pr-9 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-sm text-gray-800 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all" />
+              {/* Subtle fetch spinner â€” keeps search input mounted so focus is never lost */}
               {isFetching ? (
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-orange-300 border-t-orange-500 rounded-full animate-spin" />
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-blue-300 border-t-blue-500 rounded-full animate-spin" />
               ) : searchTerm ? (
                 <button onClick={() => setSearchTerm('')}
                   className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors">
@@ -637,7 +637,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
                     className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
                       filterStatus === s
                         ? s === 'sent' ? 'bg-white dark:bg-white/10 text-green-700 dark:text-green-400 shadow-sm'
-                          : s === 'pending' ? 'bg-white dark:bg-white/10 text-amber-700 dark:text-amber-400 shadow-sm'
+                          : s === 'pending' ? 'bg-white dark:bg-white/10 text-sky-700 dark:text-sky-400 shadow-sm'
                           : 'bg-white dark:bg-white/10 text-gray-800 dark:text-gray-100 shadow-sm'
                         : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                     }`}>
@@ -663,7 +663,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
                 </p>
                 {(filterStatus !== 'all' || searchTerm) && (
                   <button onClick={() => { setSearchTerm(''); setFilterStatus('all'); }}
-                    className="text-xs text-orange-600 dark:text-orange-400 font-bold hover:text-orange-700 transition-colors">
+                    className="text-xs text-blue-600 dark:text-blue-400 font-bold hover:text-blue-700 transition-colors">
                     Tozalash
                   </button>
                 )}
@@ -675,14 +675,14 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
           <div className={isFetching ? 'opacity-50 pointer-events-none transition-opacity duration-150' : 'transition-opacity duration-150'}>
           {photos.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-24">
-              <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-500/5 dark:to-amber-500/5 border border-orange-100 dark:border-orange-500/10 flex items-center justify-center mb-5">
-                <Package className="w-10 h-10 text-orange-200 dark:text-orange-500/30" />
+              <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-500/5 dark:to-sky-500/5 border border-blue-100 dark:border-blue-500/10 flex items-center justify-center mb-5">
+                <Package className="w-10 h-10 text-blue-200 dark:text-blue-500/30" />
               </div>
               <p className="text-gray-700 dark:text-gray-300 font-black text-lg mb-1">Yuklar yo'q</p>
               <p className="text-gray-400 dark:text-gray-500 text-sm mb-6">Birinchi yukni qo'shing</p>
               {canCreate && (
                 <button onClick={onAddCargo}
-                  className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-orange-500 to-amber-500 hover:opacity-90 rounded-xl shadow-md shadow-orange-500/30 transition-all active:scale-95">
+                  className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-blue-500 to-sky-500 hover:opacity-90 rounded-xl shadow-md shadow-blue-500/30 transition-all active:scale-95">
                   <Plus className="w-4 h-4" />Yuk qo'shish
                 </button>
               )}
@@ -717,7 +717,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
                     variant="outline"
                     disabled={currentPage === 1}
                     onClick={() => { setCurrentPage(p => p - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    className="rounded-xl h-9 px-4 text-[13px] font-semibold border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:border-orange-300 dark:hover:border-orange-500/30 hover:text-orange-600 dark:hover:text-orange-400 transition-colors disabled:opacity-40"
+                    className="rounded-xl h-9 px-4 text-[13px] font-semibold border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:border-blue-300 dark:hover:border-blue-500/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors disabled:opacity-40"
                   >
                     <ChevronLeft className="w-4 h-4 mr-1" /> Oldingi
                   </Button>
@@ -728,7 +728,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
                     variant="outline"
                     disabled={currentPage === totalPages}
                     onClick={() => { setCurrentPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    className="rounded-xl h-9 px-4 text-[13px] font-semibold border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:border-orange-300 dark:hover:border-orange-500/30 hover:text-orange-600 dark:hover:text-orange-400 transition-colors disabled:opacity-40"
+                    className="rounded-xl h-9 px-4 text-[13px] font-semibold border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:border-blue-300 dark:hover:border-blue-500/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors disabled:opacity-40"
                   >
                     Keyingi <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>

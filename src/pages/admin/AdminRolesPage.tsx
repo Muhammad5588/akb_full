@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+﻿import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, Controller, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,7 +25,7 @@ import { Skeleton } from '../../components/ui/skeleton';
 import LightSelect from '../../components/ui/LightSelect';
 import type { LightSelectOption } from '../../components/ui/LightSelect';
 
-// ─── Permission label translations ────────────────────────────────────────────
+// â”€â”€â”€ Permission label translations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const RESOURCE_MAP: Record<string, string> = {
   admin_accounts:  'Adminlar',
@@ -58,11 +58,11 @@ const ACTION_MAP: Record<string, string> = {
   reject:  'Rad etish',
 };
 
-// ─── Home page constants ───────────────────────────────────────────────────────
+// â”€â”€â”€ Home page constants â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /**
  * Exhaustive list of valid admin home pages.
- * Defined as a `const` tuple so z.enum() can derive a union type from it —
+ * Defined as a `const` tuple so z.enum() can derive a union type from it â€”
  * this means Zod rejects any value that isn't in this list even if the
  * client-side JS is tampered with before form submission.
  */
@@ -99,7 +99,7 @@ const HOME_PAGE_OPTIONS: LightSelectOption[] = [
  * Isolating permissions per role type helps admins avoid accidentally granting
  * unrelated access (e.g. a warehouse worker shouldn't see POS permissions).
  *
- * `null` means "show everything" — used for fully privileged pages.
+ * `null` means "show everything" â€” used for fully privileged pages.
  */
 const HOME_PAGE_RESOURCE_PACKS: Record<ValidHomePage, string[] | null> = {
   '/admin/accounts':       ['admin_accounts', 'roles', 'audit_logs', 'stats'],
@@ -114,12 +114,12 @@ const HOME_PAGE_RESOURCE_PACKS: Record<ValidHomePage, string[] | null> = {
   '/admin/expected-cargo': ['expected_cargo'],
 };
 
-// ─── Schema ────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Schema â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const formSchema = z.object({
   name: z.string().min(3, 'Kamida 3 ta belgi').max(64),
   description: z.string().optional(),
-  // z.enum enforces the whitelist — rejects arbitrary strings even if someone
+  // z.enum enforces the whitelist â€” rejects arbitrary strings even if someone
   // bypasses the UI and submits a crafted payload from the browser console.
   home_page: z.enum(VALID_HOME_PAGES, {
     message: "Ro'yxatdan sahifa tanlang",
@@ -136,7 +136,7 @@ const EMPTY_FORM: FormValues = {
   permission_ids: [],
 };
 
-// ─── Helpers ────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function useIsDesktop() {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
@@ -154,14 +154,14 @@ function isSuperAdminRole(role: RoleResponse): boolean {
   return name === 'super-admin' || name === 'super_admin' || name === 'superadmin';
 }
 
-// ─── Shared styles ──────────────────────────────────────────────────────────────
+// â”€â”€â”€ Shared styles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const labelClass =
   'block text-[12px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5';
 const inputClass =
-  'w-full p-3 bg-gray-50/80 dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] rounded-xl text-[14px] focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/50 transition-all outline-none text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600';
+  'w-full p-3 bg-gray-50/80 dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] rounded-xl text-[14px] focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all outline-none text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600';
 
-// ─── Main Page ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export default function AdminRolesPage() {
   const queryClient = useQueryClient();
@@ -170,7 +170,7 @@ export default function AdminRolesPage() {
   const [editingRole, setEditingRole] = useState<RoleResponse | null>(null);
   const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
 
-  // ── Queries ────────────────────────────────────────────────────────────────
+  // â”€â”€ Queries â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const { data: roles, isLoading: rolesLoading } = useQuery<RoleResponse[]>({
     queryKey: ['system-roles'],
@@ -182,7 +182,7 @@ export default function AdminRolesPage() {
     queryFn: getPermissions,
   });
 
-  // ── Form ───────────────────────────────────────────────────────────────────
+  // â”€â”€ Form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const {
     register,
@@ -219,7 +219,7 @@ export default function AdminRolesPage() {
     );
 
     const pack = HOME_PAGE_RESOURCE_PACKS[watchedHomePage] ?? null;
-    if (!pack) return grouped; // null → show all
+    if (!pack) return grouped; // null â†’ show all
 
     return Object.fromEntries(
       Object.entries(grouped).filter(([resource]) => pack.includes(resource)),
@@ -254,7 +254,7 @@ export default function AdminRolesPage() {
     [reset],
   );
 
-  // ── Mutations ──────────────────────────────────────────────────────────────
+  // â”€â”€ Mutations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const addRoleMut = useMutation({
     mutationFn: (data: CreateRoleRequest) => createRole(data),
@@ -320,7 +320,7 @@ export default function AdminRolesPage() {
   const isPending = addRoleMut.isPending || editRoleMut.isPending;
   const modalTitle = editingRole ? 'Rolni Tahrirlash' : 'Yangi Rol Yaratish';
 
-  // Portal container for LightSelect dropdowns — a div inside the modal DOM tree
+  // Portal container for LightSelect dropdowns â€” a div inside the modal DOM tree
   // so Radix FocusScope does not block pointer events on the dropdown.
   // useState (not useRef) so the component re-renders when the node is mounted.
   const [lsPortalEl, setLsPortalEl] = useState<HTMLDivElement | null>(null);
@@ -329,13 +329,13 @@ export default function AdminRolesPage() {
   }, []);
 
   /**
-   * Determines if the role being edited is a super-admin type — if so we show a
+   * Determines if the role being edited is a super-admin type â€” if so we show a
    * "full access" banner instead of the permission checkboxes, because super-admin
    * roles bypass RBAC entirely on the backend (no individual permissions stored).
    */
   const isEditingSuperAdmin = editingRole ? isSuperAdminRole(editingRole) : false;
 
-  // How many resources the current pack covers — shown as a hint below the selector
+  // How many resources the current pack covers â€” shown as a hint below the selector
   const packHint = useMemo(() => {
     const pack = HOME_PAGE_RESOURCE_PACKS[watchedHomePage];
     if (pack === null) return null;
@@ -344,8 +344,8 @@ export default function AdminRolesPage() {
       .join(', ');
   }, [watchedHomePage]);
 
-  // ── Form body (fields only — button is rendered separately and associated
-  //    via form="role-form" so it can live outside the scroll container) ──────
+  // â”€â”€ Form body (fields only â€” button is rendered separately and associated
+  //    via form="role-form" so it can live outside the scroll container) â”€â”€â”€â”€â”€â”€
 
   const FormBody = (
     <form id="role-form" onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -378,7 +378,7 @@ export default function AdminRolesPage() {
         />
       </div>
 
-      {/* Home page — LightSelect enforces the whitelist in the UI;
+      {/* Home page â€” LightSelect enforces the whitelist in the UI;
           z.enum enforces it at the Zod validation layer */}
       <div>
         <label className={labelClass}>Bosh sahifa</label>
@@ -399,7 +399,7 @@ export default function AdminRolesPage() {
         {errors.home_page && (
           <p className="text-red-500 text-[12px] mt-1.5 font-medium">{errors.home_page.message}</p>
         )}
-        {/* Pack hint — shows which resource groups will be visible */}
+        {/* Pack hint â€” shows which resource groups will be visible */}
         {packHint && (
           <div className="flex items-start gap-1.5 mt-2 px-3 py-2 bg-blue-50/80 dark:bg-blue-500/[0.06] border border-blue-100 dark:border-blue-500/20 rounded-xl">
             <Info className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
@@ -414,17 +414,17 @@ export default function AdminRolesPage() {
       <div className="space-y-4">
         <label className={labelClass}>Huquqlar</label>
 
-        {/* Super-admin full-access banner — replaces the checkbox list */}
+        {/* Super-admin full-access banner â€” replaces the checkbox list */}
         {isEditingSuperAdmin ? (
-          <div className="flex items-start gap-3 p-4 rounded-2xl bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-500/[0.08] dark:to-amber-500/[0.06] border border-orange-200/60 dark:border-orange-500/20">
-            <div className="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center shrink-0">
-              <Sparkles className="w-4 h-4 text-orange-500" />
+          <div className="flex items-start gap-3 p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-500/[0.08] dark:to-sky-500/[0.06] border border-blue-200/60 dark:border-blue-500/20">
+            <div className="w-8 h-8 rounded-xl bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center shrink-0">
+              <Sparkles className="w-4 h-4 text-blue-500" />
             </div>
             <div>
-              <p className="text-[13px] font-bold text-orange-700 dark:text-orange-300">
+              <p className="text-[13px] font-bold text-blue-700 dark:text-blue-300">
                 Barcha huquqlar berilgan
               </p>
-              <p className="text-[11px] text-orange-500/80 dark:text-orange-400/70 mt-0.5 leading-relaxed">
+              <p className="text-[11px] text-blue-500/80 dark:text-blue-400/70 mt-0.5 leading-relaxed">
                 Super-admin rollari tizim darajasida barcha amallarni bajarishga ruxsat oladi.
                 Alohida huquqlar belgilanmaydi.
               </p>
@@ -448,7 +448,7 @@ export default function AdminRolesPage() {
                       className="rounded-2xl border border-gray-100 dark:border-white/[0.06] overflow-hidden"
                     >
                       <div className="px-4 py-2.5 bg-gray-50/80 dark:bg-white/[0.03] border-b border-gray-100 dark:border-white/[0.06]">
-                        <h3 className="text-[12px] font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider">
+                        <h3 className="text-[12px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
                           {RESOURCE_MAP[resource] ?? resource.replace('_', ' ')}
                         </h3>
                       </div>
@@ -460,7 +460,7 @@ export default function AdminRolesPage() {
                               key={p.id}
                               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer transition-all ${
                                 isChecked
-                                  ? 'bg-orange-50 dark:bg-orange-500/[0.08]'
+                                  ? 'bg-blue-50 dark:bg-blue-500/[0.08]'
                                   : 'hover:bg-gray-50 dark:hover:bg-white/[0.02]'
                               }`}
                             >
@@ -478,7 +478,7 @@ export default function AdminRolesPage() {
                                 <div
                                   className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
                                     isChecked
-                                      ? 'bg-orange-500 border-orange-500 shadow-sm shadow-orange-500/20'
+                                      ? 'bg-blue-500 border-blue-500 shadow-sm shadow-blue-500/20'
                                       : 'border-gray-300 dark:border-gray-600'
                                   }`}
                                 >
@@ -490,7 +490,7 @@ export default function AdminRolesPage() {
                               <span
                                 className={`text-[13px] transition-colors ${
                                   isChecked
-                                    ? 'text-orange-700 dark:text-orange-300 font-medium'
+                                    ? 'text-blue-700 dark:text-blue-300 font-medium'
                                     : 'text-gray-600 dark:text-gray-400'
                                 }`}
                               >
@@ -532,13 +532,13 @@ export default function AdminRolesPage() {
       form="role-form"
       disabled={isPending}
       whileTap={{ scale: 0.97 }}
-      className="w-full flex justify-center py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white rounded-2xl transition-all font-semibold text-[14px] shadow-lg shadow-orange-500/20 disabled:opacity-60"
+      className="w-full flex justify-center py-3.5 bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white rounded-2xl transition-all font-semibold text-[14px] shadow-lg shadow-blue-500/20 disabled:opacity-60"
     >
       {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Saqlash'}
     </motion.button>
   );
 
-  // ── Render ─────────────────────────────────────────────────────────────────
+  // â”€â”€ Render â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   return (
     <div className="space-y-6">
@@ -556,7 +556,7 @@ export default function AdminRolesPage() {
         <motion.button
           onClick={() => setIsOpen(true)}
           whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white px-4 py-2.5 rounded-xl transition-all shadow-lg shadow-orange-500/20 text-[13px] font-semibold"
+          className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white px-4 py-2.5 rounded-xl transition-all shadow-lg shadow-blue-500/20 text-[13px] font-semibold"
         >
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">Yangi Rol</span>
@@ -582,7 +582,7 @@ export default function AdminRolesPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.04 }}
-                className="bg-white dark:bg-[#111] rounded-[20px] p-5 shadow-sm border border-black/[0.05] dark:border-white/[0.06] flex flex-col relative overflow-hidden group hover:shadow-md hover:border-orange-200/50 dark:hover:border-orange-500/20 transition-all"
+                className="bg-white dark:bg-[#111] rounded-[20px] p-5 shadow-sm border border-black/[0.05] dark:border-white/[0.06] flex flex-col relative overflow-hidden group hover:shadow-md hover:border-blue-200/50 dark:hover:border-blue-500/20 transition-all"
               >
                 {/* System role badge */}
                 {!role.is_custom && (
@@ -600,12 +600,12 @@ export default function AdminRolesPage() {
                 <div className="flex items-center gap-3 mb-3">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform ${
                     superAdmin
-                      ? 'bg-gradient-to-br from-orange-100 to-amber-100 dark:from-orange-500/20 dark:to-amber-500/15'
-                      : 'bg-orange-50 dark:bg-orange-500/[0.1]'
+                      ? 'bg-gradient-to-br from-blue-100 to-sky-100 dark:from-blue-500/20 dark:to-sky-500/15'
+                      : 'bg-blue-50 dark:bg-blue-500/[0.1]'
                   }`}>
                     {superAdmin
-                      ? <Sparkles className="w-5 h-5 text-orange-500" strokeWidth={1.8} />
-                      : <Shield className="w-5 h-5 text-orange-500" strokeWidth={1.8} />
+                      ? <Sparkles className="w-5 h-5 text-blue-500" strokeWidth={1.8} />
+                      : <Shield className="w-5 h-5 text-blue-500" strokeWidth={1.8} />
                     }
                   </div>
                   <h3 className="text-[15px] font-bold text-gray-900 dark:text-white tracking-tight">
@@ -628,9 +628,9 @@ export default function AdminRolesPage() {
                 <div className="border-t border-gray-100 dark:border-white/[0.05] pt-4 space-y-3">
                   <div className="flex items-center justify-between">
 
-                    {/* Permission count — super-admin shows "Barcha huquqlar" */}
+                    {/* Permission count â€” super-admin shows "Barcha huquqlar" */}
                     {superAdmin ? (
-                      <div className="flex items-center gap-1.5 text-[11px] font-bold text-orange-500 dark:text-orange-400">
+                      <div className="flex items-center gap-1.5 text-[11px] font-bold text-blue-500 dark:text-blue-400">
                         <Sparkles className="w-3 h-3" />
                         Barcha huquqlar
                       </div>
@@ -641,12 +641,12 @@ export default function AdminRolesPage() {
                       </div>
                     )}
 
-                    {/* Edit & Delete — custom roles only */}
+                    {/* Edit & Delete â€” custom roles only */}
                     {role.is_custom && (
                       <div className="flex items-center gap-1">
                         <button
                           onClick={() => handleEditRole(role)}
-                          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-medium text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/[0.08] transition-colors"
+                          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-medium text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/[0.08] transition-colors"
                         >
                           <Pencil className="w-3 h-3" />
                           Tahrirlash
@@ -694,7 +694,7 @@ export default function AdminRolesPage() {
                     </motion.div>
                   )}
 
-                  {/* Permission badges — skip for super-admin */}
+                  {/* Permission badges â€” skip for super-admin */}
                   {!superAdmin && (
                     <div className="flex flex-wrap gap-1.5">
                       {role.permissions?.slice(0, 4).map((p) => (
@@ -707,7 +707,7 @@ export default function AdminRolesPage() {
                         </span>
                       ))}
                       {role.permissions && role.permissions.length > 4 && (
-                        <span className="inline-block px-2 py-[3px] rounded-md text-[10px] font-semibold bg-orange-50 dark:bg-orange-500/[0.08] text-orange-500">
+                        <span className="inline-block px-2 py-[3px] rounded-md text-[10px] font-semibold bg-blue-50 dark:bg-blue-500/[0.08] text-blue-500">
                           +{role.permissions.length - 4}
                         </span>
                       )}
@@ -731,7 +731,7 @@ export default function AdminRolesPage() {
         </div>
       )}
 
-      {/* ── Add / Edit Role Modal ──
+      {/* â”€â”€ Add / Edit Role Modal â”€â”€
           The form body and submit button are separated:
           - FormBody renders <form id="role-form"> (no button inside)
           - SubmitButton uses form="role-form" to associate with it
@@ -740,7 +740,7 @@ export default function AdminRolesPage() {
       {isDesktop ? (
         <Dialog open={isOpen} onOpenChange={handleModalOpenChange}>
           <DialogContent className="sm:max-w-[500px] flex flex-col gap-0 max-h-[88vh] p-0 overflow-hidden">
-            {/* LightSelect dropdown portal target — must be inside DialogContent
+            {/* LightSelect dropdown portal target â€” must be inside DialogContent
                 so Radix FocusScope does not block pointer events on the dropdown */}
             <div ref={lsPortalCallbackRef} />
 
@@ -765,7 +765,7 @@ export default function AdminRolesPage() {
       ) : (
         <Drawer open={isOpen} onOpenChange={handleModalOpenChange}>
           <DrawerContent className="flex flex-col max-h-[92vh]">
-            {/* LightSelect dropdown portal target — must be inside DrawerContent */}
+            {/* LightSelect dropdown portal target â€” must be inside DrawerContent */}
             <div ref={lsPortalCallbackRef} />
 
             <DrawerHeader className="shrink-0 text-left px-4 pt-4 pb-3 border-b border-gray-100 dark:border-white/[0.06]">
@@ -780,7 +780,7 @@ export default function AdminRolesPage() {
               {FormBody}
             </div>
 
-            {/* Always-visible submit button — pb accounts for iOS home indicator */}
+            {/* Always-visible submit button â€” pb accounts for iOS home indicator */}
             <div className="shrink-0 px-4 pt-3 pb-[calc(1.25rem+env(safe-area-inset-bottom))] border-t border-gray-100 dark:border-white/[0.06]">
               {SubmitButton}
             </div>
@@ -790,3 +790,4 @@ export default function AdminRolesPage() {
     </div>
   );
 }
+

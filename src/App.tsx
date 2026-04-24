@@ -12,6 +12,7 @@ import AdminRolesPage from "./pages/admin/AdminRolesPage";
 import AdminProfilePage from "./pages/admin/AdminProfilePage";
 import AdminAuditLogsPage from "./pages/admin/AdminAuditLogsPage";
 import AdminCarouselPage from "./pages/admin/AdminCarouselPage";
+import FlightScheduleAdminPage from "./pages/admin/FlightScheduleAdminPage";
 import POSDashboard from "./pages/POSDashboard";
 import ImportPage from "./components/ImportPage";
 import ClientForm from "./components/ClientForm";
@@ -56,6 +57,7 @@ type Page =
   | "admin-audit"
   | "admin-profile"
   | "admin-carousel"
+  | "flight-schedule-admin"
   | "pos-dashboard"
   | "manager-page"
   | "passkey-page"
@@ -107,6 +109,7 @@ const ROLE_CONFIG: Record<string, { default: Page; allowed: Page[] }> = {
       "admin-audit",
       "admin-profile",
       "admin-carousel",
+      "flight-schedule-admin",
       "pos-dashboard",
       "warehouse-page",
       "expected-cargo",
@@ -132,6 +135,7 @@ const ROLE_CONFIG: Record<string, { default: Page; allowed: Page[] }> = {
       "admin-audit",
       "admin-profile",
       "admin-carousel",
+      "flight-schedule-admin",
       "pos-dashboard",
       "warehouse-page",
       "expected-cargo",
@@ -143,7 +147,7 @@ const ROLE_CONFIG: Record<string, { default: Page; allowed: Page[] }> = {
     default: "manager-page",
     // admin-carousel is gated by JWT permission (carousel:read) checked in ManagerPage UI;
     // adding it here only unlocks the route — the backend enforces actual authorization.
-    allowed: ["manager-page", "admin-carousel", "admin-profile", "passkey-page"],
+    allowed: ["manager-page", "admin-carousel", "admin-profile", "passkey-page", "flight-schedule-admin"],
   },
   warehouse_worker: {
     default: "warehouse-page",
@@ -233,6 +237,7 @@ function getPathForPage(
   if (page === "admin-audit") return "/admin/audit";
   if (page === "admin-profile") return "/admin/profile";
   if (page === "admin-carousel") return "/admin/carousel";
+  if (page === "flight-schedule-admin") return "/admin/flight-schedule";
   if (page === "manager-page") return "/admin/clients";
   if (page === "passkey-page") return "/admin/passkey";
   if (page === "warehouse-page") return "/admin/warehouse";
@@ -278,6 +283,8 @@ function resolvePageFromPath(rawPath: string): RouteInfo {
   if (path === "/admin/audit") return { page: "admin-audit" };
   if (path === "/admin/profile") return { page: "admin-profile" };
   if (path === "/admin/carousel") return { page: "admin-carousel" };
+  if (path === "/admin/flight-schedule" || path === "/admin/schedule")
+    return { page: "flight-schedule-admin" };
   if (path === "/admin/clients") return { page: "manager-page" };
   if (path === "/admin/passkey") return { page: "passkey-page" };
   if (path === "/warehouse" || path === "/admin/warehouse") return { page: "warehouse-page" };
@@ -538,6 +545,7 @@ function AppContent() {
     "admin-audit",
     "admin-profile",
     "admin-carousel",
+    "flight-schedule-admin",
   ].includes(currentPage);
 
   // Only roles with admin-accounts (admin, super-admin) get the full AdminLayout shell.
@@ -622,6 +630,7 @@ function AppContent() {
           {currentPage === "admin-audit" && <AdminAuditLogsPage />}
           {currentPage === "admin-profile" && <AdminProfilePage />}
           {currentPage === "admin-carousel" && <AdminCarouselPage />}
+          {currentPage === "flight-schedule-admin" && <FlightScheduleAdminPage />}
         </AdminLayout>
       ) : isPOSPage ? (
         <POSDashboard

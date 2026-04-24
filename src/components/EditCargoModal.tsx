@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { updateCargo, type CargoPhoto } from '@/api/services/cargo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,7 +20,7 @@ const INPUT_CLS = [
   "border-gray-200 dark:border-white/10",
   "text-gray-900 dark:text-white",
   "placeholder:text-gray-400 dark:placeholder:text-gray-500",
-  "focus-visible:ring-2 focus-visible:ring-orange-500/30 focus-visible:border-orange-500 focus-visible:ring-offset-0",
+  "focus-visible:ring-2 focus-visible:ring-blue-500/30 focus-visible:border-blue-500 focus-visible:ring-offset-0",
   "transition-all duration-100",
 ].join(' ');
 
@@ -82,7 +82,7 @@ export default function EditCargoModal({ cargo, onClose, onSuccess }: EditCargoM
         comment.trim() || undefined,
         newPhotos.length > 0 ? newPhotos : undefined
       );
-      toast({ title: `✅ ${t('cargo.messages.updateSuccess')}`, description: t('cargo.messages.updateSuccessDescription'), variant: 'success', duration: 2000 });
+      toast({ title: `âœ… ${t('cargo.messages.updateSuccess')}`, description: t('cargo.messages.updateSuccessDescription'), variant: 'success', duration: 2000 });
       onSuccess(updatedCargo.photo);
       onClose();
     } catch (error: unknown) {
@@ -93,7 +93,7 @@ export default function EditCargoModal({ cargo, onClose, onSuccess }: EditCargoM
         }
         return null;
       })() || t('cargo.messages.updateError');
-      toast({ title: `❌ ${t('cargo.messages.updateError')}`, description: errorMessage, variant: 'error', duration: 5000 });
+      toast({ title: `âŒ ${t('cargo.messages.updateError')}`, description: errorMessage, variant: 'error', duration: 5000 });
     } finally {
       setIsSubmitting(false);
     }
@@ -115,16 +115,16 @@ export default function EditCargoModal({ cargo, onClose, onSuccess }: EditCargoM
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
         <div
-          className="relative bg-white dark:bg-[#0d0a04] rounded-2xl shadow-xl shadow-black/30 max-w-md w-full max-h-[94vh] overflow-hidden pointer-events-auto animate-in zoom-in-95 duration-150 border border-orange-100/80 dark:border-orange-500/15"
+          className="relative bg-white dark:bg-[#0d0a04] rounded-2xl shadow-xl shadow-black/30 max-w-md w-full max-h-[94vh] overflow-hidden pointer-events-auto animate-in zoom-in-95 duration-150 border border-blue-100/80 dark:border-blue-500/15"
           onClick={e => e.stopPropagation()}
         >
           {/* accent bar */}
-          <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-transparent via-orange-500 to-transparent z-10" />
+          <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-transparent via-blue-500 to-transparent z-10" />
 
           {/* Header */}
           <div className="relative flex items-center justify-between px-6 pt-6 pb-4 border-b border-gray-100 dark:border-white/5">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-md shadow-orange-500/30">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-sky-500 flex items-center justify-center shadow-md shadow-blue-500/30">
                 <Edit2 className="w-4 h-4 text-white" />
               </div>
               <div>
@@ -149,7 +149,7 @@ export default function EditCargoModal({ cargo, onClose, onSuccess }: EditCargoM
                 </label>
                 <Input type="text" value={clientId} onChange={e => handleClientIdChange(e.target.value)}
                   placeholder={t('cargo.clientCodePlaceholder')} disabled={isSubmitting}
-                  className={`${INPUT_CLS} uppercase font-mono tracking-widest text-base caret-orange-500 ${errors.client_id ? ERR_CLS : ''}`} />
+                  className={`${INPUT_CLS} uppercase font-mono tracking-widest text-base caret-blue-500 ${errors.client_id ? ERR_CLS : ''}`} />
                 {errors.client_id && (
                   <p className="text-xs font-semibold text-red-500 mt-1.5">{errors.client_id}</p>
                 )}
@@ -177,7 +177,7 @@ export default function EditCargoModal({ cargo, onClose, onSuccess }: EditCargoM
                 <Input type="text" inputMode="decimal" value={weightKg}
                   onChange={e => handleWeightChange(e.target.value)}
                   placeholder={t('cargo.weightPlaceholder')} disabled={isSubmitting}
-                  className={`${INPUT_CLS} caret-orange-500 ${errors.weight_kg ? ERR_CLS : ''}`} />
+                  className={`${INPUT_CLS} caret-blue-500 ${errors.weight_kg ? ERR_CLS : ''}`} />
                 {errors.weight_kg && (
                   <p className="text-xs font-semibold text-red-500 mt-1.5">{errors.weight_kg}</p>
                 )}
@@ -191,7 +191,7 @@ export default function EditCargoModal({ cargo, onClose, onSuccess }: EditCargoM
                 <Input type="text" inputMode="decimal" value={pricePerKg}
                   onChange={e => handlePricePerKgChange(e.target.value)}
                   placeholder={t('cargo.pricePerKgPlaceholder')} disabled={isSubmitting}
-                  className={`${INPUT_CLS} caret-orange-500 ${errors.price_per_kg ? ERR_CLS : ''}`} />
+                  className={`${INPUT_CLS} caret-blue-500 ${errors.price_per_kg ? ERR_CLS : ''}`} />
                 {errors.price_per_kg && (
                   <p className="text-xs font-semibold text-red-500 mt-1.5">{errors.price_per_kg}</p>
                 )}
@@ -204,13 +204,13 @@ export default function EditCargoModal({ cargo, onClose, onSuccess }: EditCargoM
                 </label>
                 <textarea value={comment} onChange={e => setComment(e.target.value)}
                   placeholder={t('cargo.commentPlaceholder')} rows={3} disabled={isSubmitting}
-                  className="w-full px-3 py-2.5 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-sm text-gray-900 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all resize-none disabled:opacity-50" />
+                  className="w-full px-3 py-2.5 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-sm text-gray-900 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all resize-none disabled:opacity-50" />
               </div>
 
               {/* Actions */}
               <div className="flex gap-2.5 pt-2">
                 <Button type="submit" disabled={isSubmitting}
-                  className="flex-1 h-12 bg-gradient-to-r from-orange-500 to-amber-500 hover:opacity-90 active:scale-[0.98] text-white font-black rounded-xl shadow-md shadow-orange-500/30 border-0 transition-all disabled:opacity-60">
+                  className="flex-1 h-12 bg-gradient-to-r from-blue-500 to-sky-500 hover:opacity-90 active:scale-[0.98] text-white font-black rounded-xl shadow-md shadow-blue-500/30 border-0 transition-all disabled:opacity-60">
                   {isSubmitting ? (
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />

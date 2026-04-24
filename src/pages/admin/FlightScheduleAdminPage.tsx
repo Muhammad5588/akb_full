@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+﻿import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import {
@@ -29,7 +29,7 @@ import {
 import { getAdminJwtClaims } from '@/api/services/adminManagement';
 import { cn } from '@/lib/utils';
 
-// ── Constants ──────────────────────────────────────────────────────────────────
+// â”€â”€ Constants â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const UZ_MONTHS = [
   'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun',
@@ -67,7 +67,7 @@ const TYPE_CONFIG = {
   },
 } as const;
 
-// ── Entry Form Modal ───────────────────────────────────────────────────────────
+// â”€â”€ Entry Form Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface EntryFormValues {
   flight_name: string;
@@ -145,7 +145,7 @@ function EntryFormModal({ initial, onClose, onSave, isSaving }: EntryFormModalPr
                 value={values.flight_name}
                 onChange={(e) => setValues({ ...values, flight_name: e.target.value })}
                 placeholder="MC-1044 yoki Navro'z bayrami"
-                className="w-full px-3 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-400 transition-all"
+                className="w-full px-3 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
               />
             </div>
 
@@ -159,7 +159,7 @@ function EntryFormModal({ initial, onClose, onSave, isSaving }: EntryFormModalPr
                 required
                 value={values.flight_date}
                 onChange={(e) => setValues({ ...values, flight_date: e.target.value })}
-                className="w-full px-3 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-400 transition-all"
+                className="w-full px-3 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all"
               />
             </div>
 
@@ -180,7 +180,7 @@ function EntryFormModal({ initial, onClose, onSave, isSaving }: EntryFormModalPr
                       className={cn(
                         'flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 text-sm font-semibold transition-all',
                         values.type === t
-                          ? 'border-orange-500 bg-orange-50 dark:bg-orange-500/10 text-orange-700 dark:text-orange-400'
+                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400'
                           : 'border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-600',
                       )}
                     >
@@ -209,7 +209,7 @@ function EntryFormModal({ initial, onClose, onSave, isSaving }: EntryFormModalPr
                       className={cn(
                         'flex flex-col items-center gap-1 px-2 py-2.5 rounded-xl border-2 text-xs font-semibold transition-all',
                         values.status === s
-                          ? 'border-orange-500 bg-orange-50 dark:bg-orange-500/10 text-orange-700 dark:text-orange-400'
+                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400'
                           : 'border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-600',
                       )}
                     >
@@ -231,7 +231,7 @@ function EntryFormModal({ initial, onClose, onSave, isSaving }: EntryFormModalPr
                 onChange={(e) => setValues({ ...values, notes: e.target.value })}
                 placeholder="Aksiya tavsifi yoki qo'shimcha ma'lumot..."
                 rows={3}
-                className="w-full px-3 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-400 transition-all resize-none"
+                className="w-full px-3 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all resize-none"
               />
             </div>
           </div>
@@ -248,7 +248,7 @@ function EntryFormModal({ initial, onClose, onSave, isSaving }: EntryFormModalPr
             <button
               type="submit"
               disabled={isSaving}
-              className="flex-1 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white text-sm font-bold transition-colors flex items-center justify-center gap-2"
+              className="flex-1 py-2.5 rounded-xl bg-blue-500 hover:bg-blue-600 disabled:opacity-60 text-white text-sm font-bold transition-colors flex items-center justify-center gap-2"
             >
               {isSaving && <Loader2 className="size-4 animate-spin" />}
               {isEdit ? 'Saqlash' : "Qo'shish"}
@@ -260,7 +260,7 @@ function EntryFormModal({ initial, onClose, onSave, isSaving }: EntryFormModalPr
   );
 }
 
-// ── Delete confirm ─────────────────────────────────────────────────────────────
+// â”€â”€ Delete confirm â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface DeleteConfirmProps {
   item: FlightScheduleItem;
@@ -316,7 +316,7 @@ function DeleteConfirm({ item, onCancel, onConfirm, isDeleting }: DeleteConfirmP
   );
 }
 
-// ── Single entry card ──────────────────────────────────────────────────────────
+// â”€â”€ Single entry card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface EntryCardProps {
   item: FlightScheduleItem;
@@ -372,12 +372,12 @@ function EntryCard({ item, onEdit, onDelete, canManage }: EntryCardProps) {
         )}
       </div>
 
-      {/* Actions — only visible to users with manage permission */}
+      {/* Actions â€” only visible to users with manage permission */}
       {canManage && (
         <div className="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 sm:opacity-100 transition-opacity">
           <button
             onClick={onEdit}
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-500/10 transition-colors"
+            className="p-1.5 rounded-lg text-zinc-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-500/10 transition-colors"
             title="Tahrirlash"
           >
             <Pencil className="size-3.5" />
@@ -395,7 +395,7 @@ function EntryCard({ item, onEdit, onDelete, canManage }: EntryCardProps) {
   );
 }
 
-// ── Main page ──────────────────────────────────────────────────────────────────
+// â”€â”€ Main page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface FlightScheduleAdminPageProps {
   onBack?: () => void;
@@ -404,7 +404,7 @@ interface FlightScheduleAdminPageProps {
 export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminPageProps) {
   const queryClient = useQueryClient();
   const jwtClaims = getAdminJwtClaims();
-  // canManage → full CRUD; canView → read-only (includes canManage users)
+  // canManage â†’ full CRUD; canView â†’ read-only (includes canManage users)
   const canManage = jwtClaims.isSuperAdmin || jwtClaims.permissions.has('flight_schedule:manage');
   const canView   = canManage || jwtClaims.permissions.has('flight_schedule:read');
 
@@ -413,14 +413,14 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
   const [editTarget, setEditTarget] = useState<FlightScheduleItem | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<FlightScheduleItem | null>(null);
 
-  // ── Query ──────────────────────────────────────────────────────────────────
+  // â”€â”€ Query â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const { data, isLoading, isError } = useQuery({
     queryKey: ['flightSchedule', year],
     queryFn: () => getFlightSchedule(year),
     staleTime: 5 * 60_000,
   });
 
-  // ── Mutations ──────────────────────────────────────────────────────────────
+  // â”€â”€ Mutations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const createMutation = useMutation({
     mutationFn: (body: CreateFlightScheduleRequest) => createFlightSchedule(body),
     onSuccess: () => {
@@ -454,7 +454,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
     onError: () => toast.error("O'chirishda xatolik"),
   });
 
-  // ── Derived data — group by month ──────────────────────────────────────────
+  // â”€â”€ Derived data â€” group by month â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const groupedByMonth = useMemo(() => {
     const items = [...(data?.items ?? [])].sort(
       (a, b) => a.flight_date.localeCompare(b.flight_date),
@@ -468,7 +468,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
     return groups;
   }, [data]);
 
-  // ── Handlers ───────────────────────────────────────────────────────────────
+  // â”€â”€ Handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleSave = (values: EntryFormValues) => {
     const body: UpdateFlightScheduleRequest & CreateFlightScheduleRequest = {
       flight_name: values.flight_name.trim(),
@@ -498,7 +498,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
 
   return (
     <div className="min-h-full">
-      {/* ── Header ─────────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="flex items-center justify-between mb-6 gap-3">
         <div className="flex items-center gap-3 min-w-0">
           {onBack && (
@@ -511,13 +511,13 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
           )}
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <Calendar className="size-5 text-orange-500 flex-shrink-0" />
+              <Calendar className="size-5 text-blue-500 flex-shrink-0" />
               <h1 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 truncate">
                 Reys jadvali
               </h1>
             </div>
             <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-0.5">
-              {data?.total ?? 0} ta yozuv · {year} yil
+              {data?.total ?? 0} ta yozuv Â· {year} yil
             </p>
           </div>
         </div>
@@ -542,11 +542,11 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
             </button>
           </div>
 
-          {/* Add button — only for manage permission */}
+          {/* Add button â€” only for manage permission */}
           {canManage && (
             <button
               onClick={() => { setEditTarget(null); setFormOpen(true); }}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold transition-colors shadow-sm shadow-orange-500/20"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-sm font-bold transition-colors shadow-sm shadow-blue-500/20"
             >
               <Plus className="size-4" />
               <span className="hidden sm:inline">Qo'shish</span>
@@ -555,7 +555,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
         </div>
       </div>
 
-      {/* ── Content ────────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {isLoading && (
         <div className="flex items-center justify-center py-20 gap-3 text-zinc-400">
           <Loader2 className="size-5 animate-spin" />
@@ -586,7 +586,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
           {canManage && (
             <button
               onClick={() => { setEditTarget(null); setFormOpen(true); }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold transition-colors"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-sm font-bold transition-colors"
             >
               <Plus className="size-4" />
               Reys qo'shish
@@ -629,7 +629,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
         </div>
       )}
 
-      {/* ── Modals ─────────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Modals â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {formOpen && (
         <EntryFormModal
           initial={editTarget}
@@ -650,3 +650,4 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
     </div>
   );
 }
+

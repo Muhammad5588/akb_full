@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+﻿import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { ShieldOff, Plane, Plus } from 'lucide-react';
@@ -46,7 +46,7 @@ function AccessDenied() {
       </h2>
       <p className="text-sm">
         Ushbu sahifani ko'rish uchun{' '}
-        <span className="font-mono text-orange-500">expected_cargo:manage</span> huquqi
+        <span className="font-mono text-blue-500">expected_cargo:manage</span> huquqi
         talab qilinadi.
       </p>
     </div>
@@ -68,7 +68,7 @@ export default function ExpectedCargoPage({ onNavigate }: ExpectedCargoPageProps
 function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (page: string) => void }) {
   const queryClient = useQueryClient();
 
-  // ── Store state ─────────────────────────────────────────────────────────────
+  // â”€â”€ Store state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const {
     activeFlightName,
     expandedClientCode,
@@ -87,7 +87,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
     setFlightTabOrder,
   } = useExpectedCargoStore();
 
-  // ── Modal / dialog state ────────────────────────────────────────────────────
+  // â”€â”€ Modal / dialog state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const [renameTarget, setRenameTarget] = useState<string | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null);
   const [deleteFlightTarget, setDeleteFlightTarget] = useState<string | null>(null);
@@ -97,7 +97,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
   } | null>(null);
   const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
 
-  // ── Queries ─────────────────────────────────────────────────────────────────
+  // â”€â”€ Queries â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const flightsQuery = useQuery({
     queryKey: ['expectedCargo', 'flights'],
@@ -112,7 +112,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
     staleTime: 30_000,
   });
 
-  // ── Effects ─────────────────────────────────────────────────────────────────
+  // â”€â”€ Effects â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   // Sync tab order whenever the flights list changes
   useEffect(() => {
@@ -127,7 +127,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
     }
   }, [flightsQuery.data, syncFlightTabOrder, activeFlightName, setActiveFlight]);
 
-  // ── Derived data ─────────────────────────────────────────────────────────────
+  // â”€â”€ Derived data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const filteredSummaryItems = useMemo(() => {
     const items: ClientSummaryItem[] = summaryQuery.data?.items ?? [];
@@ -136,7 +136,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
     return items.filter((item) => item.client_code.toLowerCase().includes(q));
   }, [summaryQuery.data?.items, searchQuery]);
 
-  // ── Mutations ────────────────────────────────────────────────────────────────
+  // â”€â”€ Mutations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /** Deletes every record belonging to a specific flight. */
   const deleteFlightMutation = useMutation({
@@ -221,7 +221,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
     },
   });
 
-  // ── Handlers ─────────────────────────────────────────────────────────────────
+  // â”€â”€ Handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const handleExport = () => {
     exportExpectedCargoExcel(activeFlightName ?? undefined).catch((err: Error) =>
@@ -287,7 +287,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#000] flex flex-col">
-      {/* ── Fixed header ────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Fixed header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <ExpectedCargoHeader
         activeFlightName={activeFlightName}
         searchQuery={searchQuery}
@@ -304,7 +304,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
         onOpenNotifications={() => setIsNotificationPanelOpen(true)}
       />
 
-      {/* ── Main scrollable content ─────────────────────────────────────────── */}
+      {/* â”€â”€ Main scrollable content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div
         className="flex flex-col bg-white dark:bg-[#070F2B]"
         style={{
@@ -314,7 +314,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
           height: `calc(100dvh - ${headerHeight}px - ${bottomTabsHeight}px)`,
         }}
       >
-        {/* Fast entry panel — when client list is hidden it fills the remaining space */}
+        {/* Fast entry panel â€” when client list is hidden it fills the remaining space */}
         {isFastEntryOpen && (
           <FastEntryPanel
             flightName={activeFlightName}
@@ -323,7 +323,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
           />
         )}
 
-        {/* Client summary list — hidden when the user toggled it off */}
+        {/* Client summary list â€” hidden when the user toggled it off */}
         <div
           className="flex-1"
           style={{
@@ -338,8 +338,8 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
           {!activeFlightName ? (
             hasNoFlights ? (
               <div className="flex flex-col items-center justify-center h-full gap-5 px-8 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-orange-50 dark:bg-orange-500/[0.08] border border-orange-100 dark:border-orange-500/15 flex items-center justify-center">
-                  <Plane className="w-8 h-8 text-orange-400 dark:text-orange-500" strokeWidth={1.5} />
+                <div className="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-500/[0.08] border border-blue-100 dark:border-blue-500/15 flex items-center justify-center">
+                  <Plane className="w-8 h-8 text-blue-400 dark:text-blue-500" strokeWidth={1.5} />
                 </div>
                 <div>
                   <p className="text-[15px] font-bold text-zinc-700 dark:text-zinc-300 mb-1">
@@ -351,7 +351,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
                 </div>
                 <button
                   onClick={handleAddFlight}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white text-[13px] font-bold rounded-xl transition-all shadow-sm shadow-orange-500/20"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 active:scale-95 text-white text-[13px] font-bold rounded-xl transition-all shadow-sm shadow-blue-500/20"
                 >
                   <Plus className="w-4 h-4" />
                   Reys qo'shish
@@ -378,10 +378,10 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
         </div>
       </div>
 
-      {/* ── Floating action button (save queue) ─────────────────────────────── */}
+      {/* â”€â”€ Floating action button (save queue) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <BulkSaveFAB flightName={activeFlightName} />
 
-      {/* ── Fixed bottom flight tabs ─────────────────────────────────────────── */}
+      {/* â”€â”€ Fixed bottom flight tabs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <FlightBottomTabs
         flights={flightsQuery.data?.items ?? []}
         orderedFlightNames={flightTabOrder}
@@ -392,14 +392,14 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
         onAddFlight={handleAddFlight}
       />
 
-      {/* ── Notification panel (slide-in) ────────────────────────────────────── */}
+      {/* â”€â”€ Notification panel (slide-in) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <NotificationPanel
         isOpen={isNotificationPanelOpen}
         onClose={() => setIsNotificationPanelOpen(false)}
         onNavigateToClient={handleNavigateToClient}
       />
 
-      {/* ── Modals ──────────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Modals â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <RenameFlightModal
         flightName={renameTarget}
         isOpen={renameTarget !== null}
@@ -453,3 +453,4 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+﻿import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,9 +24,9 @@ interface AdminLoginFormProps {
 }
 
 const floatingOrbs = [
-  { size: 320, x: '-10%', y: '-20%', color: 'from-orange-500/8 to-amber-400/4', delay: 0 },
-  { size: 240, x: '70%', y: '60%', color: 'from-amber-500/6 to-orange-400/3', delay: 2 },
-  { size: 180, x: '80%', y: '-10%', color: 'from-yellow-400/5 to-orange-500/3', delay: 4 },
+  { size: 320, x: '-10%', y: '-20%', color: 'from-blue-500/8 to-sky-400/4', delay: 0 },
+  { size: 240, x: '70%', y: '60%', color: 'from-sky-500/6 to-blue-400/3', delay: 2 },
+  { size: 180, x: '80%', y: '-10%', color: 'from-sky-400/5 to-blue-500/3', delay: 4 },
 ];
 
 export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormProps) {
@@ -166,7 +166,7 @@ export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormPr
           <motion.div
             whileHover={{ rotate: [0, -5, 5, 0] }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center justify-center w-20 h-20 rounded-[22px] bg-gradient-to-br from-orange-500 to-amber-500 mb-5 shadow-xl shadow-orange-500/25"
+            className="inline-flex items-center justify-center w-20 h-20 rounded-[22px] bg-gradient-to-br from-blue-500 to-sky-500 mb-5 shadow-xl shadow-blue-500/25"
           >
             <ShieldCheck className="w-10 h-10 text-white" strokeWidth={1.8} />
           </motion.div>
@@ -186,12 +186,12 @@ export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormPr
           className="bg-white dark:bg-[#111111] rounded-[24px] shadow-2xl shadow-black/[0.04] dark:shadow-black/40 border border-black/[0.06] dark:border-white/[0.06] overflow-hidden"
         >
           {/* Accent line */}
-          <div className="h-[3px] bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500" />
+          <div className="h-[3px] bg-gradient-to-r from-blue-500 via-sky-400 to-blue-500" />
 
           <div className="p-7 sm:p-8">
             <AnimatePresence mode="wait">
 
-              {/* ── STEP 1: Username ── */}
+              {/* â”€â”€ STEP 1: Username â”€â”€ */}
               {step === 1 && (
                 <motion.div
                   key="step1"
@@ -216,7 +216,7 @@ export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormPr
                       </label>
                       <div className="relative group">
                         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                          <User className="w-[18px] h-[18px] text-gray-400 dark:text-gray-600 group-focus-within:text-orange-500 transition-colors" />
+                          <User className="w-[18px] h-[18px] text-gray-400 dark:text-gray-600 group-focus-within:text-blue-500 transition-colors" />
                         </div>
                         <input
                           {...register('system_username')}
@@ -228,7 +228,7 @@ export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormPr
                           placeholder="admin_01"
                           autoComplete="off"
                           className="w-full pl-10 pr-4 py-3.5 bg-gray-50/80 dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] rounded-2xl text-[14px]
-                                     focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/50 dark:focus:border-orange-500/40 transition-all outline-none
+                                     focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 dark:focus:border-blue-500/40 transition-all outline-none
                                      text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600"
                           onFocus={(e) => { setTimeout(() => e.target.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300); }}
                         />
@@ -263,8 +263,8 @@ export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormPr
                       type="submit"
                       disabled={checkUsernameMutation.isPending || isPasskeyLoading}
                       whileTap={{ scale: 0.97 }}
-                      className="w-full flex items-center justify-center gap-2.5 py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600
-                                 text-white text-[14px] font-semibold rounded-2xl shadow-lg shadow-orange-500/25 hover:shadow-orange-500/35 transition-all disabled:opacity-60 disabled:pointer-events-none"
+                      className="w-full flex items-center justify-center gap-2.5 py-3.5 bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600
+                                 text-white text-[14px] font-semibold rounded-2xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/35 transition-all disabled:opacity-60 disabled:pointer-events-none"
                     >
                       {checkUsernameMutation.isPending || isPasskeyLoading ? (
                         <Loader2 className="w-5 h-5 animate-spin" />
@@ -278,7 +278,7 @@ export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormPr
                 </motion.div>
               )}
 
-              {/* ── STEP 2: PIN ── */}
+              {/* â”€â”€ STEP 2: PIN â”€â”€ */}
               {step === 2 && (
                 <motion.div
                   key="step2"
@@ -301,15 +301,15 @@ export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormPr
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.1, type: 'spring', stiffness: 200 }}
-                    className="w-16 h-16 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-500/10 dark:to-amber-500/5 rounded-full flex items-center justify-center mb-5 ring-1 ring-orange-200/50 dark:ring-orange-500/20"
+                    className="w-16 h-16 bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-500/10 dark:to-sky-500/5 rounded-full flex items-center justify-center mb-5 ring-1 ring-blue-200/50 dark:ring-blue-500/20"
                   >
-                    <Lock className="w-7 h-7 text-orange-500" strokeWidth={1.8} />
+                    <Lock className="w-7 h-7 text-blue-500" strokeWidth={1.8} />
                   </motion.div>
 
                   <h3 className="text-[17px] font-semibold text-gray-900 dark:text-white mb-1">
                     Xush kelibsiz
                   </h3>
-                  <span className="inline-flex items-center px-3 py-1 mb-1 rounded-full bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 text-[12px] font-semibold tracking-wide">
+                  <span className="inline-flex items-center px-3 py-1 mb-1 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[12px] font-semibold tracking-wide">
                     {adminRole.replace('-', ' ').toUpperCase()}
                   </span>
                   <p className="text-[13px] text-gray-500 dark:text-gray-500 mb-7 text-center">
@@ -342,7 +342,7 @@ export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormPr
                       whileTap={{ scale: 0.96 }}
                       className="mb-7 px-5 py-2.5 flex items-center gap-2.5 bg-gray-50 dark:bg-white/[0.04] hover:bg-gray-100 dark:hover:bg-white/[0.07] text-gray-800 dark:text-gray-200 rounded-2xl transition-all text-[13px] font-medium border border-gray-200/80 dark:border-white/[0.08]"
                     >
-                      {isPasskeyLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Fingerprint className="w-4 h-4 text-orange-500" /> Face ID / Touch ID</>}
+                      {isPasskeyLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Fingerprint className="w-4 h-4 text-blue-500" /> Face ID / Touch ID</>}
                     </motion.button>
                   )}
 
@@ -369,8 +369,8 @@ export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormPr
                                     ${pinError
                                       ? 'border-red-400 dark:border-red-500/60 text-red-500 animate-[shake_0.4s_ease-in-out]'
                                       : digit
-                                        ? 'border-orange-400 dark:border-orange-500/50 text-gray-900 dark:text-white ring-4 ring-orange-500/10'
-                                        : 'border-gray-200 dark:border-white/[0.08] text-gray-900 dark:text-white focus:border-orange-400 dark:focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10'
+                                        ? 'border-blue-400 dark:border-blue-500/50 text-gray-900 dark:text-white ring-4 ring-blue-500/10'
+                                        : 'border-gray-200 dark:border-white/[0.08] text-gray-900 dark:text-white focus:border-blue-400 dark:focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10'
                                     }`}
                         />
                       </motion.div>
@@ -397,7 +397,7 @@ export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormPr
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
-                          className="flex items-center gap-2 text-orange-500"
+                          className="flex items-center gap-2 text-blue-500"
                         >
                           <Loader2 className="w-4 h-4 animate-spin" />
                           <span className="text-[13px] font-medium">Tekshirilmoqda...</span>

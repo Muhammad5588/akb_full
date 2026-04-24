@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect, useMemo } from "react";
+﻿import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
@@ -76,7 +76,7 @@ import {
 import type { ClientSearchResult, UnpaidCargoItem } from "@/api/verification";
 import { formatCurrencySum, formatTashkentDateTime } from "@/lib/format";
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Constants â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const PAYMENT_TYPES: { id: PaymentProvider; label: string }[] = [
   { id: "cash", label: "Naqd" },
@@ -128,9 +128,9 @@ const PEER_CASHIER_PALETTE = [
 
 /** Style applied to the current user's own log rows. */
 const OWN_CASHIER_STYLE = {
-  row: "border-l-2 border-orange-400 bg-orange-50/40 dark:bg-orange-500/[0.06]",
-  dot: "bg-orange-400",
-  label: "text-orange-500 dark:text-orange-400",
+  row: "border-l-2 border-blue-400 bg-blue-50/40 dark:bg-blue-500/[0.06]",
+  dot: "bg-blue-400",
+  label: "text-blue-500 dark:text-blue-400",
 } as const;
 
 /** Returns the colour tokens for a log entry given the entry's cashier_id and the current admin's id. */
@@ -157,8 +157,8 @@ const STATUS_STYLES: Record<
     label: "To'landi",
   },
   partial: {
-    bg: "bg-amber-50 dark:bg-amber-500/10",
-    text: "text-amber-600 dark:text-amber-400",
+    bg: "bg-sky-50 dark:bg-sky-500/10",
+    text: "text-sky-600 dark:text-sky-400",
     label: "Qisman",
   },
   pending: {
@@ -175,7 +175,7 @@ const FILTER_TABS: { id: FilterType; label: string }[] = [
   { id: "partial", label: "Qisman to'langan" },
 ];
 
-// ─── Payment provider / status localisation ───────────────────────────────────
+// â”€â”€â”€ Payment provider / status localisation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const PAYMENT_LABEL: Record<string, string> = {
   cash: "Naqd",
@@ -212,7 +212,7 @@ const DELIVERY_METHOD_LABELS: Record<string, string> = {
 
 /** Translates raw backend payment_provider / payment_type strings to Uzbek. */
 function translatePayment(raw: string): string {
-  if (!raw) return "—";
+  if (!raw) return "â€”";
   if (raw.toUpperCase().startsWith("SYS_ADJ")) return "Hamyon tahriri";
   return PAYMENT_LABEL[raw.toLowerCase()] ?? raw;
 }
@@ -223,7 +223,7 @@ const SOUND_KEY = "pos_sound_enabled";
 const PENDING_NOTIFS_KEY = "pos_pending_notifs";
 
 /**
- * A single warehouse→cashier notification that has been received but not yet
+ * A single warehouseâ†’cashier notification that has been received but not yet
  * acted on (dismissed or opened).  Persisted in localStorage so the cashier
  * does not lose notifications if they briefly leave or refresh the page.
  */
@@ -249,7 +249,7 @@ function persistPendingNotifs(notifs: PendingNotif[]): void {
 
 /**
  * Plays a two-tone notification chime using the Web Audio API.
- * No external audio file needed — the sound is synthesised on-the-fly.
+ * No external audio file needed â€” the sound is synthesised on-the-fly.
  * Silently no-ops if AudioContext is unavailable or blocked by the browser.
  */
 function playNotificationChime(): void {
@@ -260,7 +260,7 @@ function playNotificationChime(): void {
     master.gain.setValueAtTime(0.35, ctx.currentTime);
     master.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.7);
 
-    // First tone — higher pitch
+    // First tone â€” higher pitch
     const osc1 = ctx.createOscillator();
     osc1.connect(master);
     osc1.type = "sine";
@@ -268,7 +268,7 @@ function playNotificationChime(): void {
     osc1.start(ctx.currentTime);
     osc1.stop(ctx.currentTime + 0.18);
 
-    // Second tone — lower pitch, slight delay
+    // Second tone â€” lower pitch, slight delay
     const osc2 = ctx.createOscillator();
     osc2.connect(master);
     osc2.type = "sine";
@@ -283,7 +283,7 @@ function playNotificationChime(): void {
   }
 }
 
-// ─── localStorage helpers ─────────────────────────────────────────────────────
+// â”€â”€â”€ localStorage helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function getRecentSearches(): string[] {
   try {
@@ -308,7 +308,7 @@ function deleteRecentSearch(code: string): void {
   );
 }
 
-// ─── Waterfall distribution ───────────────────────────────────────────────────
+// â”€â”€â”€ Waterfall distribution â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /** Spread `received` across cargo debts sequentially; last item absorbs remainder. */
 function waterfallDistribute(
@@ -338,13 +338,13 @@ function formatCard(raw: string): string {
     .trim();
 }
 
-/** 8600123456789012 → 8600 **** **** 9012 */
+/** 8600123456789012 â†’ 8600 **** **** 9012 */
 function maskCard(raw: string): string {
   const d = raw.replace(/\s/g, "");
   return `${d.slice(0, 4)} **** **** ${d.slice(-4)}`;
 }
 
-// ─── TodayTotal ───────────────────────────────────────────────────────────────
+// â”€â”€â”€ TodayTotal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function TodayTotal({ total, loading }: { total: number; loading: boolean }) {
   return (
@@ -363,7 +363,7 @@ function TodayTotal({ total, loading }: { total: number; loading: boolean }) {
   );
 }
 
-// ─── LogEntry ─────────────────────────────────────────────────────────────────
+// â”€â”€â”€ LogEntry â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function LogEntry({
   item,
@@ -374,7 +374,7 @@ function LogEntry({
   item: CashierLogItem;
   index: number;
   onSelect: (code: string) => void;
-  /** The current user's Admin DB PK — used to colour-code own vs. peer entries. */
+  /** The current user's Admin DB PK â€” used to colour-code own vs. peer entries. */
   currentAdminId: number | null;
 }) {
   const hasCode = !!item.client_code;
@@ -393,14 +393,14 @@ function LogEntry({
     >
       <div className="min-w-0">
         <div className="flex items-center gap-1.5">
-          {/* Coloured dot — visually groups rows by cashier */}
+          {/* Coloured dot â€” visually groups rows by cashier */}
           <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${cashierStyle.dot}`} />
           <span className="text-[13px] font-bold text-gray-800 dark:text-white font-mono">
-            {item.client_code ?? "—"}
+            {item.client_code ?? "â€”"}
           </span>
           {item.flight && (
             <span className="text-[10px] text-gray-400 dark:text-gray-500 truncate max-w-[80px]">
-              · {item.flight}
+              Â· {item.flight}
             </span>
           )}
         </div>
@@ -425,7 +425,7 @@ function LogEntry({
           }`}
         >
           {item.paid_amount < 0
-            ? `−${formatCurrencySum(Math.abs(item.paid_amount))}`
+            ? `âˆ’${formatCurrencySum(Math.abs(item.paid_amount))}`
             : formatCurrencySum(item.paid_amount)}
         </p>
         <span
@@ -441,7 +441,7 @@ function LogEntry({
   );
 }
 
-// ─── CargoRow ─────────────────────────────────────────────────────────────────
+// â”€â”€â”€ CargoRow â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function CargoRow({
   cargo,
@@ -457,8 +457,8 @@ function CargoRow({
       layout
       className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all border ${
         isSelected
-          ? "bg-orange-50 dark:bg-orange-500/[0.08] border-orange-200/70 dark:border-orange-500/20"
-          : "bg-white dark:bg-[#111] border-gray-100 dark:border-white/[0.06] hover:border-orange-200/50 dark:hover:border-orange-500/10"
+          ? "bg-blue-50 dark:bg-blue-500/[0.08] border-blue-200/70 dark:border-blue-500/20"
+          : "bg-white dark:bg-[#111] border-gray-100 dark:border-white/[0.06] hover:border-blue-200/50 dark:hover:border-blue-500/10"
       }`}
     >
       <input
@@ -470,7 +470,7 @@ function CargoRow({
       <div
         className={`w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all ${
           isSelected
-            ? "bg-orange-500 border-orange-500 shadow-sm shadow-orange-500/20"
+            ? "bg-blue-500 border-blue-500 shadow-sm shadow-blue-500/20"
             : "border-gray-300 dark:border-gray-600"
         }`}
       >
@@ -498,7 +498,7 @@ function CargoRow({
       <p
         className={`text-[14px] font-black shrink-0 transition-colors ${
           isSelected
-            ? "text-orange-600 dark:text-orange-400"
+            ? "text-blue-600 dark:text-blue-400"
             : "text-red-500 dark:text-red-400"
         }`}
       >
@@ -508,7 +508,7 @@ function CargoRow({
   );
 }
 
-// ─── ClientProfileDrawer ──────────────────────────────────────────────────────
+// â”€â”€â”€ ClientProfileDrawer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function ClientProfileDrawer({
   clientCode,
@@ -545,7 +545,7 @@ function ClientProfileDrawer({
   // Full client info overlay
   const [showFullInfo, setShowFullInfo] = useState(false);
 
-  // Full client profile (phone, passport, region, …)
+  // Full client profile (phone, passport, region, â€¦)
   const { data: profile } = useQuery({
     queryKey: ["pos-profile", clientCode],
     queryFn: async () => {
@@ -554,7 +554,7 @@ function ClientProfileDrawer({
     },
   });
 
-  // Paginated transactions — re-fetches on filter change
+  // Paginated transactions â€” re-fetches on filter change
   const { data: txData, isLoading: txLoading } = useQuery({
     queryKey: ["pos-txn", clientCode, txFilter],
     queryFn: () => getPOSClientTransactions(clientCode, txFilter, 20, 0),
@@ -722,14 +722,14 @@ function ClientProfileDrawer({
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           placeholder="Summa"
-          className="flex-1 min-w-0 px-3.5 py-2.5 bg-gray-50 dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] rounded-xl text-[13px] font-bold outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/50 transition-all text-gray-900 dark:text-white"
+          className="flex-1 min-w-0 px-3.5 py-2.5 bg-gray-50 dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] rounded-xl text-[13px] font-bold outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all text-gray-900 dark:text-white"
         />
         <input
           type="text"
           value={reason}
           onChange={(e) => setReason(e.target.value.slice(0, 64))}
           placeholder="Sabab (1-64 belgi)"
-          className="flex-[2] min-w-0 px-3.5 py-2.5 bg-gray-50 dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] rounded-xl text-[13px] outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/50 transition-all text-gray-900 dark:text-white"
+          className="flex-[2] min-w-0 px-3.5 py-2.5 bg-gray-50 dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] rounded-xl text-[13px] outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all text-gray-900 dark:text-white"
         />
       </div>
 
@@ -737,7 +737,7 @@ function ClientProfileDrawer({
         whileTap={{ scale: 0.97 }}
         onClick={handleAdjust}
         disabled={adjustMut.isPending}
-        className="w-full py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-[13px] rounded-2xl shadow-lg shadow-orange-500/20 disabled:opacity-60 flex items-center justify-center gap-2"
+        className="w-full py-3 bg-gradient-to-r from-blue-500 to-sky-500 text-white font-bold text-[13px] rounded-2xl shadow-lg shadow-blue-500/20 disabled:opacity-60 flex items-center justify-center gap-2"
       >
         {adjustMut.isPending && <Loader2 className="w-4 h-4 animate-spin" />}
         Hamyonni yangilash
@@ -770,8 +770,8 @@ function ClientProfileDrawer({
         {/* Header */}
         <div className="shrink-0 flex items-center justify-between px-5 pb-3 border-b border-gray-100 dark:border-white/[0.06]">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-orange-50 dark:bg-orange-500/[0.1] flex items-center justify-center">
-              <User className="w-5 h-5 text-orange-500" strokeWidth={1.8} />
+            <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-500/[0.1] flex items-center justify-center">
+              <User className="w-5 h-5 text-blue-500" strokeWidth={1.8} />
             </div>
             <div>
               <p className="text-[14px] font-bold text-gray-900 dark:text-white leading-tight">
@@ -812,7 +812,7 @@ function ClientProfileDrawer({
           </div>
         </div>
 
-        {/* Body — 2-column on desktop, stacked on mobile */}
+        {/* Body â€” 2-column on desktop, stacked on mobile */}
         <div className="flex-1 min-h-0 overflow-hidden flex flex-col md:flex-row">
           {/* DESKTOP LEFT: Profile details + adjust form */}
           <div className="hidden md:flex md:w-80 shrink-0 flex-col border-r border-gray-100 dark:border-white/[0.06]">
@@ -832,7 +832,7 @@ function ClientProfileDrawer({
                     Telefon
                   </p>
                   <p className="text-[12px] font-semibold text-gray-800 dark:text-white">
-                    {profile?.phone ?? "—"}
+                    {profile?.phone ?? "â€”"}
                   </p>
                 </div>
               </div>
@@ -848,7 +848,7 @@ function ClientProfileDrawer({
                     Pasport seriyasi
                   </p>
                   <p className="text-[12px] font-semibold text-gray-800 dark:text-white font-mono">
-                    {profile?.passport_series ?? "—"}
+                    {profile?.passport_series ?? "â€”"}
                   </p>
                 </div>
               </div>
@@ -864,7 +864,7 @@ function ClientProfileDrawer({
                     Viloyat
                   </p>
                   <p className="text-[12px] font-semibold text-gray-800 dark:text-white">
-                    {profile?.region ?? "—"}
+                    {profile?.region ?? "â€”"}
                   </p>
                 </div>
               </div>
@@ -999,7 +999,7 @@ function ClientProfileDrawer({
                                   : "text-red-500 dark:text-red-400"
                               }`}
                             >
-                              {tx.payment_balance_difference >= 0 ? "+" : "−"}
+                              {tx.payment_balance_difference >= 0 ? "+" : "âˆ’"}
                               {formatCurrencySum(
                                 Math.abs(tx.payment_balance_difference),
                               )}
@@ -1012,7 +1012,7 @@ function ClientProfileDrawer({
                               {tx.payment_status !== "paid" &&
                                 tx.remaining_amount > 0 && (
                                   <p className="text-[10px] text-red-500 font-semibold">
-                                    −{formatCurrencySum(tx.remaining_amount)}
+                                    âˆ’{formatCurrencySum(tx.remaining_amount)}
                                   </p>
                                 )}
                             </>
@@ -1122,7 +1122,7 @@ function ClientProfileDrawer({
         </div>
       </motion.div>
 
-      {/* ── Full client info modal ────────────────────────────────────────── */}
+      {/* â”€â”€ Full client info modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <AnimatePresence>
         {showFullInfo && profile && (
           <motion.div
@@ -1164,19 +1164,19 @@ function ClientProfileDrawer({
                 <div className="bg-gray-50 dark:bg-white/[0.04] rounded-2xl divide-y divide-gray-100 dark:divide-white/[0.05] overflow-hidden text-[13px]">
                   {[
                     { label: "Ism Familiya", value: profile.full_name },
-                    { label: "Telefon", value: profile.phone ?? "—" },
+                    { label: "Telefon", value: profile.phone ?? "â€”" },
                     {
                       label: "Pasport seriyasi",
-                      value: profile.passport_series ?? "—",
+                      value: profile.passport_series ?? "â€”",
                     },
-                    { label: "JSHSHIR (PINFL)", value: profile.pinfl ?? "—" },
+                    { label: "JSHSHIR (PINFL)", value: profile.pinfl ?? "â€”" },
                     {
                       label: "Tug'ilgan sana",
-                      value: profile.date_of_birth ?? "—",
+                      value: profile.date_of_birth ?? "â€”",
                     },
-                    { label: "Viloyat", value: profile.region ?? "—" },
-                    { label: "Tuman", value: profile.district ?? "—" },
-                    { label: "Manzil", value: profile.address ?? "—" },
+                    { label: "Viloyat", value: profile.region ?? "â€”" },
+                    { label: "Tuman", value: profile.district ?? "â€”" },
+                    { label: "Manzil", value: profile.address ?? "â€”" },
                     {
                       label: "Tranzaksiyalar",
                       value: String(profile.transaction_count),
@@ -1212,7 +1212,7 @@ function ClientProfileDrawer({
   );
 }
 
-// ─── ConfirmModal ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ ConfirmModal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface ConfirmPayload {
   cargos: UnpaidCargoItem[];
@@ -1253,7 +1253,7 @@ function ConfirmModal({
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-sm bg-white dark:bg-[#111] rounded-3xl border border-gray-100 dark:border-white/[0.08] shadow-2xl overflow-hidden"
       >
-        <div className="h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400" />
+        <div className="h-1 bg-gradient-to-r from-blue-400 via-blue-500 to-sky-400" />
         <div className="p-5 space-y-4">
           <div>
             <h3 className="text-[17px] font-black text-gray-900 dark:text-white">
@@ -1274,7 +1274,7 @@ function ConfirmModal({
                 <div className="flex items-center gap-2">
                   <Package className="w-3.5 h-3.5 text-gray-400 shrink-0" />
                   <span className="text-[12px] font-semibold text-gray-700 dark:text-gray-300">
-                    #{c.row_number} · {c.flight_name}
+                    #{c.row_number} Â· {c.flight_name}
                   </span>
                 </div>
                 <span className="text-[12px] font-bold text-gray-800 dark:text-white">
@@ -1296,7 +1296,7 @@ function ConfirmModal({
               <div className="flex justify-between text-[12px]">
                 <span className="text-green-600">Hamyon</span>
                 <span className="font-semibold text-green-600">
-                  −{formatCurrencySum(payload.walletDeduction)}
+                  âˆ’{formatCurrencySum(payload.walletDeduction)}
                 </span>
               </div>
             )}
@@ -1304,7 +1304,7 @@ function ConfirmModal({
               <span className="text-gray-700 dark:text-gray-200">
                 Naqd/karta:
               </span>
-              <span className="text-orange-600 dark:text-orange-400">
+              <span className="text-blue-600 dark:text-blue-400">
                 {formatCurrencySum(netCash > 0 ? netCash : payload.received)}
               </span>
             </div>
@@ -1336,7 +1336,7 @@ function ConfirmModal({
               whileTap={{ scale: 0.97 }}
               onClick={onConfirm}
               disabled={isPending}
-              className="flex-[2] py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-[14px] rounded-2xl shadow-lg shadow-orange-500/20 disabled:opacity-60 flex items-center justify-center gap-2"
+              className="flex-[2] py-3 bg-gradient-to-r from-blue-500 to-sky-500 text-white font-black text-[14px] rounded-2xl shadow-lg shadow-blue-500/20 disabled:opacity-60 flex items-center justify-center gap-2"
             >
               {isPending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -1352,7 +1352,7 @@ function ConfirmModal({
   );
 }
 
-// ─── Main Component ───────────────────────────────────────────────────────────
+// â”€â”€â”€ Main Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface POSDashboardProps {
   onNavigate: (page: string) => void;
@@ -1363,7 +1363,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
   const queryClient = useQueryClient();
   const searchRef = useRef<HTMLInputElement>(null);
 
-  // ── Dark mode ─────────────────────────────────────────────────────────────
+  // â”€â”€ Dark mode â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const [isDark, setIsDark] = useState<boolean>(() => {
     // Initialise from localStorage; fall back to the current <html> class
     const saved = localStorage.getItem("pos_theme");
@@ -1380,7 +1380,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     });
   }, []);
 
-  // ── Permissions ───────────────────────────────────────────────────────────
+  // â”€â”€ Permissions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // State (not memo) so the UI re-renders automatically after a silent token refresh.
   const [jwtClaims, setJwtClaims] = useState(() => getAdminJwtClaims());
 
@@ -1395,13 +1395,13 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
         setJwtClaims(getAdminJwtClaims());
       })
       .catch(() => {
-        // Refresh failure is non-fatal — we continue with the existing token.
+        // Refresh failure is non-fatal â€” we continue with the existing token.
         // A real expiry will be caught by the 401 interceptor in apiClient.
       });
     return () => { cancelled = true; };
   }, []);
 
-  // Super-admins have no explicit permissions in their JWT — they bypass all checks.
+  // Super-admins have no explicit permissions in their JWT â€” they bypass all checks.
   const hasPerm = useCallback(
     (slug: string) => jwtClaims.isSuperAdmin || jwtClaims.permissions.has(slug),
     [jwtClaims],
@@ -1415,10 +1415,10 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
   const hasPosAccess =
     jwtClaims.isSuperAdmin || canRead || canProcess || canAdjust || canUpdateStatus;
 
-  // ── Calculator modal ──────────────────────────────────────────────────────
+  // â”€â”€ Calculator modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
 
-  // ── Sound preference (persisted in localStorage) ─────────────────────────
+  // â”€â”€ Sound preference (persisted in localStorage) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const [soundEnabled, setSoundEnabled] = useState<boolean>(
     () => localStorage.getItem(SOUND_KEY) !== "off",
   );
@@ -1430,13 +1430,13 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     });
   }, []);
 
-  // ── Pending notifications (persisted — survive page refresh) ────────────
+  // â”€â”€ Pending notifications (persisted â€” survive page refresh) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Notifications are stored in localStorage and re-shown on mount so the
   // cashier never misses a message even if they briefly leave the page.
   const [pendingNotifs, setPendingNotifs] = useState<PendingNotif[]>(loadPendingNotifs);
   const notifCount = pendingNotifs.length;
 
-  // ── Stable refs for functions used inside toast action callbacks ──────────
+  // â”€â”€ Stable refs for functions used inside toast action callbacks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Toast action `onClick` handlers close over these refs so they always call
   // the latest version without creating stale closures.
   const handleSearchRef = useRef<(code: string) => void>(() => {});
@@ -1465,14 +1465,14 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
   const showNotifToast = useCallback((notif: PendingNotif) => {
     const amountStr =
       notif.amount != null
-        ? ` · ${new Intl.NumberFormat("uz-UZ").format(notif.amount)} ${notif.currency ?? "UZS"}`
+        ? ` Â· ${new Intl.NumberFormat("uz-UZ").format(notif.amount)} ${notif.currency ?? "UZS"}`
         : "";
 
     toast.info(`${notif.clientCode}${amountStr}`, {
       // Stable ID lets Sonner de-duplicate if the same notif is shown twice
       // (e.g. mount effect runs while the toast is still visible).
       id: notif.id,
-      description: `${notif.flightName} · To'lov tasdiqlansin`,
+      description: `${notif.flightName} Â· To'lov tasdiqlansin`,
       duration: Infinity,
       action: {
         label: "Ochish",
@@ -1487,11 +1487,11 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
         },
       },
       cancel: {
-        label: "✕",
+        label: "âœ•",
         onClick: () => removePendingNotifRef.current(notif.id),
       },
     });
-  }, []); // all dependencies are refs — this callback is intentionally stable
+  }, []); // all dependencies are refs â€” this callback is intentionally stable
 
   // On mount: re-show toasts for notifications that arrived while the cashier
   // was away (they are still in localStorage / pendingNotifs state).
@@ -1500,7 +1500,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // only on mount
 
-  // ── Warehouse → Cashier notifications via BroadcastChannel ──────────────
+  // â”€â”€ Warehouse â†’ Cashier notifications via BroadcastChannel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const { sendMessage } = useBroadcastChannel(
     useCallback(
       (msg: BroadcastMessage) => {
@@ -1531,7 +1531,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
   // Keep sendMessage ref current so toast action callbacks can send ACKs.
   sendMessageRef.current = sendMessage;
 
-  // ── Search ────────────────────────────────────────────────────────────────
+  // â”€â”€ Search â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const [searchInput, setSearchInput] = useState("");
   const [clientInfo, setClientInfo] = useState<ClientSearchResult | null>(null);
   const [searchError, setSearchError] = useState<string | null>(null);
@@ -1542,14 +1542,14 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
   const [liveBalance, setLiveBalance] = useState<number | null>(null);
   const displayBalance = liveBalance ?? clientInfo?.client_balance ?? 0;
 
-  // ── Selection & payment ───────────────────────────────────────────────────
+  // â”€â”€ Selection & payment â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [paymentType, setPaymentType] = useState<PaymentProvider>("cash");
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
   const [useWallet, setUseWallet] = useState(false);
   const [receivedInput, setReceivedInput] = useState("");
 
-  // ── UI overlays ───────────────────────────────────────────────────────────
+  // â”€â”€ UI overlays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const [showProfile, setShowProfile] = useState(false);
   const [confirmPayload, setConfirmPayload] = useState<ConfirmPayload | null>(
     null,
@@ -1559,7 +1559,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     searchRef.current?.focus();
   }, []);
 
-  // ── Queries ───────────────────────────────────────────────────────────────
+  // â”€â”€ Queries â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const {
     data: logData,
     isLoading: logLoading,
@@ -1570,7 +1570,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     // Poll every 10 s so all cashiers see each other's entries in near-real-time
     // without requiring a manual refresh.
     refetchInterval: 10_000,
-    // Only fire if the admin actually has pos:read — prevents a 403 for adjust-only roles
+    // Only fire if the admin actually has pos:read â€” prevents a 403 for adjust-only roles
     enabled: canRead,
   });
 
@@ -1605,7 +1605,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     cargos.length > 0 && cargos.every((c) => selectedIds.has(c.cargo_id));
   const someSelected = selectedIds.size > 0;
 
-  // ── Bulk payment mutation ─────────────────────────────────────────────────
+  // â”€â”€ Bulk payment mutation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const payMut = useMutation({
     mutationFn: processBulkPayment,
     onSuccess: (result) => {
@@ -1647,7 +1647,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     },
   });
 
-  // ── Derived payment totals ────────────────────────────────────────────────
+  // â”€â”€ Derived payment totals â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const selectedCargos = cargos.filter((c) => selectedIds.has(c.cargo_id));
   const totalOwed = selectedCargos.reduce(
     (s, c) => s + (c.total_payment ?? 0),
@@ -1665,7 +1665,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
 
   const receivedAmount = parseFloat(receivedInput) || netAfterWallet;
 
-  // ── Search ────────────────────────────────────────────────────────────────
+  // â”€â”€ Search â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleSearch = useCallback(
     async (overrideCode?: string) => {
       const query = (overrideCode ?? searchInput).trim().toUpperCase();
@@ -1723,7 +1723,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     setTimeout(() => searchRef.current?.focus(), 50);
   };
 
-  // ── Cargo selection ───────────────────────────────────────────────────────
+  // â”€â”€ Cargo selection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const toggleAll = useCallback(() => {
     setSelectedIds(
       allSelected ? new Set() : new Set(cargos.map((c) => c.cargo_id)),
@@ -1739,7 +1739,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     });
   }, []);
 
-  // ── Confirmation flow ─────────────────────────────────────────────────────
+  // â”€â”€ Confirmation flow â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleOpenConfirm = () => {
     if (!clientInfo || selectedCargos.length === 0 || payMut.isPending) return;
     if (paymentType === "card" && !selectedCardId) {
@@ -1774,9 +1774,9 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     });
   };
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Render
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const showRecentChips =
     !searchInput &&
@@ -1785,7 +1785,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     !isSearching &&
     recentCodes.length > 0;
 
-  // ── Zero-access fallback ──────────────────────────────────────────────────
+  // â”€â”€ Zero-access fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (!hasPosAccess) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 text-center px-6">
@@ -1818,7 +1818,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
               <button
                 onClick={handleDismissAllNotifs}
                 title="Barcha bildirishnomalarni yopish"
-                className="relative p-2 rounded-xl text-amber-500 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-500/[0.08] transition-colors"
+                className="relative p-2 rounded-xl text-sky-500 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-sky-500/[0.08] transition-colors"
               >
                 <BellRing className="w-4 h-4" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
@@ -1829,7 +1829,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
             <button
               onClick={() => setIsCalculatorOpen(true)}
               title="Kalkulyator"
-              className="p-2 rounded-xl text-gray-400 hover:text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-500/[0.08] transition-colors"
+              className="p-2 rounded-xl text-gray-400 hover:text-sky-500 hover:bg-sky-50 dark:hover:bg-sky-500/[0.08] transition-colors"
             >
               <Calculator className="w-4 h-4" />
             </button>
@@ -1838,7 +1838,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
             <button
               onClick={toggleSound}
               title={soundEnabled ? "Ovozni o'chirish" : "Ovozni yoqish"}
-              className="p-2 rounded-xl text-gray-400 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/[0.08] transition-colors"
+              className="p-2 rounded-xl text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/[0.08] transition-colors"
             >
               {soundEnabled ? (
                 <Bell className="w-4 h-4" />
@@ -1857,7 +1857,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
             <button
               onClick={toggleDark}
               title={isDark ? "Kunduzgi rejim" : "Tungi rejim"}
-              className="p-2 rounded-xl text-gray-400 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/[0.08] transition-colors"
+              className="p-2 rounded-xl text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/[0.08] transition-colors"
             >
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
@@ -1872,7 +1872,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
         </div>
 
         <div className="flex flex-col lg:flex-row gap-4">
-          {/* ── Left column: Cashier Log ───────────────────────────────────
+          {/* â”€â”€ Left column: Cashier Log â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                Always rendered so the layout stays consistent.
                Content is gated behind pos:read; otherwise shows a lock panel. */}
           <div className="lg:w-72 xl:w-80 shrink-0 space-y-3">
@@ -1885,14 +1885,14 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                 <div className="bg-white dark:bg-[#111] rounded-2xl border border-black/[0.05] dark:border-white/[0.06] shadow-sm overflow-hidden">
                   <div className="flex items-center justify-between px-4 py-3 border-b border-gray-50 dark:border-white/[0.05]">
                     <div className="flex items-center gap-2">
-                      <ReceiptText className="w-3.5 h-3.5 text-orange-500" />
+                      <ReceiptText className="w-3.5 h-3.5 text-blue-500" />
                       <span className="text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                         So'nggi to'lovlar
                       </span>
                     </div>
                     <button
                       onClick={() => refetchLog()}
-                      className="p-1 rounded-lg text-gray-400 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/[0.08] transition-colors"
+                      className="p-1 rounded-lg text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/[0.08] transition-colors"
                       title="Yangilash"
                     >
                       <RefreshCw className="w-3 h-3" />
@@ -1944,7 +1944,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
             )}
           </div>
 
-          {/* ── Right column: Search & Payment ────────────────────────────── */}
+          {/* â”€â”€ Right column: Search & Payment â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <div className="flex-1 min-w-0 space-y-3">
             {/* Search bar */}
             <div className="bg-white dark:bg-[#111] rounded-2xl border border-black/[0.05] dark:border-white/[0.06] shadow-sm p-3">
@@ -1960,14 +1960,14 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                     }
                     onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                     placeholder="Mijoz kodini kiriting (masalan: T123)"
-                    className="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] rounded-xl text-[14px] font-mono font-semibold focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/50 outline-none transition-all text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 placeholder:font-sans placeholder:font-normal uppercase"
+                    className="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] rounded-xl text-[14px] font-mono font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 outline-none transition-all text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 placeholder:font-sans placeholder:font-normal uppercase"
                   />
                 </div>
                 <motion.button
                   onClick={() => handleSearch()}
                   disabled={!searchInput.trim() || isSearching}
                   whileTap={{ scale: 0.95 }}
-                  className="px-5 py-3 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold text-[13px] rounded-xl shadow-sm shadow-orange-500/20 transition-all disabled:opacity-50 shrink-0"
+                  className="px-5 py-3 bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white font-semibold text-[13px] rounded-xl shadow-sm shadow-blue-500/20 transition-all disabled:opacity-50 shrink-0"
                 >
                   {isSearching ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -1993,9 +1993,9 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                       <button
                         key={code}
                         onClick={() => handleRecentChipClick(code)}
-                        className="group flex items-center gap-1 pl-2.5 pr-1.5 py-1 bg-gray-100 dark:bg-white/[0.06] hover:bg-orange-50 dark:hover:bg-orange-500/[0.1] border border-gray-200 dark:border-white/[0.08] hover:border-orange-300 dark:hover:border-orange-500/30 rounded-lg transition-all"
+                        className="group flex items-center gap-1 pl-2.5 pr-1.5 py-1 bg-gray-100 dark:bg-white/[0.06] hover:bg-blue-50 dark:hover:bg-blue-500/[0.1] border border-gray-200 dark:border-white/[0.08] hover:border-blue-300 dark:hover:border-blue-500/30 rounded-lg transition-all"
                       >
-                        <span className="text-[11px] font-bold font-mono text-gray-700 dark:text-gray-300 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                        <span className="text-[11px] font-bold font-mono text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                           {code}
                         </span>
                         <span
@@ -2026,7 +2026,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
               )}
             </AnimatePresence>
 
-            {/* Client card — clicking opens the profile drawer */}
+            {/* Client card â€” clicking opens the profile drawer */}
             <AnimatePresence>
               {clientInfo && (
                 <motion.div
@@ -2034,13 +2034,13 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   onClick={() => setShowProfile(true)}
-                  className="bg-white dark:bg-[#111] rounded-2xl border border-black/[0.05] dark:border-white/[0.06] shadow-sm p-4 cursor-pointer hover:border-orange-200/80 dark:hover:border-orange-500/20 transition-colors"
+                  className="bg-white dark:bg-[#111] rounded-2xl border border-black/[0.05] dark:border-white/[0.06] shadow-sm p-4 cursor-pointer hover:border-blue-200/80 dark:hover:border-blue-500/20 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-orange-50 dark:bg-orange-500/[0.1] flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/[0.1] flex items-center justify-center">
                         <User
-                          className="w-5 h-5 text-orange-500"
+                          className="w-5 h-5 text-blue-500"
                           strokeWidth={1.8}
                         />
                       </div>
@@ -2084,7 +2084,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
               )}
             </AnimatePresence>
 
-            {/* Inline lock — shown when a client is found but the admin cannot process payments */}
+            {/* Inline lock â€” shown when a client is found but the admin cannot process payments */}
             <AnimatePresence>
               {!canProcess && clientInfo && (
                 <motion.div
@@ -2103,7 +2103,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
               )}
             </AnimatePresence>
 
-            {/* Cargo list — only visible to users who can process payments */}
+            {/* Cargo list â€” only visible to users who can process payments */}
             <AnimatePresence>
               {canProcess && clientInfo && (
                 <motion.div
@@ -2117,9 +2117,9 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                         onClick={toggleAll}
                         className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
                           allSelected
-                            ? "bg-orange-500 border-orange-500"
+                            ? "bg-blue-500 border-blue-500"
                             : someSelected
-                              ? "bg-orange-200 border-orange-300 dark:bg-orange-500/20 dark:border-orange-500/40"
+                              ? "bg-blue-200 border-blue-300 dark:bg-blue-500/20 dark:border-blue-500/40"
                               : "border-gray-300 dark:border-gray-600"
                         }`}
                       >
@@ -2130,7 +2130,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                           />
                         ) : someSelected ? (
                           <Square
-                            className="w-3 h-3 text-orange-500"
+                            className="w-3 h-3 text-blue-500"
                             strokeWidth={3}
                           />
                         ) : (
@@ -2202,7 +2202,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
               </div>
             )}
 
-            {/* ── Sticky payment footer (pos:process required) ───────────── */}
+            {/* â”€â”€ Sticky payment footer (pos:process required) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <AnimatePresence>
               {canProcess && someSelected && clientInfo && (
                 <motion.div
@@ -2244,7 +2244,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                       </div>
                     </div>
 
-                    {/* Card selector — shown when paymentType === "card" */}
+                    {/* Card selector â€” shown when paymentType === "card" */}
                     <AnimatePresence>
                       {paymentType === "card" && (
                         <motion.div
@@ -2282,7 +2282,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                                       <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5 truncate">
                                         {card.full_name}
                                         <span className="ml-1.5 text-gray-400 dark:text-gray-500">
-                                          · {formatCurrencySum(card.total_collected)}
+                                          Â· {formatCurrencySum(card.total_collected)}
                                         </span>
                                       </p>
                                     </div>
@@ -2302,7 +2302,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                       )}
                     </AnimatePresence>
 
-                    {/* Wallet toggle — large, prominent block */}
+                    {/* Wallet toggle â€” large, prominent block */}
                     {displayBalance > 0 && (
                       <button
                         type="button"
@@ -2371,7 +2371,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                         onChange={(e) => setReceivedInput(e.target.value)}
                         onFocus={(e) => e.target.select()}
                         placeholder={String(Math.round(netAfterWallet))}
-                        className="w-full px-4 py-2.5 bg-gray-50 dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] rounded-xl text-[15px] font-bold outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/50 transition-all text-gray-900 dark:text-white"
+                        className="w-full px-4 py-2.5 bg-gray-50 dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] rounded-xl text-[15px] font-bold outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all text-gray-900 dark:text-white"
                       />
                     </div>
 
@@ -2391,7 +2391,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                             Hamyon:
                           </span>
                           <span className="font-semibold text-green-600 dark:text-green-400">
-                            −{formatCurrencySum(walletDeduction)}
+                            âˆ’{formatCurrencySum(walletDeduction)}
                           </span>
                         </div>
                       )}
@@ -2399,7 +2399,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                         <span className="font-bold text-gray-700 dark:text-gray-300">
                           To'lash:
                         </span>
-                        <span className="font-black text-orange-600 dark:text-orange-400">
+                        <span className="font-black text-blue-600 dark:text-blue-400">
                           {formatCurrencySum(netAfterWallet)}
                         </span>
                       </div>
@@ -2410,10 +2410,10 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                       onClick={handleOpenConfirm}
                       disabled={payMut.isPending}
                       whileTap={{ scale: 0.97 }}
-                      className="w-full py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-black text-[16px] rounded-2xl shadow-lg shadow-orange-500/25 transition-all disabled:opacity-60 flex items-center justify-center gap-2"
+                      className="w-full py-4 bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white font-black text-[16px] rounded-2xl shadow-lg shadow-blue-500/25 transition-all disabled:opacity-60 flex items-center justify-center gap-2"
                     >
                       <ChevronRight className="w-5 h-5" />
-                      TO'LASH ({selectedIds.size} ta ·{" "}
+                      TO'LASH ({selectedIds.size} ta Â·{" "}
                       {formatCurrencySum(netAfterWallet)})
                     </motion.button>
                   </div>
@@ -2424,7 +2424,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
         </div>
       </div>
 
-      {/* ── Overlays ───────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Overlays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <AnimatePresence>
         {showProfile && clientInfo && (
           <ClientProfileDrawer
@@ -2458,3 +2458,4 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     </>
   );
 }
+

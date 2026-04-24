@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { getFlights, type Flight } from '@/api/services/flight';
 import { getFlightList, type FlightListItem } from '@/api/services/expectedCargo';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,7 @@ interface FlightsPageProps {
   onNavigate?: (page: string) => void;
 }
 
-/** Split "M123-2025" → { code: "M123", year: "2025" } */
+/** Split "M123-2025" â†’ { code: "M123", year: "2025" } */
 function parseFlightName(name: string): { code: string; year: string | null } {
   const idx = name.lastIndexOf('-');
   if (idx !== -1) {
@@ -63,7 +63,7 @@ export default function FlightsPage({ onSelectFlight, onLogout, onNavigate }: Fl
         localStorage.setItem('access_token', data.access_token);
         setJwtClaims(getAdminJwtClaims());
       })
-      .catch(() => { /* Non-fatal — continue with existing token */ });
+      .catch(() => { /* Non-fatal â€” continue with existing token */ });
     return () => { cancelled = true; };
   }, []);
 
@@ -135,15 +135,15 @@ export default function FlightsPage({ onSelectFlight, onLogout, onNavigate }: Fl
 
       {flights.length === 0 ? (
         <div className="bg-white dark:bg-[#0d0a04] rounded-2xl border border-gray-100 dark:border-white/[0.06] flex flex-col items-center justify-center py-16">
-          <div className="w-14 h-14 rounded-2xl bg-orange-50 dark:bg-orange-500/10 border border-orange-100 dark:border-orange-500/15 flex items-center justify-center mb-4">
-            <Plane className="w-7 h-7 text-orange-300 dark:text-orange-500/50" />
+          <div className="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/15 flex items-center justify-center mb-4">
+            <Plane className="w-7 h-7 text-blue-300 dark:text-blue-500/50" />
           </div>
           <p className="text-sm font-black text-gray-500 dark:text-gray-400">{t('flights.noFlights')}</p>
         </div>
       ) : (
         <div className="space-y-4">
 
-          {/* Expected cargo flights — shown above recent flights, blue accent */}
+          {/* Expected cargo flights â€” shown above recent flights, blue accent */}
           {canViewExpectedCargo && expectedFlights.length > 0 && (
             <section>
               <p className="text-[11px] font-bold text-blue-500 dark:text-blue-400 uppercase tracking-wider mb-2 px-1">
@@ -175,8 +175,8 @@ export default function FlightsPage({ onSelectFlight, onLogout, onNavigate }: Fl
                 Asosiy reyslar ({regularFlights.length})
               </button>
               {showRegularFlights && (
-                <div className="bg-white dark:bg-[#0d0a04] rounded-2xl border border-orange-100/60 dark:border-orange-500/10 shadow-sm overflow-hidden">
-                  <div className="h-[2px] bg-gradient-to-r from-transparent via-orange-400/40 dark:via-orange-500/25 to-transparent" />
+                <div className="bg-white dark:bg-[#0d0a04] rounded-2xl border border-blue-100/60 dark:border-blue-500/10 shadow-sm overflow-hidden">
+                  <div className="h-[2px] bg-gradient-to-r from-transparent via-blue-400/40 dark:via-blue-500/25 to-transparent" />
                   <div className="divide-y divide-gray-50 dark:divide-white/[0.03]">
                     {regularFlights.map((f, idx) => (
                       <FlightRow
@@ -260,7 +260,7 @@ function PageHeader({ t, count, isRefreshing, onRefresh, onLogout, onOpenExpecte
         <button
           onClick={onRefresh}
           disabled={isRefreshing || loading}
-          className="flex items-center gap-1.5 h-8 px-3 text-[12px] font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] rounded-xl hover:border-orange-300 dark:hover:border-orange-500/30 hover:text-orange-600 dark:hover:text-orange-400 disabled:opacity-50 transition-colors"
+          className="flex items-center gap-1.5 h-8 px-3 text-[12px] font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] rounded-xl hover:border-blue-300 dark:hover:border-blue-500/30 hover:text-blue-600 dark:hover:text-blue-400 disabled:opacity-50 transition-colors"
         >
           <RefreshCw className={`w-3 h-3 ${isRefreshing ? 'animate-spin' : ''}`} />
           Yangilash
@@ -302,7 +302,7 @@ function ExpectedFlightRow({ flight, onSelect }: {
           {year && <span className="text-[12px] font-medium text-gray-400 dark:text-gray-500">{year}</span>}
         </div>
         <span className="text-[11px] text-blue-400 dark:text-blue-500">
-          {flight.client_count} mijoz · {flight.track_code_count} trek kodi
+          {flight.client_count} mijoz Â· {flight.track_code_count} trek kodi
         </span>
       </div>
 
@@ -329,15 +329,15 @@ function FlightRow({ flight, offlineCount, isRecent, onSelect }: {
   return (
     <button
       onClick={onSelect}
-      className="w-full flex items-center gap-4 px-4 py-3.5 hover:bg-orange-50/40 dark:hover:bg-orange-500/[0.05] text-left transition-colors active:scale-[0.99]"
+      className="w-full flex items-center gap-4 px-4 py-3.5 hover:bg-blue-50/40 dark:hover:bg-blue-500/[0.05] text-left transition-colors active:scale-[0.99]"
     >
       {/* Flight icon */}
       <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
         isRecent
-          ? 'bg-orange-100 dark:bg-orange-500/10 border border-orange-200/60 dark:border-orange-500/20'
+          ? 'bg-blue-100 dark:bg-blue-500/10 border border-blue-200/60 dark:border-blue-500/20'
           : 'bg-gray-100 dark:bg-white/5 border border-gray-200/60 dark:border-white/[0.06]'
       }`}>
-        <Plane className={`w-5 h-5 ${isRecent ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`} />
+        <Plane className={`w-5 h-5 ${isRecent ? 'text-blue-500' : 'text-gray-400 dark:text-gray-500'}`} />
       </div>
 
       {/* Name + source */}
@@ -354,12 +354,12 @@ function FlightRow({ flight, offlineCount, isRecent, onSelect }: {
       {/* Badges + arrow */}
       <div className="flex items-center gap-2 shrink-0">
         {isRecent && (
-          <span className="text-[10px] font-bold text-orange-700 dark:text-orange-400 bg-orange-50 dark:bg-orange-500/10 border border-orange-200/60 dark:border-orange-500/20 px-2 py-0.5 rounded-full hidden sm:inline-flex">
+          <span className="text-[10px] font-bold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 border border-blue-200/60 dark:border-blue-500/20 px-2 py-0.5 rounded-full hidden sm:inline-flex">
             Yangi
           </span>
         )}
         {offlineCount > 0 && (
-          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 border border-amber-200/60 dark:border-amber-500/20 px-1.5 py-0.5 rounded-full">
+          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-sky-700 dark:text-sky-400 bg-sky-50 dark:bg-sky-500/10 border border-sky-200/60 dark:border-sky-500/20 px-1.5 py-0.5 rounded-full">
             <WifiOff className="w-2.5 h-2.5" />{offlineCount}
           </span>
         )}
@@ -368,3 +368,4 @@ function FlightRow({ flight, offlineCount, isRecent, onSelect }: {
     </button>
   );
 }
+
