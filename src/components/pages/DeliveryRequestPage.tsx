@@ -34,7 +34,7 @@ import {
 // TYPES
 // ============================================
 
-type DeliveryType = 'uzpost' | 'yandex' | 'mandarin' | 'bts';
+type DeliveryType = 'uzpost' | 'yandex' | 'akb' | 'bts';
 
 interface DeliveryOption {
   id: DeliveryType;
@@ -70,9 +70,9 @@ const DELIVERY_OPTIONS: DeliveryOption[] = [
     iconBg: 'bg-[#fff1f1] text-[#c44747]',
   },
   {
-    id: 'mandarin',
+    id: 'akb',
     label: 'AKB Dostavka',
-    descKey: 'deliveryRequest.options.mandarin',
+    descKey: 'deliveryRequest.options.akb',
     icon: <Package className="w-8 h-8" />,
     iconBg: 'bg-[#effbf5] text-[#15835b]',
   },
@@ -174,8 +174,8 @@ StepIndicator.displayName = 'StepIndicator';
 const StepHeader = memo(({ title, subtitle }: { title: string; subtitle?: string }) => (
   <div className="mb-5">
     <p className="mb-1 text-[11px] font-semibold uppercase text-[#0b84e5]">AKB Cargo</p>
-    <h2 className="text-2xl font-semibold leading-tight text-[#07182f]">{title}</h2>
-    {subtitle && <p className="mt-2 text-sm leading-6 text-[#63758a]">{subtitle}</p>}
+    <h2 className="text-2xl font-semibold leading-tight text-[#07182f] dark:text-[#ffffff]">{title}</h2>
+    {subtitle && <p className="mt-2 text-sm leading-6 text-[#63758a] dark:text-[#ffffff]">{subtitle}</p>}
   </div>
 ));
 
@@ -267,10 +267,10 @@ const StepFlightSelection = memo(
         title={t('deliveryRequest.steps.flight.title')}
         subtitle={t('deliveryRequest.steps.flight.subtitle')}
       />
-      {deliveryType === 'mandarin' && (
+      {deliveryType === 'akb' && (
         <div className="mb-4 flex items-start gap-2 rounded-lg border border-[#cfe0f1] bg-[#eef7ff] p-3 text-xs font-medium text-[#0b2b53]">
           <Wallet className="mt-0.5 h-4 w-4 shrink-0 text-[#0b4edb]" />
-          {t('deliveryRequest.steps.flight.mandarinNote')}
+          {t('deliveryRequest.steps.flight.akbNote')}
         </div>
       )}
       {deliveryType === 'yandex' && (
@@ -382,7 +382,7 @@ const StepFlightSelection = memo(
 );
 
 // ============================================
-// STEP 3A — Standard Confirmation (Yandex/Mandarin/BTS)
+// STEP 3A — Standard Confirmation (Yandex/AKB/BTS)
 // ============================================
 
 interface StepStandardProps {
@@ -958,7 +958,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
     if (!deliveryType || deliveryType === 'uzpost') return;
     setSubmitting(true);
     try {
-      await submitStandardDelivery(deliveryType as 'yandex' | 'mandarin' | 'bts', selectedFlights);
+      await submitStandardDelivery(deliveryType as 'yandex' | 'akb' | 'bts', selectedFlights);
       setCurrentStep(4);
     } catch (err: unknown) {
       const e = err as { status?: number; message?: string };
@@ -1017,7 +1017,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
           </button>
           <div>
             <p className="text-[11px] font-semibold uppercase text-[#0b84e5]">AKB Cargo</p>
-            <h1 className="text-lg font-semibold text-[#07182f]">{t('deliveryRequest.headerTitleShort')}</h1>
+            <h1 className="text-lg font-semibold text-[#07182f] dark:text-[#ffffff]">{t('deliveryRequest.headerTitleShort')}</h1>
           </div>
         </div>
         <ProfileIncompleteAlert
@@ -1041,7 +1041,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
           </button>
           <div>
             <p className="text-[11px] font-semibold uppercase text-[#0b84e5]">AKB Cargo</p>
-            <h1 className="text-lg font-semibold leading-tight text-[#07182f]">{t('deliveryRequest.headerTitle')}</h1>
+            <h1 className="text-lg font-semibold leading-tight text-[#07182f] dark:text-[#ffffff]">{t('deliveryRequest.headerTitle')}</h1>
           </div>
         </div>
         {onNavigateToHistory && (

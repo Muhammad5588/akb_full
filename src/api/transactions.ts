@@ -9,11 +9,11 @@ export type FilterType = 'all' | 'taken' | 'not_taken' | 'partial' | 'pending';
 export type SortOrder = 'asc' | 'desc';
 export type PaymentStatus = 'pending' | 'partial' | 'paid';
 export type PaymentType = 'online' | 'cash' | 'card';
-export type DeliveryRequestType = 'uzpost' | 'bts' | 'mandarin' | 'yandex';
+export type DeliveryRequestType = 'uzpost' | 'bts' | 'akb' | 'yandex';
 export type DeliveryProofMethod =
   | 'uzpost'
   | 'bts'
-  | 'mandarin'
+  | 'akb'
   | 'yandex'
   | 'self_pickup';
 

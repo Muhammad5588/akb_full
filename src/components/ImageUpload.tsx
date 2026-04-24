@@ -10,7 +10,7 @@ interface ImageUploadProps {
   onChange: (file: File | null) => void;
   error?: string;
   isLoading?: boolean;
-  variant?: 'mandarin' | 'akb';
+  variant?: 'akb';
 }
 
 const STYLES = `
@@ -29,7 +29,7 @@ export default function ImageUpload({
   onChange,
   error,
   isLoading = false,
-  variant = 'mandarin',
+  variant = 'akb',
 }: ImageUploadProps) {
   const { t } = useTranslation();
   const [preview, setPreview] = useState<string | null>(null);

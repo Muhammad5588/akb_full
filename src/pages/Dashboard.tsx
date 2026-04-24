@@ -27,7 +27,6 @@ import { toast } from "sonner";
 import { ActionButton, type ActionItemData } from "@/components/user_page/ActionButtons";
 import { UniqueBackground } from "@/components/ui/UniqueBackground";
 import { useTranslation } from 'react-i18next';
-import { useProfile } from "@/hooks/useProfile";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -578,34 +577,6 @@ const PageLoadingFallback = memo(() => {
 
 PageLoadingFallback.displayName = "PageLoadingFallback";
 
-// ---------------------------------------------------------------------------
-// DashboardHeader
-// ---------------------------------------------------------------------------
-const DashboardHeader = memo(({ name }: { name?: string }) => {
-    const { t } = useTranslation();
-    const displayName = name?.trim().split(/\s+/)[0];
-
-    return (
-        <header className="mb-4">
-            <div className="rounded-lg border border-[#dbe8f4] bg-white p-4 shadow-[0_8px_20px_rgba(15,47,87,0.05)]">
-                <p className="text-sm font-medium text-[#0b84e5]">{t('dashboard.greeting', 'Assalomu alaykum 👋')}</p>
-                <h1 className="mt-1 max-w-md text-xl font-semibold leading-tight text-[#07182f]">
-                    {displayName
-                        ? `${displayName}, ${t('dashboard.welcomeCabinet', 'welcome to your AKB Cargo cabinet')}`
-                        : t('dashboard.customerWelcome', 'Welcome to your AKB Cargo cabinet')}
-                </h1>
-                <p className="mt-1 text-xs font-medium uppercase tracking-[0.08em] text-[#7d91a8]">
-                    {t('dashboard.customer', 'AKB Cargo mijozi')}
-                </p>
-                <p className="mt-3 max-w-md text-sm leading-6 text-[#63758a]">
-                    {t('dashboard.heroSubtitle', 'Yukingizni kuzating, zayavka qoldiring va to\'lovlarni boshqaring.')}
-                </p>
-            </div>
-        </header>
-    );
-});
-
-DashboardHeader.displayName = "DashboardHeader";
 
 // ---------------------------------------------------------------------------
 // Lazy imports
@@ -641,7 +612,6 @@ export default function Dashboard({ onNavigateToReports, onNavigateToHistory }: 
     const [mediaModalItem,        setMediaModalItem]        = useState<CarouselItemData | null>(null);
 
     const { t }              = useTranslation();
-    const { data: profile }  = useProfile();
 
     const { data: apiCarouselItems } = useQuery({
         queryKey: ['carousel-items'],
@@ -833,7 +803,6 @@ export default function Dashboard({ onNavigateToReports, onNavigateToHistory }: 
             <UniqueBackground />
 
             <div className="relative z-10 max-w-4xl mx-auto px-4 pt-[80px]">
-                {activeTab !== "home" && activeTab !== "track" && <DashboardHeader name={profile?.full_name} />}
                 {activeTab !== "home" && <HeaderTabs activeTab={activeTab} setActiveTab={handleSetActiveTab} />}
 
                 {activeTab === 'schedule' && (
@@ -921,7 +890,7 @@ export default function Dashboard({ onNavigateToReports, onNavigateToHistory }: 
                         <section className="pb-8 px-1">
                             <button
                                 className="group relative grid w-full grid-cols-[auto_1fr_auto] items-center gap-3 overflow-hidden rounded-lg p-3 bg-white text-[#07182f] border border-[#dbe8f4] active:scale-[0.98] transition-all duration-300 shadow-sm hover:border-[#0b84e5] hover:bg-[#f8fbfe]"
-                                onClick={() => window.open("https://t.me/mandarin_admin", "_blank")}
+                                onClick={() => window.open("https://t.me/AKB_CARGO", "_blank")}
                             >
                                 <div className="absolute inset-y-2 left-2 w-1 rounded-lg bg-[#0b84e5]" />
                                 <div className="w-11 h-11 rounded-lg bg-[#eef7ff] text-[#0b4edb] flex items-center justify-center transition-transform group-hover:scale-105">

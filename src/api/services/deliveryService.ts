@@ -75,10 +75,10 @@ export async function calculateUzpost(flightNames: string[]): Promise<CalculateU
 }
 
 /**
- * Submit a standard delivery request (Yandex, Mandarin, BTS)
+ * Submit a standard delivery request (Yandex, AKB, BTS)
  */
 export async function submitStandardDelivery(
-  deliveryType: 'yandex' | 'mandarin' | 'bts',
+  deliveryType: 'yandex' | 'akb' | 'bts',
   flightNames: string[]
 ): Promise<DeliverySuccessResponse> {
   const response = await apiClient.post<DeliverySuccessResponse>(

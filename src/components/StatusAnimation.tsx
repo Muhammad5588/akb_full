@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { CheckCircle2, XCircle, Loader2 } from 'lucide-react';
 
 interface StatusAnimationProps {
   status: 'loading' | 'success' | 'error';
@@ -8,73 +7,147 @@ interface StatusAnimationProps {
 }
 
 const STYLES = `
-  @keyframes modal-in {
-    0%   { transform: scale(.8) translateY(24px); opacity: 0; }
-    100% { transform: scale(1) translateY(0);     opacity: 1; }
+  @keyframes sa-in {
+    0%   { opacity: 0; transform: translateY(20px) scale(.95); }
+    100% { opacity: 1; transform: translateY(0)    scale(1);   }
   }
-  @keyframes bounce-in {
-    0%   { transform: scale(0);   opacity: 0; }
-    60%  { transform: scale(1.25); }
-    100% { transform: scale(1);   opacity: 1; }
+  @keyframes sa-bd {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
-  @keyframes shake-x {
-    0%,100% { transform: translateX(0);  }
-    20%,60% { transform: translateX(-9px); }
-    40%,80% { transform: translateX(9px);  }
+  @keyframes sa-spin {
+    to { transform: rotate(360deg); }
   }
-  @keyframes ring-expand {
-    0%   { transform: scale(1);   opacity: .55; }
-    100% { transform: scale(1.9); opacity: 0;   }
+  @keyframes sa-ping {
+    0%   { transform: scale(1);   opacity: .5; }
+    100% { transform: scale(1.8); opacity: 0;  }
   }
-  @keyframes glow-pulse {
-    0%,100% { opacity: .35; }
-    50%     { opacity: .75; }
+  @keyframes sa-pop {
+    0%   { transform: scale(0);    opacity: 0; }
+    55%  { transform: scale(1.18);             }
+    100% { transform: scale(1);    opacity: 1; }
   }
-  @keyframes bounce-dot {
-    0%,100% { transform: translateY(0);    }
-    50%     { transform: translateY(-12px); }
+  @keyframes sa-shake {
+    0%,100% { transform: translateX(0);   }
+    20%,60% { transform: translateX(-8px);}
+    40%,80% { transform: translateX(8px); }
   }
-  @keyframes backdrop-in {
-    0%   { opacity: 0; }
-    100% { opacity: 1; }
+  @keyframes sa-dot {
+    0%,100% { opacity: .3; transform: scaleY(.6); }
+    50%     { opacity: 1;  transform: scaleY(1);  }
+  }
+  @keyframes sa-scan {
+    0%   { top: 0%;   opacity: .8; }
+    100% { top: 100%; opacity: 0;  }
+  }
+  @keyframes sa-check {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes sa-x {
+    to { stroke-dashoffset: 0; }
   }
 
-  .anim-modal    { animation: modal-in  .45s cubic-bezier(.34,1.56,.64,1) forwards; }
-  .anim-bounce   { animation: bounce-in .65s cubic-bezier(.68,-.55,.265,1.55) forwards; }
-  .anim-shake    { animation: shake-x   .65s cubic-bezier(.36,.07,.19,.97); }
-  .ring-expand   { animation: ring-expand 1.6s ease-out infinite; }
-  .glow-pulse    { animation: glow-pulse  2.2s ease-in-out infinite; }
-  .backdrop-in   { animation: backdrop-in .3s ease forwards; }
-  .dot-0 { animation: bounce-dot 1s ease-in-out infinite; animation-delay:  0s; }
-  .dot-1 { animation: bounce-dot 1s ease-in-out infinite; animation-delay: .2s; }
-  .dot-2 { animation: bounce-dot 1s ease-in-out infinite; animation-delay: .4s; }
+  .sa-backdrop { animation: sa-bd   .25s ease forwards; }
+  .sa-card     { animation: sa-in   .4s  cubic-bezier(.34,1.36,.64,1) forwards; }
+  .sa-pop      { animation: sa-pop  .55s cubic-bezier(.34,1.46,.64,1) forwards; }
+  .sa-shake    { animation: sa-shake .6s ease; }
+  .sa-spin     { animation: sa-spin 1.1s linear infinite; }
+  .sa-ping     { animation: sa-ping 1.5s ease-out infinite; }
+
+  .sa-dot      { animation: sa-dot 1.2s ease-in-out infinite; }
+  .sa-dot:nth-child(2) { animation-delay: .18s; }
+  .sa-dot:nth-child(3) { animation-delay: .36s; }
+
+  .sa-scan-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(56,189,248,.7), transparent);
+    animation: sa-scan 1.8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .sa-check-path {
+    stroke-dasharray: 32;
+    stroke-dashoffset: 32;
+    animation: sa-check .5s ease .1s forwards;
+  }
+  .sa-x-path1, .sa-x-path2 {
+    stroke-dasharray: 22;
+    stroke-dashoffset: 22;
+  }
+  .sa-x-path1 { animation: sa-x .35s ease .05s forwards; }
+  .sa-x-path2 { animation: sa-x .35s ease .18s forwards; }
 `;
 
-const GLOW: Record<string, string> = {
-  loading: 'rgba(249,115,22,0.28)',
-  success: 'rgba(34,197,94,0.28)',
-  error:   'rgba(239,68,68,0.28)',
-};
+// ── renk tokenlari ────────────────────────────────────────────
+const T = {
+  loading: {
+    ring:   '#bfdbfe',
+    stroke: '#3b82f6',
+    text:   '#1d4ed8',
+    dot:    '#60a5fa',
+    glow:   'rgba(59,130,246,.18)',
+  },
+  success: {
+    ring:   '#bbf7d0',
+    stroke: '#22c55e',
+    text:   '#15803d',
+    dot:    '#4ade80',
+    glow:   'rgba(34,197,94,.18)',
+  },
+  error: {
+    ring:   '#fecaca',
+    stroke: '#ef4444',
+    text:   '#b91c1c',
+    dot:    '#f87171',
+    glow:   'rgba(239,68,68,.18)',
+  },
+} as const;
 
-const BAR_GRADIENT: Record<string, string> = {
-  loading: 'linear-gradient(90deg, transparent, rgb(249,115,22), transparent)',
-  success: 'linear-gradient(90deg, transparent, rgb(34,197,94),  transparent)',
-  error:   'linear-gradient(90deg, transparent, rgb(239,68,68),  transparent)',
-};
+// ── SVG ikonkalar ─────────────────────────────────────────────
+function SpinnerIcon({ color }: { color: string }) {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" className="sa-spin">
+      <circle cx="32" cy="32" r="26" stroke={color} strokeOpacity=".18" strokeWidth="4" />
+      <circle cx="32" cy="32" r="26" stroke={color} strokeWidth="4"
+              strokeLinecap="round" strokeDasharray="44 120" />
+    </svg>
+  );
+}
 
-const RING_COLOR: Record<string, string> = {
-  loading: 'border-orange-300',
-  success: 'border-green-300',
-  error:   'border-red-300',
-};
+function CheckIcon({ color }: { color: string }) {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" className="sa-pop">
+      <circle cx="32" cy="32" r="28" fill="none" stroke={color} strokeOpacity=".2" strokeWidth="1" />
+      <polyline className="sa-check-path"
+        points="18,33 28,43 46,23"
+        fill="none" stroke={color} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
+function CrossIcon({ color }: { color: string }) {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" className="sa-shake">
+      <circle cx="32" cy="32" r="28" fill="none" stroke={color} strokeOpacity=".2" strokeWidth="1" />
+      <line className="sa-x-path1" x1="21" y1="21" x2="43" y2="43"
+            stroke={color} strokeWidth="3.5" strokeLinecap="round" />
+      <line className="sa-x-path2" x1="43" y1="21" x2="21" y2="43"
+            stroke={color} strokeWidth="3.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+// ── asosiy komponent ──────────────────────────────────────────
 export default function StatusAnimation({ status, message, onComplete }: StatusAnimationProps) {
-  const [show, setShow] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const c = T[status];
 
   useEffect(() => {
-    queueMicrotask(() => setShow(true));
+    queueMicrotask(() => setVisible(true));
     if (status !== 'loading' && onComplete) {
-      const t = setTimeout(() => onComplete(), 2000);
+      const t = setTimeout(onComplete, 2000);
       return () => clearTimeout(t);
     }
   }, [status, onComplete]);
@@ -83,69 +156,111 @@ export default function StatusAnimation({ status, message, onComplete }: StatusA
     <>
       <style>{STYLES}</style>
 
-      <div className={`backdrop-in fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 ${show ? 'opacity-100' : 'opacity-0'}`}>
-
-        {/* backdrop */}
-        <div className="absolute inset-0 bg-black/65 backdrop-blur-md" />
-
+      {/* backdrop */}
+      <div
+        className="sa-backdrop"
+        style={{
+          position: 'fixed', inset: 0, zIndex: 50,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: 'rgba(7,19,39,.72)',
+          opacity: visible ? 1 : 0,
+          fontFamily: 'system-ui,-apple-system,sans-serif',
+        }}
+      >
         {/* card */}
         <div
-          className="anim-modal relative bg-white dark:bg-[#0d0a04] rounded-3xl p-10 border border-gray-100 dark:border-white/10 flex flex-col items-center gap-6 min-w-[300px] max-w-sm mx-4"
-          style={{ boxShadow: `0 0 70px ${GLOW[status]}, 0 30px 60px rgba(0,0,0,.35)` }}
+          className="sa-card"
+          style={{
+            position: 'relative',
+            background: 'linear-gradient(160deg,#f7fbff 0%,#eff6ff 100%)',
+            borderRadius: 20,
+            border: '1px solid #dbeafe',
+            padding: '36px 32px',
+            minWidth: 260,
+            maxWidth: 320,
+            margin: '0 16px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 20,
+            overflow: 'hidden',
+          }}
         >
-          {/* top accent bar */}
-          <div className="absolute top-0 inset-x-0 h-[3px] rounded-t-3xl" style={{ background: BAR_GRADIENT[status] }} />
+          {/* top accent */}
+          <div style={{
+            position: 'absolute', top: 0, left: 0, right: 0,
+            height: 2,
+            background: `linear-gradient(90deg, transparent, ${c.stroke}, transparent)`,
+          }} />
 
-          {/* dot-grid */}
-          <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-[0.025]"
-            style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+          {/* scan line — faqat loading holatida */}
+          {status === 'loading' && <div className="sa-scan-line" />}
 
-          {/* ── Icon section ── */}
-          <div className="relative flex items-center justify-center w-28 h-28">
-            {/* ping ring */}
-            <div className={`ring-expand absolute w-24 h-24 rounded-full border-2 ${RING_COLOR[status]}`} />
+          {/* icon area */}
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {/* ping halqa */}
+            <div
+              className="sa-ping"
+              style={{
+                position: 'absolute',
+                width: 80, height: 80,
+                borderRadius: '50%',
+                border: `1.5px solid ${c.ring}`,
+              }}
+            />
 
-            {status === 'loading' && (
-              <>
-                <Loader2 className="w-20 h-20 text-orange-500 animate-spin relative z-10 drop-shadow-lg" />
-                <div className="glow-pulse absolute w-20 h-20 rounded-full bg-orange-500/20 blur-xl" />
-              </>
-            )}
+            {/* glow */}
+            <div style={{
+              position: 'absolute',
+              width: 64, height: 64,
+              borderRadius: '50%',
+              background: c.glow,
+              filter: 'blur(12px)',
+            }} />
 
-            {status === 'success' && (
-              <div className="anim-bounce relative z-10">
-                <CheckCircle2 className="w-20 h-20 text-green-500 drop-shadow-lg" />
-                <div className="glow-pulse absolute inset-0 w-20 h-20 rounded-full bg-green-500/25 blur-xl" />
-              </div>
-            )}
-
-            {status === 'error' && (
-              <div className="anim-shake relative z-10">
-                <XCircle className="w-20 h-20 text-red-500 drop-shadow-lg" />
-                <div className="glow-pulse absolute inset-0 w-20 h-20 rounded-full bg-red-500/25 blur-xl" />
-              </div>
-            )}
+            {status === 'loading' && <SpinnerIcon color={c.stroke} />}
+            {status === 'success'  && <CheckIcon  color={c.stroke} />}
+            {status === 'error'    && <CrossIcon  color={c.stroke} />}
           </div>
 
-          {/* message */}
+          {/* xabar */}
           {message && (
-            <p className={`text-base font-semibold text-center max-w-xs leading-relaxed ${
-              status === 'loading' ? 'text-gray-700 dark:text-gray-200'
-              : status === 'success' ? 'text-green-700 dark:text-green-400'
-              : 'text-red-700 dark:text-red-400'
-            }`}>
+            <p style={{
+              margin: 0,
+              fontSize: 14,
+              fontWeight: 500,
+              color: c.text,
+              textAlign: 'center',
+              lineHeight: 1.5,
+            }}>
               {message}
             </p>
           )}
 
           {/* loading dots */}
           {status === 'loading' && (
-            <div className="flex gap-2.5">
-              <div className="dot-0 w-3 h-3 rounded-full bg-orange-500 shadow-md shadow-orange-500/50" />
-              <div className="dot-1 w-3 h-3 rounded-full bg-orange-500 shadow-md shadow-orange-500/50" />
-              <div className="dot-2 w-3 h-3 rounded-full bg-orange-500 shadow-md shadow-orange-500/50" />
+            <div style={{ display: 'flex', gap: 6 }}>
+              {[0,1,2].map(i => (
+                <span
+                  key={i}
+                  className="sa-dot"
+                  style={{
+                    display: 'inline-block',
+                    width: 5, height: 14,
+                    borderRadius: 99,
+                    background: c.dot,
+                  }}
+                />
+              ))}
             </div>
           )}
+
+          {/* pastki chegara */}
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            height: 1,
+            background: `linear-gradient(90deg, transparent, ${c.ring}, transparent)`,
+          }} />
         </div>
       </div>
     </>

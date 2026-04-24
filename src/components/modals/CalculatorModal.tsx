@@ -350,7 +350,7 @@ export default function CalculatorModal({ isOpen, onClose }: CalculatorModalProp
 
                             {/* CTA Button */}
                             <button
-                                onClick={() => window.open("https://t.me/mandarin_admin", "_blank", "noopener,noreferrer")}
+                                onClick={() => window.open("https://t.me/AKB_CARGO", "_blank", "noopener,noreferrer")}
                                 className="w-full flex items-center justify-center gap-2.5 bg-[#0b4edb] hover:bg-[#073fba] active:scale-[0.98] text-white font-bold text-sm py-4 rounded-lg shadow-sm transition-all duration-200"
                             >
                                 <MessageCircle className="w-5 h-5" />

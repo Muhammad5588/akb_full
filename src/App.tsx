@@ -12,7 +12,6 @@ import AdminRolesPage from "./pages/admin/AdminRolesPage";
 import AdminProfilePage from "./pages/admin/AdminProfilePage";
 import AdminAuditLogsPage from "./pages/admin/AdminAuditLogsPage";
 import AdminCarouselPage from "./pages/admin/AdminCarouselPage";
-import FlightScheduleAdminPage from "./pages/admin/FlightScheduleAdminPage";
 import POSDashboard from "./pages/POSDashboard";
 import ImportPage from "./components/ImportPage";
 import ClientForm from "./components/ClientForm";
@@ -20,7 +19,6 @@ import FlightsPage from "./components/FlightsPage";
 import CargoListPage from "./components/CargoListPage";
 import AddCargoForm from "./components/AddCargoForm";
 import StatisticsDashboard from "./components/StatisticsDashboard";
-import TelegramWebAppGuard from "./components/TelegramWebAppGuard";
 import UserPage from "./pages/UserPage";
 import { UserNav } from "./components/navigation/UserNav";
 import { Toaster } from "sonner";
@@ -33,6 +31,8 @@ import ManagerPage from "./pages/admin/ManagerPage";
 import PasskeyPage from "./pages/admin/PasskeyPage";
 import WarehousePage from "./pages/admin/WarehousePage";
 import ExpectedCargoPage from "./pages/admin/ExpectedCargoPage";
+import { UniqueBackground } from "./components/ui/UniqueBackground";
+import TelegramWebAppGuard from "./components/TelegramWebAppGuard";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -47,9 +47,6 @@ type Page =
   | "cargo-list"
   | "cargo-add"
   | "statistics"
-  | "verification-profile"
-  | "verification-transactions"
-  | "verification-unpaid"
   | "user-profile"
   | "user-home"
   | "user-reports"
@@ -59,12 +56,11 @@ type Page =
   | "admin-audit"
   | "admin-profile"
   | "admin-carousel"
-  | "pos"
+  | "pos-dashboard"
   | "manager-page"
   | "passkey-page"
   | "warehouse-page"
-  | "expected-cargo"
-  | "flight-schedule-admin";
+  | "expected-cargo";
 
 interface RouteInfo {
   page: Page;
@@ -85,9 +81,9 @@ const ROLE_CONFIG: Record<string, { default: Page; allowed: Page[] }> = {
     allowed: ["flights", "cargo-list", "cargo-add", "passkey-page", "expected-cargo"],
   },
   accountant: {
-    default: "pos",
+    default: "pos-dashboard",
     allowed: [
-      "pos",
+      "pos-dashboard",
       "admin-profile",
       "passkey-page",
     ],
@@ -102,9 +98,6 @@ const ROLE_CONFIG: Record<string, { default: Page; allowed: Page[] }> = {
       "cargo-list",
       "cargo-add",
       "statistics",
-      "verification-profile",
-      "verification-transactions",
-      "verification-unpaid",
       "user-home",
       "user-profile",
       "user-history",
@@ -114,11 +107,10 @@ const ROLE_CONFIG: Record<string, { default: Page; allowed: Page[] }> = {
       "admin-audit",
       "admin-profile",
       "admin-carousel",
-      "pos",
+      "pos-dashboard",
       "warehouse-page",
       "expected-cargo",
       "passkey-page",
-      "flight-schedule-admin",
     ],
   },
   "super-admin": {
@@ -131,9 +123,6 @@ const ROLE_CONFIG: Record<string, { default: Page; allowed: Page[] }> = {
       "cargo-list",
       "cargo-add",
       "statistics",
-      "verification-profile",
-      "verification-transactions",
-      "verification-unpaid",
       "user-home",
       "user-profile",
       "user-history",
@@ -143,20 +132,18 @@ const ROLE_CONFIG: Record<string, { default: Page; allowed: Page[] }> = {
       "admin-audit",
       "admin-profile",
       "admin-carousel",
-      "pos",
+      "pos-dashboard",
       "warehouse-page",
       "expected-cargo",
       "manager-page",
       "passkey-page",
-      "flight-schedule-admin",
     ],
   },
   manager: {
     default: "manager-page",
     // admin-carousel is gated by JWT permission (carousel:read) checked in ManagerPage UI;
-    // flight-schedule-admin is gated by JWT permission (flight_schedule:manage) in the page UI;
-    // adding them here only unlocks the route — the backend enforces actual authorization.
-    allowed: ["manager-page", "admin-carousel", "admin-profile", "passkey-page", "flight-schedule-admin"],
+    // adding it here only unlocks the route — the backend enforces actual authorization.
+    allowed: ["manager-page", "admin-carousel", "admin-profile", "passkey-page"],
   },
   warehouse_worker: {
     default: "warehouse-page",
@@ -225,7 +212,6 @@ function getPathForPage(
   page: Page,
   flightName?: string,
   clientId?: number,
-  clientCode?: string,
 ): string {
   if (page === "register") return "/auth/register";
   if (page === "admin-login") return "/admin/login";
@@ -238,12 +224,6 @@ function getPathForPage(
     return `/flights/${encodeURIComponent(flightName)}/photos`;
   if (page === "cargo-add" && flightName)
     return `/flights/${encodeURIComponent(flightName)}/photos/add`;
-  if (page === "verification-profile" && clientId)
-    return `/verification/profile/${clientId}`;
-  if (page === "verification-transactions" && clientCode)
-    return `/verification/transactions/${encodeURIComponent(clientCode)}`;
-  if (page === "verification-unpaid" && clientCode)
-    return `/verification/unpaid/${encodeURIComponent(clientCode)}`;
   if (page === "user-profile") return "/user/profile";
   if (page === "user-home") return "/user/home";
   if (page === "user-reports") return "/user/reports";
@@ -256,9 +236,8 @@ function getPathForPage(
   if (page === "manager-page") return "/admin/clients";
   if (page === "passkey-page") return "/admin/passkey";
   if (page === "warehouse-page") return "/admin/warehouse";
-  if (page === "pos") return "/pos";
+  if (page === "pos-dashboard") return "/pos";
   if (page === "expected-cargo") return "/admin/expected-cargo";
-  if (page === "flight-schedule-admin") return "/admin/flight-schedule";
   return "/auth/login";
 }
 
@@ -277,7 +256,6 @@ function resolvePageFromPath(rawPath: string): RouteInfo {
   const clientEditId = clientEditMatch
     ? parseInt(clientEditMatch[1], 10)
     : undefined;
-
 
   if (path === "/auth/register") return { page: "register" };
   if (path === "/admin/login") return { page: "admin-login" };
@@ -304,8 +282,7 @@ function resolvePageFromPath(rawPath: string): RouteInfo {
   if (path === "/admin/passkey") return { page: "passkey-page" };
   if (path === "/warehouse" || path === "/admin/warehouse") return { page: "warehouse-page" };
   if (path === "/admin/expected-cargo") return { page: "expected-cargo" };
-  if (path === "/admin/flight-schedule") return { page: "flight-schedule-admin" };
-  if (path === "/pos") return { page: "pos" };
+  if (path === "/pos") return { page: "pos-dashboard" };
 
   return { page: "login" };
 }
@@ -343,7 +320,7 @@ function AppContent() {
         clientCode = undefined;
       }
 
-      const path = getPathForPage(page, flightName, clientId, clientCode);
+      const path = getPathForPage(page, flightName, clientId);
 
       // Preserve existing query params (e.g. ?tab=request) from the current URL
       const currentParams = window.location.search;
@@ -539,6 +516,13 @@ function AppContent() {
 
   // ── Derived flags ────────────────────────────────────────────────────────
 
+  const isVerificationPage = [
+    "verification-search",
+    "verification-profile",
+    "verification-transactions",
+    "verification-unpaid",
+  ].includes(currentPage);
+
   const isUserPages = [
     "user-profile",
     "user-home",
@@ -554,7 +538,6 @@ function AppContent() {
     "admin-audit",
     "admin-profile",
     "admin-carousel",
-    "flight-schedule-admin",
   ].includes(currentPage);
 
   // Only roles with admin-accounts (admin, super-admin) get the full AdminLayout shell.
@@ -570,7 +553,7 @@ function AppContent() {
     !canAccessAdminPanel &&
     userRole !== null;
 
-  const isPOSPage = currentPage === "pos";
+  const isPOSPage = currentPage === "pos-dashboard";
   const isManagerPage = currentPage === "manager-page";
   const isPasskeyPage = currentPage === "passkey-page";
   const isWarehousePage = currentPage === "warehouse-page";
@@ -584,6 +567,10 @@ function AppContent() {
   const canAccessExpectedCargo =
     userRole !== null &&
     (ROLE_CONFIG[userRole]?.allowed ?? []).includes("expected-cargo");
+  const isCustomerFacingPage =
+    currentPage === "login" ||
+    currentPage === "register" ||
+    USER_PAGES.includes(currentPage);
 
   const isAdminArea =
     isSuperAdminPages || isAdminLoginPage || isPOSPage ||
@@ -595,35 +582,34 @@ function AppContent() {
   return (
     <div
       className={`min-h-screen relative overflow-hidden transition-colors duration-300 ${
-        isAdminArea
+        isCustomerFacingPage
+          ? "bg-[#f4f8fc] text-[#07182f] dark:bg-[#0b1420] dark:text-[#f3f7fc]"
+          : isAdminArea
           ? "bg-[#f5f5f4] dark:bg-[#09090b]"
-          : "bg-gradient-to-br from-orange-50 via-amber-50 to-orange-100 dark:from-[#0d0a04] dark:via-[#1a1612] dark:to-[#0d0a04]"
+          : "bg-[#f5f5f7] dark:bg-[#111214]"
       }`}
     >
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-orange-300/20 dark:bg-orange-500/10 rounded-full blur-3xl animate-blob" />
-        <div className="absolute top-40 right-10 w-96 h-96 bg-amber-300/20 dark:bg-amber-500/10 rounded-full blur-3xl animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-20 left-1/2 w-80 h-80 bg-orange-200/20 dark:bg-orange-400/10 rounded-full blur-3xl animate-blob animation-delay-4000" />
-      </div>
+      {!isUserPages && <UniqueBackground />}
 
-      {!isAdminArea && (
-        <>
-          <NavigationBar
-            currentPage={currentPage}
-          />
-
-          {isUserPages && (
-            <UserNav
+      <div className="relative z-10">
+        {!isAdminArea && (
+          <>
+            <NavigationBar
               currentPage={currentPage}
-              onNavigate={(page) => navigateToPage(page as Page)}
             />
-          )}
-        </>
-      )}
+
+            {isUserPages && (
+              <UserNav
+                currentPage={currentPage}
+                onNavigate={(page) => navigateToPage(page as Page)}
+              />
+            )}
+          </>
+        )}
 
       {isCheckingAuth ? (
         <div className="flex h-[60vh] items-center justify-center">
-          <div className="w-10 h-10 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 rounded-full border-4 border-zinc-900 border-t-transparent animate-spin dark:border-white dark:border-t-transparent" />
         </div>
       ) : isSuperAdminPages && canAccessAdminPanel ? (
         <AdminLayout
@@ -636,7 +622,6 @@ function AppContent() {
           {currentPage === "admin-audit" && <AdminAuditLogsPage />}
           {currentPage === "admin-profile" && <AdminProfilePage />}
           {currentPage === "admin-carousel" && <AdminCarouselPage />}
-          {currentPage === "flight-schedule-admin" && <FlightScheduleAdminPage />}
         </AdminLayout>
       ) : isPOSPage ? (
         <POSDashboard
@@ -654,11 +639,6 @@ function AppContent() {
           )}
           {currentPage === "admin-profile" && (
             <AdminProfilePage
-              onBack={() => navigateToPage(getDefaultPageForRole(userRole!) as Page)}
-            />
-          )}
-          {currentPage === "flight-schedule-admin" && (
-            <FlightScheduleAdminPage
               onBack={() => navigateToPage(getDefaultPageForRole(userRole!) as Page)}
             />
           )}
@@ -688,12 +668,12 @@ function AppContent() {
           className={`relative ${
             isUserPages
               ? "pb-0 md:pb-0 pt-0"
-              : isAdminLoginPage
+              : isAdminLoginPage || currentPage === "login"
                 ? "p-0"
-                : ["flights", "cargo-list", "cargo-add", "statistics"].includes(currentPage)
-                  ? "pt-20 pb-20"   // NavigationBar clearance only — inner pages control their own spacing
+                : ["flights", "cargo-list", "cargo-add"].includes(currentPage)
+                  ? "pt-20 pb-6"   // NavigationBar clearance only — inner pages control their own spacing
                   : "pb-12 pt-24"
-          } transition-all duration-300`}
+          } transition-all duration-300 ${isVerificationPage ? "pt-24 md:pt-48" : ""}`}
         >
           {currentPage === "login" && (
             <LoginForm
@@ -729,7 +709,6 @@ function AppContent() {
                 navigateToPage("cargo-list", flightName)
               }
               onLogout={handleLogout}
-              onNavigate={(page) => navigateToPage(page as Page)}
             />
           )}
 
@@ -751,7 +730,7 @@ function AppContent() {
           )}
 
           {currentPage === "statistics" && (
-            <StatisticsDashboard onBack={() => window.history.back()} />
+            <StatisticsDashboard onBack={() => navigateToPage("flights")} />
           )}
 
           {currentPage === "user-profile" && (
@@ -765,9 +744,7 @@ function AppContent() {
             />
           )}
 
-          {currentPage === "user-reports" && (
-            <UserReportsPage />
-          )}
+          {currentPage === "user-reports" && <UserReportsPage />}
 
           {currentPage === "user-history" && (
             <UserHistoryPage onBack={() => navigateToPage("user-home")} />
@@ -775,8 +752,10 @@ function AppContent() {
         </main>
       )}
 
-      <Toaster position="top-center" richColors />
+      <Toaster position="top-center"/>
 
+
+      </div>
     </div>
   );
 }

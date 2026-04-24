@@ -566,7 +566,7 @@
     },
     "editProfile": "Редактировать профиль",
     "logout": "Выйти из системы",
-    "version": "Версия 2.0 • Mandarin Cargo",
+    "version": "Версия 2.0 • AKB Cargo",
     "logoutConfirm": {
       "title": "Выйти из системы",
       "description": "Вы действительно хотите выйти из своего аккаунта?",
@@ -979,7 +979,7 @@
     "upcoming": "Ближайшие рейсы",
     "googleCalendar": {
       "title": "Рейс: прибытие {{name}}",
-      "details": "Mandarin Cargo: ожидается прибытие рейса {{name}} {{date}}.",
+      "details": "AKB Cargo: ожидается прибытие рейса {{name}} {{date}}.",
       "tooltip": "Добавить в Google Calendar"
     }
   },
@@ -995,7 +995,7 @@
       "flight": {
         "title": "Выберите рейсы",
         "subtitle": "Отметьте рейсы для доставки",
-        "mandarinNote": "Стоимость доставки: 30 000 сум",
+        "akbNote": "Стоимость доставки: 30 000 сум",
         "yandexNote": "Оплата после доставки груза",
         "btsNote": "Оплата после доставки груза",
         "empty": "Рейсы пока не найдены",
@@ -1045,7 +1045,7 @@
     "options": {
       "uzpost": "Доставка почтой",
       "yandex": "Быстрая доставка",
-      "mandarin": "Только по Ташкенту",
+      "akb": "Только по Ташкенту",
       "bts": "По выгодной цене"
     },
     "toast": {
@@ -1060,7 +1060,7 @@
     "types": {
       "uzpost": "UzPost",
       "yandex": "Yandex",
-      "mandarin": "Mandarin",
+      "akb": "AKB Dostavka",
       "bts": "BTS"
     },
     "status": {

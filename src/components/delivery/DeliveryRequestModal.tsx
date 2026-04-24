@@ -274,7 +274,7 @@ export function DeliveryRequestModal({
                                 {[
                                     { id: 'uzpost', label: 'Uzpost', icon: <Package className="w-5 h-5 text-blue-500" /> },
                                     { id: 'yandex', label: 'Yandex Dostavka', icon: <Car className="w-5 h-5 text-yellow-500" /> },
-                                    { id: 'mandarin', label: 'Mandarin Dastavka', icon: <Store className="w-5 h-5 text-orange-500" /> },
+                                    { id: 'akb', label: 'AKB Dastavka', icon: <Store className="w-5 h-5 text-orange-500" /> },
                                     { id: 'bts', label: 'BTS', icon: <Truck className="w-5 h-5 text-indigo-500" /> },
                                 ].map((svc) => (
                                     <div

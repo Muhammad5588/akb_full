@@ -30,9 +30,9 @@ interface Props {
 
 const DELIVERY_TYPE_COLORS: Record<string, string> = {
   uzpost: 'bg-[#eef6ff] text-[#0b4edb]',
-  yandex: 'bg-[#fff1f1] text-[#c44747]',
-  mandarin: 'bg-[#effbf5] text-[#15835b]',
-  bts: 'bg-[#eafaff] text-[#0784a6]',
+  yandex: 'bg-[#f5f8ff] text-[#1f3a8a]',
+  akb: 'bg-[#eff4ff] text-[#1e40af]',
+  bts: 'bg-[#f0f7ff] text-[#075985]',
 };
 
 // ============================================

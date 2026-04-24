@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-export const DELIVERY_METHODS = ["uzpost", "bts", "mandarin", "yandex", "self_pickup"] as const;
+export const DELIVERY_METHODS = ["uzpost", "bts", "akb", "yandex", "self_pickup"] as const;
 
 export const DELIVERY_METHOD_LABELS: Record<string, string> = {
   uzpost: "UzPost",
   bts: "BTS",
-  mandarin: "Mandarin yetkazib berish",
+  akb: "AKB Dostavka",
   yandex: "Yandex",
   self_pickup: "O'zi olib ketdi",
 };

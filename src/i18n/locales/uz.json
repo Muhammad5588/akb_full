@@ -566,7 +566,7 @@
     },
     "editProfile": "Profilni Tahrirlash",
     "logout": "Tizimdan Chiqish",
-    "version": "Versiya 2.0 • Mandarin Cargo",
+    "version": "Versiya 2.0 • AKB Cargo",
     "logoutConfirm": {
       "title": "Tizimdan chiqish",
       "description": "Haqiqatan ham hisobingizdan chiqmoqchimisiz?",
@@ -979,7 +979,7 @@
     "upcoming": "Keyingi Reyslar",
     "googleCalendar": {
       "title": "Reys: {{name}} kelishi",
-      "details": "Mandarin Cargo: {{name}} reysi {{date}} kuni yetib kelishi kutilmoqda.",
+      "details": "AKB Cargo: {{name}} reysi {{date}} kuni yetib kelishi kutilmoqda.",
       "tooltip": "Google Calendar ga qo'shish"
     }
   },
@@ -995,7 +995,7 @@
       "flight": {
         "title": "Reyslarni tanlang",
         "subtitle": "Yetkazmoqchi bo'lgan reyslaringizni belgilang",
-        "mandarinNote": "Yetkazib berish narxi: 30 000 so'm",
+        "akbNote": "Yetkazib berish narxi: 30 000 so'm",
         "yandexNote": "Yukingiz yetib borgandan keyin to'lov qilasiz",
         "btsNote": "Yukingiz yetib borgandan keyin to'lov qilasiz",
         "empty": "Hozircha reyslar topilmadi",
@@ -1045,7 +1045,7 @@
     "options": {
       "uzpost": "Pochta orqali yetkazish",
       "yandex": "Tez yetkazib berish",
-      "mandarin": "Faqat Toshkent shahrida",
+      "akb": "Faqat Toshkent shahrida",
       "bts": "Qulay narxda"
     },
     "toast": {
@@ -1060,7 +1060,7 @@
     "types": {
       "uzpost": "UzPost",
       "yandex": "Yandex",
-      "mandarin": "Mandarin",
+      "akb": "AKB Dostavka",
       "bts": "BTS"
     },
     "status": {

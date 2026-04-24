@@ -189,14 +189,14 @@ const PAYMENT_LABEL: Record<string, string> = {
 const DELIVERY_REQUEST_OPTIONS: DeliveryRequestType[] = [
   "uzpost",
   "bts",
-  "mandarin",
+  "akb",
   "yandex",
 ];
 
 const DELIVERY_PROOF_OPTIONS: DeliveryProofMethod[] = [
   "uzpost",
   "bts",
-  "mandarin",
+  "akb",
   "yandex",
   "self_pickup",
 ];
@@ -204,7 +204,7 @@ const DELIVERY_PROOF_OPTIONS: DeliveryProofMethod[] = [
 const DELIVERY_METHOD_LABELS: Record<string, string> = {
   uzpost: "UzPost",
   bts: "BTS",
-  mandarin: "Mandarin",
+  akb: "AKB Dostavka",
   yandex: "Yandex",
   self_pickup: "O'zi olib ketish",
 };
