@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Users, Shield, Clock, LogOut, Sun, Moon, User, Layers, BarChart3, CalendarDays,
   LayoutGrid, Plane, Monitor, UserCheck, Warehouse, PackageSearch,
-  Upload, X, ChevronDown,
+  Upload, X, ChevronDown, Building2,
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -21,6 +21,7 @@ const navItems = [
   { id: 'admin-audit',           label: 'Audit',      icon: Clock,         description: 'Faoliyat tarixi' },
   { id: 'statistics',            label: 'Statistika', icon: BarChart3,     description: "Ko'rsatkichlar tahlili" },
   { id: 'flight-schedule-admin', label: 'Jadval',     icon: CalendarDays,  description: 'Reys jadvali' },
+  { id: 'admin-partners',        label: 'Partnerlar', icon: Building2,     description: 'Karta, link, maska' },
   { id: 'admin-profile',         label: 'Profil',     icon: User,          description: 'Shaxsiy sozlamalar' },
 ];
 

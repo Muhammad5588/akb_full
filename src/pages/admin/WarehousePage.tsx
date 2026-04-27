@@ -9,6 +9,7 @@ import {
   ClipboardList,
   Lock,
   PackageSearch,
+  Building2,
 } from "lucide-react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -81,6 +82,7 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
   const canView = jwtClaims.isSuperAdmin || jwtClaims.permissions.has('warehouse:read');
   const canMarkTaken = jwtClaims.isSuperAdmin || jwtClaims.permissions.has('warehouse:mark_taken');
   const canViewExpectedCargo = jwtClaims.isSuperAdmin || jwtClaims.permissions.has('expected_cargo:manage');
+  const canManagePartners = jwtClaims.isSuperAdmin || jwtClaims.permissions.has('partners:manage');
   const [activeTab, setActiveTab] = useState<ActiveTab>("transactions");
   const [activityPage, setActivityPage] = useState(1);
 
@@ -235,6 +237,15 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
                   title="Kutilayotgan yuklar"
                 >
                   <PackageSearch className="w-4 h-4" />
+                </button>
+              )}
+              {canManagePartners && (
+                <button
+                  onClick={() => onNavigate('admin-partners')}
+                  className="w-8 h-8 rounded-xl flex items-center justify-center text-cyan-500 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-500/10 transition-colors"
+                  title="Partnerlar"
+                >
+                  <Building2 className="w-4 h-4" />
                 </button>
               )}
               <button

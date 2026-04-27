@@ -32,6 +32,7 @@ import ManagerPage from "./pages/admin/ManagerPage";
 import PasskeyPage from "./pages/admin/PasskeyPage";
 import WarehousePage from "./pages/admin/WarehousePage";
 import ExpectedCargoPage from "./pages/admin/ExpectedCargoPage";
+import AdminPartnersPage from "./pages/admin/AdminPartnersPage";
 import { UniqueBackground } from "./components/ui/UniqueBackground";
 import TelegramWebAppGuard from "./components/TelegramWebAppGuard";
 
@@ -62,7 +63,8 @@ type Page =
   | "manager-page"
   | "passkey-page"
   | "warehouse-page"
-  | "expected-cargo";
+  | "expected-cargo"
+  | "admin-partners";
 
 interface RouteInfo {
   page: Page;
@@ -114,6 +116,7 @@ const ROLE_CONFIG: Record<string, { default: Page; allowed: Page[] }> = {
       "warehouse-page",
       "expected-cargo",
       "passkey-page",
+      "admin-partners",
     ],
   },
   "super-admin": {
@@ -141,6 +144,7 @@ const ROLE_CONFIG: Record<string, { default: Page; allowed: Page[] }> = {
       "expected-cargo",
       "manager-page",
       "passkey-page",
+      "admin-partners",
     ],
   },
   manager: {
@@ -151,11 +155,11 @@ const ROLE_CONFIG: Record<string, { default: Page; allowed: Page[] }> = {
   },
   warehouse_worker: {
     default: "warehouse-page",
-    allowed: ["warehouse-page", "expected-cargo", "admin-profile", "passkey-page"],
+    allowed: ["warehouse-page", "expected-cargo", "admin-profile", "passkey-page", "admin-partners"],
   },
   warehouse: {
     default: "warehouse-page",
-    allowed: ["warehouse-page", "expected-cargo", "admin-profile", "passkey-page"],
+    allowed: ["warehouse-page", "expected-cargo", "admin-profile", "passkey-page", "admin-partners"],
   },
 };
 
@@ -243,6 +247,7 @@ function getPathForPage(
   if (page === "warehouse-page") return "/admin/warehouse";
   if (page === "pos-dashboard") return "/pos";
   if (page === "expected-cargo") return "/admin/expected-cargo";
+  if (page === "admin-partners") return "/admin/partners";
   return "/auth/login";
 }
 
@@ -289,6 +294,7 @@ function resolvePageFromPath(rawPath: string): RouteInfo {
   if (path === "/admin/passkey") return { page: "passkey-page" };
   if (path === "/warehouse" || path === "/admin/warehouse") return { page: "warehouse-page" };
   if (path === "/admin/expected-cargo") return { page: "expected-cargo" };
+  if (path === "/admin/partners") return { page: "admin-partners" };
   if (path === "/pos") return { page: "pos-dashboard" };
 
   return { page: "login" };
@@ -546,6 +552,7 @@ function AppContent() {
     "admin-profile",
     "admin-carousel",
     "flight-schedule-admin",
+    "admin-partners",
   ].includes(currentPage);
 
   // Only roles with admin-accounts (admin, super-admin) get the full AdminLayout shell.
@@ -631,6 +638,7 @@ function AppContent() {
           {currentPage === "admin-profile" && <AdminProfilePage />}
           {currentPage === "admin-carousel" && <AdminCarouselPage />}
           {currentPage === "flight-schedule-admin" && <FlightScheduleAdminPage />}
+          {currentPage === "admin-partners" && <AdminPartnersPage />}
         </AdminLayout>
       ) : isPOSPage ? (
         <POSDashboard
@@ -650,6 +658,17 @@ function AppContent() {
             <AdminProfilePage
               onBack={() => navigateToPage(getDefaultPageForRole(userRole!) as Page)}
             />
+          )}
+          {currentPage === "admin-partners" && (
+            <div className="min-h-screen bg-[#f5f5f4] dark:bg-[#0a0a0a] px-3 sm:px-5 py-4 sm:py-6">
+              <button
+                onClick={() => navigateToPage(getDefaultPageForRole(userRole!) as Page)}
+                className="mb-4 flex items-center gap-1.5 text-[12px] font-semibold text-gray-500 dark:text-gray-400 hover:text-blue-500 transition-colors"
+              >
+                ← Orqaga
+              </button>
+              <AdminPartnersPage />
+            </div>
           )}
         </>
       ) : isManagerPage && canAccessManagerPage ? (
