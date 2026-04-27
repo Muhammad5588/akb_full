@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
 import { offlineStorage } from "@/utils/offlineStorage";
 import { uploadPhoto } from "@/api/services/cargo";
 import { Button } from "@/components/ui/button";
@@ -461,7 +461,7 @@ export default function AddCargoForm({
 
   const handleClientIdChange = useCallback(
     (value: string) => {
-      const cleaned = value.toUpperCase().replace(/[^A-Z0-9-]/g, "");
+      const cleaned = value.toUpperCase().replace(/[^A-Z0-9-/]/g, "");
       setClientId(cleaned);
       clearError("client_id");
 
@@ -569,7 +569,7 @@ export default function AddCargoForm({
     const e: Record<string, string> = {};
     if (!clientId.trim())
       e.client_id = t("cargo.validation.clientCodeRequired");
-    else if (!/^[A-Z][A-Z0-9-]*$/.test(clientId))
+    else if (!/^[A-Z][A-Z0-9-/]*$/.test(clientId))
       e.client_id = t("cargo.validation.clientCodeInvalid");
     if (photos.length === 0) e.photos = t("cargo.validation.photoRequired");
     if (!weightKg.trim()) e.weight_kg = t("cargo.validation.weightRequired");

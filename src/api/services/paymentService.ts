@@ -32,6 +32,7 @@ export interface FlightPaymentDetailsResponse {
   existing_remaining_amount: number | null;
   card_number: string | null;
   card_owner: string | null;
+  payment_links?: { label: string; url: string }[];
 }
 
 export interface WalletOnlyPaymentRequest {

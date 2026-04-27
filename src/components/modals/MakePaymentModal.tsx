@@ -1121,7 +1121,9 @@ const MakePaymentModal = ({ isOpen, onClose, preselectedFlightName }: MakePaymen
 
     // ---- Online Payment — Card + Upload ----
     if (paymentMethod === 'online') {
-      if (!details?.card_number) {
+      const hasLinks = details?.payment_links && details.payment_links.length > 0;
+
+      if (!details?.card_number && !hasLinks) {
         return (
           <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
             <AlertCircle className="w-12 h-12 text-[#c44747]" />
@@ -1154,32 +1156,58 @@ const MakePaymentModal = ({ isOpen, onClose, preselectedFlightName }: MakePaymen
             )}
           </div>
 
-          {/* Card info */}
-          <div className="rounded-lg p-4 bg-white border border-[#dbe8f4] shadow-[0_8px_20px_rgba(10,35,70,0.05)]">
-            <p className="text-xs font-semibold text-[#63758a] mb-1 uppercase tracking-normal">
-              {t('makePayment.transferTo')}
-            </p>
-            <div className="flex items-center justify-between">
-              <p className="text-2xl font-black tracking-normal text-[#07182f]">
-                {details.card_number}
+          {/* Payment Links */}
+          {hasLinks && (
+            <div className="space-y-3">
+              <p className="text-xs font-semibold text-[#63758a] uppercase tracking-normal">
+                To'lov ilovalari orqali to'lash:
               </p>
-              <button
-                onClick={handleCopyCard}
-                className="p-2.5 rounded-lg border border-[#cfe0f1] bg-[#eef6ff] hover:bg-[#e1f0ff] active:scale-90 transition-all"
-              >
-                {copied ? (
-                  <Check className="w-5 h-5 text-[#15835b]" />
-                ) : (
-                  <Copy className="w-5 h-5 text-[#0b4edb]" />
-                )}
-              </button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {details.payment_links!.map((link, idx) => (
+                  <a
+                    key={idx}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-12 rounded-lg font-bold text-sm
+                      bg-[#0b4edb] hover:bg-[#073fba] text-white shadow-sm
+                      active:scale-[0.97] transition-all flex items-center justify-center"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
             </div>
-            {details.card_owner && (
-              <p className="text-xs text-[#63758a] mt-1.5">
-                {t('makePayment.cardOwner')}: {details.card_owner}
+          )}
+
+          {/* Card info */}
+          {details?.card_number && (
+            <div className="rounded-lg p-4 bg-white border border-[#dbe8f4] shadow-[0_8px_20px_rgba(10,35,70,0.05)]">
+              <p className="text-xs font-semibold text-[#63758a] mb-1 uppercase tracking-normal">
+                {t('makePayment.transferTo')}
               </p>
-            )}
-          </div>
+              <div className="flex items-center justify-between">
+                <p className="text-2xl font-black tracking-normal text-[#07182f]">
+                  {details.card_number}
+                </p>
+                <button
+                  onClick={handleCopyCard}
+                  className="p-2.5 rounded-lg border border-[#cfe0f1] bg-[#eef6ff] hover:bg-[#e1f0ff] active:scale-90 transition-all"
+                >
+                  {copied ? (
+                    <Check className="w-5 h-5 text-[#15835b]" />
+                  ) : (
+                    <Copy className="w-5 h-5 text-[#0b4edb]" />
+                  )}
+                </button>
+              </div>
+              {details.card_owner && (
+                <p className="text-xs text-[#63758a] mt-1.5">
+                  {t('makePayment.cardOwner')}: {details.card_owner}
+                </p>
+              )}
+            </div>
+          )}
 
           {/* File Upload Area */}
           <div
