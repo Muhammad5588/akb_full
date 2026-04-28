@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { updateCargo, type CargoPhoto } from '@/api/services/cargo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -53,7 +53,7 @@ export default function EditCargoModal({ cargo, onClose, onSuccess }: EditCargoM
   };
 
   const handleClientIdChange = (value: string) => {
-    const cleaned = value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
+    const cleaned = value.toUpperCase().replace(/[^A-Z0-9-/]/g, '');
     setClientId(cleaned);
     if (errors.client_id) setErrors(prev => { const n = { ...prev }; delete n.client_id; return n; });
   };
@@ -61,7 +61,7 @@ export default function EditCargoModal({ cargo, onClose, onSuccess }: EditCargoM
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
     if (!clientId.trim()) newErrors.client_id = t('cargo.validation.clientCodeRequired');
-    else if (!/^[A-Z][A-Z0-9-]*$/.test(clientId)) newErrors.client_id = t('cargo.validation.clientCodeInvalid');
+    else if (!/^[A-Z][A-Z0-9-/]*$/.test(clientId)) newErrors.client_id = t('cargo.validation.clientCodeInvalid');
     if (!weightKg.trim()) newErrors.weight_kg = t('cargo.validation.weightRequired');
     else if (isNaN(Number(weightKg))) newErrors.weight_kg = t('cargo.validation.weightInvalid');
     if (pricePerKg && isNaN(Number(pricePerKg))) newErrors.price_per_kg = t('cargo.validation.weightInvalid');

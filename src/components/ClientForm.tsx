@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -108,7 +108,7 @@ const clientSchema = z.object({
   client_code: z
       .string()
       .max(10, "Kod maksimal 10 ta belgidan iborat bo'lishi kerak")
-      .regex(/^[A-Z0-9_]*$/, "Faqat lotin harflari, raqamlar va pastki chiziqcha (_) ruxsat etilgan")
+      .regex(/^[A-Z0-9_/]*$/, "Faqat lotin harflari, raqamlar, pastki chiziqcha (_) va slash (/) ruxsat etilgan")
       .optional(),
   full_name: z
     .string()
@@ -183,7 +183,7 @@ const clientSchema = z.object({
   referrer_client_code: z
     .string()
     .optional()
-    .refine((val) => !val || /^[A-Z][A-Z0-9-]*$/.test(val.toUpperCase()), {
+    .refine((val) => !val || /^[A-Z][A-Z0-9-/]*$/.test(val.toUpperCase()), {
       message: "client.validation.referrerClientCodeInvalid",
     }),
   passportImages: z
@@ -754,7 +754,7 @@ export default function ClientForm({
                         {...field}
                         onChange={(e) => {
                           // Faqat harf, raqam va pastki chiziqchani (_) qoldiramiz va katta harfga o'tkazamiz
-                          const cleanedCode = e.target.value.toUpperCase().replace(/[^A-Z0-9_]/g, "");
+                          const cleanedCode = e.target.value.toUpperCase().replace(/[^A-Z0-9_/]/g, "");
                           field.onChange(cleanedCode);
                         }}
                         className="bg-blue-50/50 text-gray-900 placeholder:text-gray-400 uppercase"

@@ -23,7 +23,7 @@ import {
 } from '@/components/user_panel/premium';
 
 const loginSchema = z.object({
-  clientCode: z.string().min(1, 'login.validation.clientCodeRequired').regex(/^[A-Z][A-Z0-9-]*$/, 'login.validation.clientCodeInvalid'),
+  clientCode: z.string().min(1, 'login.validation.clientCodeRequired').regex(/^[A-Z][A-Z0-9-/]*$/, 'login.validation.clientCodeInvalid'),
   phoneNumber: z.string().min(1, 'login.validation.phoneNumberRequired').regex(/^\d{9}$/, 'login.validation.phoneNumberInvalid'),
 });
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -158,7 +158,7 @@ export default function LoginForm({ onNavigateToRegister, onLoginSuccess }: Logi
     setSubmitMessage('');
   };
 
-  const handleClientCodeInput = (v: string) => v.toUpperCase().replace(/[^A-Z0-9-]/g, '');
+  const handleClientCodeInput = (v: string) => v.toUpperCase().replace(/[^A-Z0-9-/]/g, '');
 
   const handlePhoneInput = (v: string) => {
     const c = v.replace(/\D/g, '');
