@@ -76,7 +76,7 @@ import {
 import type { ClientSearchResult, UnpaidCargoItem } from "@/api/verification";
 import { formatCurrencySum, formatTashkentDateTime } from "@/lib/format";
 
-// â”€â”€â”€ Constants â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€ Constants €
 
 const PAYMENT_TYPES: { id: PaymentProvider; label: string }[] = [
   { id: "cash", label: "Naqd" },
@@ -175,7 +175,7 @@ const FILTER_TABS: { id: FilterType; label: string }[] = [
   { id: "partial", label: "Qisman to'langan" },
 ];
 
-// â”€â”€â”€ Payment provider / status localisation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€ Payment provider / status localisation €€€
 
 const PAYMENT_LABEL: Record<string, string> = {
   cash: "Naqd",
@@ -212,7 +212,7 @@ const DELIVERY_METHOD_LABELS: Record<string, string> = {
 
 /** Translates raw backend payment_provider / payment_type strings to Uzbek. */
 function translatePayment(raw: string): string {
-  if (!raw) return "â€”";
+  if (!raw) return "€”";
   if (raw.toUpperCase().startsWith("SYS_ADJ")) return "Hamyon tahriri";
   return PAYMENT_LABEL[raw.toLowerCase()] ?? raw;
 }
@@ -223,7 +223,7 @@ const SOUND_KEY = "pos_sound_enabled";
 const PENDING_NOTIFS_KEY = "pos_pending_notifs";
 
 /**
- * A single warehouseâ†’cashier notification that has been received but not yet
+ * A single warehouse†’cashier notification that has been received but not yet
  * acted on (dismissed or opened).  Persisted in localStorage so the cashier
  * does not lose notifications if they briefly leave or refresh the page.
  */
@@ -249,7 +249,7 @@ function persistPendingNotifs(notifs: PendingNotif[]): void {
 
 /**
  * Plays a two-tone notification chime using the Web Audio API.
- * No external audio file needed â€” the sound is synthesised on-the-fly.
+ * No external audio file needed €” the sound is synthesised on-the-fly.
  * Silently no-ops if AudioContext is unavailable or blocked by the browser.
  */
 function playNotificationChime(): void {
@@ -260,7 +260,7 @@ function playNotificationChime(): void {
     master.gain.setValueAtTime(0.35, ctx.currentTime);
     master.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.7);
 
-    // First tone â€” higher pitch
+    // First tone €” higher pitch
     const osc1 = ctx.createOscillator();
     osc1.connect(master);
     osc1.type = "sine";
@@ -268,7 +268,7 @@ function playNotificationChime(): void {
     osc1.start(ctx.currentTime);
     osc1.stop(ctx.currentTime + 0.18);
 
-    // Second tone â€” lower pitch, slight delay
+    // Second tone €” lower pitch, slight delay
     const osc2 = ctx.createOscillator();
     osc2.connect(master);
     osc2.type = "sine";
@@ -283,7 +283,7 @@ function playNotificationChime(): void {
   }
 }
 
-// â”€â”€â”€ localStorage helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€ localStorage helpers ”€
 
 function getRecentSearches(): string[] {
   try {
@@ -308,7 +308,7 @@ function deleteRecentSearch(code: string): void {
   );
 }
 
-// â”€â”€â”€ Waterfall distribution â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€ Waterfall distribution ”€
 
 /** Spread `received` across cargo debts sequentially; last item absorbs remainder. */
 function waterfallDistribute(
@@ -338,13 +338,13 @@ function formatCard(raw: string): string {
     .trim();
 }
 
-/** 8600123456789012 â†’ 8600 **** **** 9012 */
+/** 8600123456789012 †’ 8600 **** **** 9012 */
 function maskCard(raw: string): string {
   const d = raw.replace(/\s/g, "");
   return `${d.slice(0, 4)} **** **** ${d.slice(-4)}`;
 }
 
-// â”€â”€â”€ TodayTotal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€ TodayTotal €”€
 
 function TodayTotal({ total, loading }: { total: number; loading: boolean }) {
   return (
@@ -363,7 +363,7 @@ function TodayTotal({ total, loading }: { total: number; loading: boolean }) {
   );
 }
 
-// â”€â”€â”€ LogEntry â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€ LogEntry €”€
 
 function LogEntry({
   item,
@@ -374,7 +374,7 @@ function LogEntry({
   item: CashierLogItem;
   index: number;
   onSelect: (code: string) => void;
-  /** The current user's Admin DB PK â€” used to colour-code own vs. peer entries. */
+  /** The current user's Admin DB PK €” used to colour-code own vs. peer entries. */
   currentAdminId: number | null;
 }) {
   const hasCode = !!item.client_code;
@@ -393,14 +393,14 @@ function LogEntry({
     >
       <div className="min-w-0">
         <div className="flex items-center gap-1.5">
-          {/* Coloured dot â€” visually groups rows by cashier */}
+          {/* Coloured dot €” visually groups rows by cashier */}
           <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${cashierStyle.dot}`} />
           <span className="text-[13px] font-bold text-gray-800 dark:text-white font-mono">
-            {item.client_code ?? "â€”"}
+            {item.client_code ?? "€”"}
           </span>
           {item.flight && (
             <span className="text-[10px] text-gray-400 dark:text-gray-500 truncate max-w-[80px]">
-              Â· {item.flight}
+              · {item.flight}
             </span>
           )}
         </div>
@@ -425,7 +425,7 @@ function LogEntry({
           }`}
         >
           {item.paid_amount < 0
-            ? `âˆ’${formatCurrencySum(Math.abs(item.paid_amount))}`
+            ? `ˆ’${formatCurrencySum(Math.abs(item.paid_amount))}`
             : formatCurrencySum(item.paid_amount)}
         </p>
         <span
@@ -441,7 +441,7 @@ function LogEntry({
   );
 }
 
-// â”€â”€â”€ CargoRow â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€ CargoRow €”€
 
 function CargoRow({
   cargo,
@@ -508,7 +508,7 @@ function CargoRow({
   );
 }
 
-// â”€â”€â”€ ClientProfileDrawer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€ ClientProfileDrawer 
 
 function ClientProfileDrawer({
   clientCode,
@@ -545,7 +545,7 @@ function ClientProfileDrawer({
   // Full client info overlay
   const [showFullInfo, setShowFullInfo] = useState(false);
 
-  // Full client profile (phone, passport, region, â€¦)
+  // Full client profile (phone, passport, region, €¦)
   const { data: profile } = useQuery({
     queryKey: ["pos-profile", clientCode],
     queryFn: async () => {
@@ -554,7 +554,7 @@ function ClientProfileDrawer({
     },
   });
 
-  // Paginated transactions â€” re-fetches on filter change
+  // Paginated transactions €” re-fetches on filter change
   const { data: txData, isLoading: txLoading } = useQuery({
     queryKey: ["pos-txn", clientCode, txFilter],
     queryFn: () => getPOSClientTransactions(clientCode, txFilter, 20, 0),
@@ -812,7 +812,7 @@ function ClientProfileDrawer({
           </div>
         </div>
 
-        {/* Body â€” 2-column on desktop, stacked on mobile */}
+        {/* Body €” 2-column on desktop, stacked on mobile */}
         <div className="flex-1 min-h-0 overflow-hidden flex flex-col md:flex-row">
           {/* DESKTOP LEFT: Profile details + adjust form */}
           <div className="hidden md:flex md:w-80 shrink-0 flex-col border-r border-gray-100 dark:border-white/[0.06]">
@@ -832,7 +832,7 @@ function ClientProfileDrawer({
                     Telefon
                   </p>
                   <p className="text-[12px] font-semibold text-gray-800 dark:text-white">
-                    {profile?.phone ?? "â€”"}
+                    {profile?.phone ?? "€”"}
                   </p>
                 </div>
               </div>
@@ -848,7 +848,7 @@ function ClientProfileDrawer({
                     Pasport seriyasi
                   </p>
                   <p className="text-[12px] font-semibold text-gray-800 dark:text-white font-mono">
-                    {profile?.passport_series ?? "â€”"}
+                    {profile?.passport_series ?? "€”"}
                   </p>
                 </div>
               </div>
@@ -864,7 +864,7 @@ function ClientProfileDrawer({
                     Viloyat
                   </p>
                   <p className="text-[12px] font-semibold text-gray-800 dark:text-white">
-                    {profile?.region ?? "â€”"}
+                    {profile?.region ?? "€”"}
                   </p>
                 </div>
               </div>
@@ -999,7 +999,7 @@ function ClientProfileDrawer({
                                   : "text-red-500 dark:text-red-400"
                               }`}
                             >
-                              {tx.payment_balance_difference >= 0 ? "+" : "âˆ’"}
+                              {tx.payment_balance_difference >= 0 ? "+" : "ˆ’"}
                               {formatCurrencySum(
                                 Math.abs(tx.payment_balance_difference),
                               )}
@@ -1012,7 +1012,7 @@ function ClientProfileDrawer({
                               {tx.payment_status !== "paid" &&
                                 tx.remaining_amount > 0 && (
                                   <p className="text-[10px] text-red-500 font-semibold">
-                                    âˆ’{formatCurrencySum(tx.remaining_amount)}
+                                    ˆ’{formatCurrencySum(tx.remaining_amount)}
                                   </p>
                                 )}
                             </>
@@ -1122,7 +1122,7 @@ function ClientProfileDrawer({
         </div>
       </motion.div>
 
-      {/* â”€â”€ Full client info modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/*  Full client info modal €€€€ */}
       <AnimatePresence>
         {showFullInfo && profile && (
           <motion.div
@@ -1164,19 +1164,19 @@ function ClientProfileDrawer({
                 <div className="bg-gray-50 dark:bg-white/[0.04] rounded-2xl divide-y divide-gray-100 dark:divide-white/[0.05] overflow-hidden text-[13px]">
                   {[
                     { label: "Ism Familiya", value: profile.full_name },
-                    { label: "Telefon", value: profile.phone ?? "â€”" },
+                    { label: "Telefon", value: profile.phone ?? "€”" },
                     {
                       label: "Pasport seriyasi",
-                      value: profile.passport_series ?? "â€”",
+                      value: profile.passport_series ?? "€”",
                     },
-                    { label: "JSHSHIR (PINFL)", value: profile.pinfl ?? "â€”" },
+                    { label: "JSHSHIR (PINFL)", value: profile.pinfl ?? "€”" },
                     {
                       label: "Tug'ilgan sana",
-                      value: profile.date_of_birth ?? "â€”",
+                      value: profile.date_of_birth ?? "€”",
                     },
-                    { label: "Viloyat", value: profile.region ?? "â€”" },
-                    { label: "Tuman", value: profile.district ?? "â€”" },
-                    { label: "Manzil", value: profile.address ?? "â€”" },
+                    { label: "Viloyat", value: profile.region ?? "€”" },
+                    { label: "Tuman", value: profile.district ?? "€”" },
+                    { label: "Manzil", value: profile.address ?? "€”" },
                     {
                       label: "Tranzaksiyalar",
                       value: String(profile.transaction_count),
@@ -1212,7 +1212,7 @@ function ClientProfileDrawer({
   );
 }
 
-// â”€â”€â”€ ConfirmModal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€ ConfirmModal €”€
 
 interface ConfirmPayload {
   cargos: UnpaidCargoItem[];
@@ -1274,7 +1274,7 @@ function ConfirmModal({
                 <div className="flex items-center gap-2">
                   <Package className="w-3.5 h-3.5 text-gray-400 shrink-0" />
                   <span className="text-[12px] font-semibold text-gray-700 dark:text-gray-300">
-                    #{c.row_number} Â· {c.flight_name}
+                    #{c.row_number} · {c.flight_name}
                   </span>
                 </div>
                 <span className="text-[12px] font-bold text-gray-800 dark:text-white">
@@ -1296,7 +1296,7 @@ function ConfirmModal({
               <div className="flex justify-between text-[12px]">
                 <span className="text-green-600">Hamyon</span>
                 <span className="font-semibold text-green-600">
-                  âˆ’{formatCurrencySum(payload.walletDeduction)}
+                  ˆ’{formatCurrencySum(payload.walletDeduction)}
                 </span>
               </div>
             )}
@@ -1352,7 +1352,7 @@ function ConfirmModal({
   );
 }
 
-// â”€â”€â”€ Main Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€ Main Component 
 
 interface POSDashboardProps {
   onNavigate: (page: string) => void;
@@ -1363,7 +1363,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
   const queryClient = useQueryClient();
   const searchRef = useRef<HTMLInputElement>(null);
 
-  // â”€â”€ Dark mode â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Dark mode €”€
   const [isDark, setIsDark] = useState<boolean>(() => {
     // Initialise from localStorage; fall back to the current <html> class
     const saved = localStorage.getItem("pos_theme");
@@ -1380,7 +1380,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     });
   }, []);
 
-  // â”€â”€ Permissions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Permissions 
   // State (not memo) so the UI re-renders automatically after a silent token refresh.
   const [jwtClaims, setJwtClaims] = useState(() => getAdminJwtClaims());
 
@@ -1395,13 +1395,13 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
         setJwtClaims(getAdminJwtClaims());
       })
       .catch(() => {
-        // Refresh failure is non-fatal â€” we continue with the existing token.
+        // Refresh failure is non-fatal €” we continue with the existing token.
         // A real expiry will be caught by the 401 interceptor in apiClient.
       });
     return () => { cancelled = true; };
   }, []);
 
-  // Super-admins have no explicit permissions in their JWT â€” they bypass all checks.
+  // Super-admins have no explicit permissions in their JWT €” they bypass all checks.
   const hasPerm = useCallback(
     (slug: string) => jwtClaims.isSuperAdmin || jwtClaims.permissions.has(slug),
     [jwtClaims],
@@ -1415,10 +1415,10 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
   const hasPosAccess =
     jwtClaims.isSuperAdmin || canRead || canProcess || canAdjust || canUpdateStatus;
 
-  // â”€â”€ Calculator modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Calculator modal 
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
 
-  // â”€â”€ Sound preference (persisted in localStorage) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Sound preference (persisted in localStorage) €€
   const [soundEnabled, setSoundEnabled] = useState<boolean>(
     () => localStorage.getItem(SOUND_KEY) !== "off",
   );
@@ -1430,13 +1430,13 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     });
   }, []);
 
-  // â”€â”€ Pending notifications (persisted â€” survive page refresh) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Pending notifications (persisted €” survive page refresh) €
   // Notifications are stored in localStorage and re-shown on mount so the
   // cashier never misses a message even if they briefly leave the page.
   const [pendingNotifs, setPendingNotifs] = useState<PendingNotif[]>(loadPendingNotifs);
   const notifCount = pendingNotifs.length;
 
-  // â”€â”€ Stable refs for functions used inside toast action callbacks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Stable refs for functions used inside toast action callbacks €
   // Toast action `onClick` handlers close over these refs so they always call
   // the latest version without creating stale closures.
   const handleSearchRef = useRef<(code: string) => void>(() => {});
@@ -1465,14 +1465,14 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
   const showNotifToast = useCallback((notif: PendingNotif) => {
     const amountStr =
       notif.amount != null
-        ? ` Â· ${new Intl.NumberFormat("uz-UZ").format(notif.amount)} ${notif.currency ?? "UZS"}`
+        ? ` · ${new Intl.NumberFormat("uz-UZ").format(notif.amount)} ${notif.currency ?? "UZS"}`
         : "";
 
     toast.info(`${notif.clientCode}${amountStr}`, {
       // Stable ID lets Sonner de-duplicate if the same notif is shown twice
       // (e.g. mount effect runs while the toast is still visible).
       id: notif.id,
-      description: `${notif.flightName} Â· To'lov tasdiqlansin`,
+      description: `${notif.flightName} · To'lov tasdiqlansin`,
       duration: Infinity,
       action: {
         label: "Ochish",
@@ -1487,11 +1487,11 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
         },
       },
       cancel: {
-        label: "âœ•",
+        label: "œ•",
         onClick: () => removePendingNotifRef.current(notif.id),
       },
     });
-  }, []); // all dependencies are refs â€” this callback is intentionally stable
+  }, []); // all dependencies are refs €” this callback is intentionally stable
 
   // On mount: re-show toasts for notifications that arrived while the cashier
   // was away (they are still in localStorage / pendingNotifs state).
@@ -1500,7 +1500,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // only on mount
 
-  // â”€â”€ Warehouse â†’ Cashier notifications via BroadcastChannel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Warehouse †’ Cashier notifications via BroadcastChannel €
   const { sendMessage } = useBroadcastChannel(
     useCallback(
       (msg: BroadcastMessage) => {
@@ -1531,7 +1531,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
   // Keep sendMessage ref current so toast action callbacks can send ACKs.
   sendMessageRef.current = sendMessage;
 
-  // â”€â”€ Search â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Search €
   const [searchInput, setSearchInput] = useState("");
   const [clientInfo, setClientInfo] = useState<ClientSearchResult | null>(null);
   const [searchError, setSearchError] = useState<string | null>(null);
@@ -1542,14 +1542,14 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
   const [liveBalance, setLiveBalance] = useState<number | null>(null);
   const displayBalance = liveBalance ?? clientInfo?.client_balance ?? 0;
 
-  // â”€â”€ Selection & payment â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Selection & payment ”€
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [paymentType, setPaymentType] = useState<PaymentProvider>("cash");
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
   const [useWallet, setUseWallet] = useState(false);
   const [receivedInput, setReceivedInput] = useState("");
 
-  // â”€â”€ UI overlays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  UI overlays 
   const [showProfile, setShowProfile] = useState(false);
   const [confirmPayload, setConfirmPayload] = useState<ConfirmPayload | null>(
     null,
@@ -1559,7 +1559,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     searchRef.current?.focus();
   }, []);
 
-  // â”€â”€ Queries â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Queries €”€
   const {
     data: logData,
     isLoading: logLoading,
@@ -1570,7 +1570,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     // Poll every 10 s so all cashiers see each other's entries in near-real-time
     // without requiring a manual refresh.
     refetchInterval: 10_000,
-    // Only fire if the admin actually has pos:read â€” prevents a 403 for adjust-only roles
+    // Only fire if the admin actually has pos:read €” prevents a 403 for adjust-only roles
     enabled: canRead,
   });
 
@@ -1605,7 +1605,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     cargos.length > 0 && cargos.every((c) => selectedIds.has(c.cargo_id));
   const someSelected = selectedIds.size > 0;
 
-  // â”€â”€ Bulk payment mutation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Bulk payment mutation €€€€
   const payMut = useMutation({
     mutationFn: processBulkPayment,
     onSuccess: (result) => {
@@ -1647,7 +1647,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     },
   });
 
-  // â”€â”€ Derived payment totals â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Derived payment totals €€€€
   const selectedCargos = cargos.filter((c) => selectedIds.has(c.cargo_id));
   const totalOwed = selectedCargos.reduce(
     (s, c) => s + (c.total_payment ?? 0),
@@ -1669,7 +1669,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
 
   const receivedAmount = parseFloat(receivedInput) || netAfterWallet;
 
-  // â”€â”€ Search â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Search €
   const handleSearch = useCallback(
     async (overrideCode?: string) => {
       const query = (overrideCode ?? searchInput).trim().toUpperCase();
@@ -1727,7 +1727,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     setTimeout(() => searchRef.current?.focus(), 50);
   };
 
-  // â”€â”€ Cargo selection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Cargo selection ”€
   const toggleAll = useCallback(() => {
     setSelectedIds(
       allSelected ? new Set() : new Set(cargos.map((c) => c.cargo_id)),
@@ -1743,7 +1743,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     });
   }, []);
 
-  // â”€â”€ Confirmation flow â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Confirmation flow ”€
   const handleOpenConfirm = () => {
     if (!clientInfo || selectedCargos.length === 0 || payMut.isPending) return;
     if (paymentType === "card" && !selectedCardId) {
@@ -1778,9 +1778,9 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     });
   };
 
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // €€”€
   // Render
-  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // €€”€
 
   const showRecentChips =
     !searchInput &&
@@ -1789,7 +1789,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     !isSearching &&
     recentCodes.length > 0;
 
-  // â”€â”€ Zero-access fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //  Zero-access fallback €€€€€
   if (!hasPosAccess) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 text-center px-6">
@@ -1876,7 +1876,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
         </div>
 
         <div className="flex flex-col lg:flex-row gap-4">
-          {/* â”€â”€ Left column: Cashier Log â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+          {/*  Left column: Cashier Log €€€
                Always rendered so the layout stays consistent.
                Content is gated behind pos:read; otherwise shows a lock panel. */}
           <div className="lg:w-72 xl:w-80 shrink-0 space-y-3">
@@ -1948,7 +1948,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
             )}
           </div>
 
-          {/* â”€â”€ Right column: Search & Payment â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+          {/*  Right column: Search & Payment €€€ */}
           <div className="flex-1 min-w-0 space-y-3">
             {/* Search bar */}
             <div className="bg-white dark:bg-[#111] rounded-2xl border border-black/[0.05] dark:border-white/[0.06] shadow-sm p-3">
@@ -2030,7 +2030,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
               )}
             </AnimatePresence>
 
-            {/* Client card â€” clicking opens the profile drawer */}
+            {/* Client card €” clicking opens the profile drawer */}
             <AnimatePresence>
               {clientInfo && (
                 <motion.div
@@ -2088,7 +2088,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
               )}
             </AnimatePresence>
 
-            {/* Inline lock â€” shown when a client is found but the admin cannot process payments */}
+            {/* Inline lock €” shown when a client is found but the admin cannot process payments */}
             <AnimatePresence>
               {!canProcess && clientInfo && (
                 <motion.div
@@ -2107,7 +2107,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
               )}
             </AnimatePresence>
 
-            {/* Cargo list â€” only visible to users who can process payments */}
+            {/* Cargo list €” only visible to users who can process payments */}
             <AnimatePresence>
               {canProcess && clientInfo && (
                 <motion.div
@@ -2206,7 +2206,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
               </div>
             )}
 
-            {/* â”€â”€ Sticky payment footer (pos:process required) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/*  Sticky payment footer (pos:process required) €”€ */}
             <AnimatePresence>
               {canProcess && someSelected && clientInfo && (
                 <motion.div
@@ -2248,7 +2248,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                       </div>
                     </div>
 
-                    {/* Card selector â€” shown when paymentType === "card" */}
+                    {/* Card selector €” shown when paymentType === "card" */}
                     <AnimatePresence>
                       {paymentType === "card" && (
                         <motion.div
@@ -2286,7 +2286,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                                       <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5 truncate">
                                         {card.full_name}
                                         <span className="ml-1.5 text-gray-400 dark:text-gray-500">
-                                          Â· {formatCurrencySum(card.total_collected)}
+                                          · {formatCurrencySum(card.total_collected)}
                                         </span>
                                       </p>
                                     </div>
@@ -2306,7 +2306,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                       )}
                     </AnimatePresence>
 
-                    {/* Wallet toggle â€” large, prominent block */}
+                    {/* Wallet toggle €” large, prominent block */}
                     {displayBalance > 0 && (
                       <button
                         type="button"
@@ -2406,7 +2406,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                             Hamyon:
                           </span>
                           <span className="font-semibold text-green-600 dark:text-green-400">
-                            âˆ’{formatCurrencySum(walletDeduction)}
+                            ˆ’{formatCurrencySum(walletDeduction)}
                           </span>
                         </div>
                       )}
@@ -2428,7 +2428,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                       className="w-full py-4 bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white font-black text-[16px] rounded-2xl shadow-lg shadow-blue-500/25 transition-all disabled:opacity-60 flex items-center justify-center gap-2"
                     >
                       <ChevronRight className="w-5 h-5" />
-                      TO'LASH ({selectedIds.size} ta Â·{" "}
+                      TO'LASH ({selectedIds.size} ta ·{" "}
                       {formatCurrencySum(netAfterWallet)})
                     </motion.button>
                   </div>
@@ -2439,7 +2439,7 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
         </div>
       </div>
 
-      {/* â”€â”€ Overlays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/*  Overlays  */}
       <AnimatePresence>
         {showProfile && clientInfo && (
           <ClientProfileDrawer
