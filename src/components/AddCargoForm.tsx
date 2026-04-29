@@ -372,7 +372,7 @@ export default function AddCargoForm({
   const { t } = useTranslation();
 
   // â”€â”€ Form state â”€â”€
-  const [clientId, setClientId] = useState("");
+  const [clientId, setClientId] = useState(() => sessionStorage.getItem('savedPrefix') || "");
   const [region, setRegion] = useState("");
   const [district, setDistrict] = useState("");
   const [weightKg, setWeightKg] = useState("");
@@ -381,12 +381,24 @@ export default function AddCargoForm({
   const [photos, setPhotos] = useState<File[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  // Restore region/district if prefix was loaded from storage
+  useEffect(() => {
+    if (clientId) {
+      const { region: r, district: d } = getRegionAndDistrictFromCode(clientId);
+      if (r) setRegion(r);
+      if (d) setDistrict(d);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // â”€â”€ Mode toggles â”€â”€
   const [fastMode, setFastMode] = useState(false);
   const [autoCamera, setAutoCamera] = useState(true);
 
   // â”€â”€ Keep client/region toggle (default: ON â†’ saqlanadi) â”€â”€
-  const [keepClientRegion, setKeepClientRegion] = useState(true);
+  const [keepClientRegion, setKeepClientRegion] = useState(() => {
+    return sessionStorage.getItem('keepClientRegion') !== 'false';
+  });
 
   // â”€â”€ Upload queue â”€â”€
   const [uploadQueue, setUploadQueue] = useState<QueuedUpload[]>([]);
@@ -556,8 +568,10 @@ export default function AddCargoForm({
   /* â”€â”€ Keep toggle handler â”€â”€ */
   const handleKeepToggle = useCallback((checked: boolean) => {
     setKeepClientRegion(checked);
+    sessionStorage.setItem('keepClientRegion', checked ? 'true' : 'false');
     // Toggle o'chirilganda darhol tozala
     if (!checked) {
+      sessionStorage.removeItem('savedPrefix');
       setClientId("");
       setRegion("");
       setDistrict("");
@@ -623,19 +637,23 @@ export default function AddCargoForm({
 
       setUploadQueue((prev) => [...prev, item]);
 
+      const currentPrefix = (() => {
+        const { district: d, region: r } = getRegionAndDistrictFromCode(clientId);
+        if (d && AVIA_CODES[d] && clientId.startsWith(AVIA_CODES[d])) return AVIA_CODES[d];
+        if (r && REGION_PREFIXES[r] && clientId.startsWith(REGION_PREFIXES[r])) return REGION_PREFIXES[r];
+        return "";
+      })();
+
+      if (keepClientRegion) {
+        sessionStorage.setItem('savedPrefix', currentPrefix);
+      } else {
+        sessionStorage.removeItem('savedPrefix');
+      }
+
       if (fastMode) {
         if (keepClientRegion) {
           // Faqat prefixni saqlÐ°b, raqamli qismini tozala
-          setClientId((prev) => {
-            const { district: d, region: r } = getRegionAndDistrictFromCode(prev);
-            if (d && AVIA_CODES[d] && prev.startsWith(AVIA_CODES[d])) {
-              return AVIA_CODES[d];
-            }
-            if (r && REGION_PREFIXES[r] && prev.startsWith(REGION_PREFIXES[r])) {
-              return REGION_PREFIXES[r];
-            }
-            return "";
-          });
+          setClientId(currentPrefix);
           // region va district o'zgarishsiz qoladi
         } else {
           // Hammasi tozalanadi
@@ -965,34 +983,6 @@ export default function AddCargoForm({
                 }}
               />
 
-              {/* â”€â”€ Keep Client/Region toggle â”€â”€ */}
-              <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/10">
-                <div className="flex items-center gap-2.5">
-                  <MapPin className="w-4 h-4 text-blue-500 shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 leading-none">
-                      Viloyat va kodni saqlash
-                    </p>
-                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-                      {keepClientRegion
-                        ? "Keyingi yuklashda saqlanadi"
-                        : "Har yuklashda tozalanadi"}
-                    </p>
-                  </div>
-                </div>
-
-                <label className="relative cursor-pointer shrink-0">
-                  <input
-                    type="checkbox"
-                    checked={keepClientRegion}
-                    onChange={(e) => handleKeepToggle(e.target.checked)}
-                    className="sr-only peer"
-                  />
-                  <div className="w-11 h-6 bg-gray-200 dark:bg-gray-800 rounded-full peer-checked:bg-blue-500 dark:peer-checked:bg-blue-600 border border-gray-300 dark:border-gray-700 peer-checked:border-blue-500/50 transition-all" />
-                  <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-sm peer-checked:translate-x-5 transition-transform" />
-                </label>
-              </div>
-
               {/* Region */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">
@@ -1030,10 +1020,26 @@ export default function AddCargoForm({
 
               {/* Client ID */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">
-                  {t("cargo.clientCode")}{" "}
-                  <span className="text-red-500">*</span>
-                </label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200">
+                    {t("cargo.clientCode")} <span className="text-red-500">*</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer group" title="Prefixni saqlash (misol: PP)">
+                    <span className="text-[11px] font-semibold text-gray-400 group-hover:text-blue-500 transition-colors uppercase tracking-wider">
+                      {keepClientRegion ? "Saqlanadi" : "Saqlash"}
+                    </span>
+                    <div className="relative flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={keepClientRegion}
+                        onChange={(e) => handleKeepToggle(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-9 h-5 bg-gray-200 dark:bg-gray-800 rounded-full peer-checked:bg-blue-500 dark:peer-checked:bg-blue-600 border border-gray-300 dark:border-gray-700 peer-checked:border-blue-500/50 transition-all" />
+                      <div className="absolute left-[3px] top-[3px] w-3.5 h-3.5 bg-white rounded-full shadow-sm peer-checked:translate-x-4 transition-transform" />
+                    </div>
+                  </label>
+                </div>
                 <Input
                   ref={clientIdRef}
                   type="text"
