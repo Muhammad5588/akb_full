@@ -335,7 +335,7 @@ const StepFlightSelection = memo(
 
                 {/* Flight Info */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-base text-[#07182f]">{f.flight_name}</h3>
+                  <h3 className="font-semibold text-base text-[#07182f]">{f.display_name || f.flight_name}</h3>
                   <p className="text-xs text-[#63758a]">{t('deliveryRequest.steps.flight.flightLabel')}</p>
                 </div>
 
@@ -388,16 +388,18 @@ const StepFlightSelection = memo(
 interface StepStandardProps {
   deliveryType: DeliveryType;
   selectedFlights: string[];
+  flightDisplayMap: Record<string, string>;
   submitting: boolean;
   onSubmit: () => void;
   onBack: () => void;
 }
 
 const StepStandardConfirm = memo(
-  ({ deliveryType, selectedFlights, submitting, onSubmit, onBack }: StepStandardProps) => {
+  ({ deliveryType, selectedFlights, flightDisplayMap, submitting, onSubmit, onBack }: StepStandardProps) => {
     const { t } = useTranslation();
     const typeLabel =
       DELIVERY_OPTIONS.find((o) => o.id === deliveryType)?.label ?? deliveryType;
+    const displayFlights = selectedFlights.map((f) => flightDisplayMap[f] || f);
 
     return (
       <div className="animate-in fade-in slide-in-from-right-4 duration-400">
@@ -423,13 +425,13 @@ const StepStandardConfirm = memo(
               {t('deliveryRequest.steps.confirm.selectedFlights')}
             </p>
             <div className="flex flex-wrap gap-2">
-              {selectedFlights.map((f) => (
+              {selectedFlights.map((f, i) => (
                 <span
                   key={f}
                   className="inline-flex items-center gap-1.5 rounded-lg border border-[#cfe0f1] bg-[#eef7ff] px-3 py-1.5 text-sm font-semibold text-[#0b4edb]"
                 >
                   <Plane className="w-3.5 h-3.5" />
-                  {f}
+                  {displayFlights[i]}
                 </span>
               ))}
             </div>
@@ -441,7 +443,7 @@ const StepStandardConfirm = memo(
           <p className="text-sm text-[#0b2b53] font-medium">
             <Trans
               i18nKey="deliveryRequest.steps.confirm.infoMessage"
-              values={{ type: typeLabel, flights: selectedFlights.join(', ') }}
+              values={{ type: typeLabel, flights: displayFlights.join(', ') }}
               components={{ strong: <strong /> }}
             />
           </p>
@@ -493,6 +495,7 @@ interface StepUzpostProps {
   calcData: CalculateUzpostResponse | null;
   loading: boolean;
   selectedFlights: string[];
+  flightDisplayMap: Record<string, string>;
   submitting: boolean;
   onSubmit: (walletUsed: number, file: File | null) => void;
   onBack: () => void;
@@ -502,6 +505,7 @@ function StepUzpostPayment({
   calcData,
   loading,
   selectedFlights,
+  flightDisplayMap,
   submitting,
   onSubmit,
   onBack,
@@ -588,7 +592,7 @@ function StepUzpostPayment({
     <div className="animate-in fade-in slide-in-from-right-4 duration-400">
       <StepHeader
         title={t('deliveryRequest.steps.uzpost.paymentTitle')}
-        subtitle={t('deliveryRequest.steps.uzpost.flightsFor', { flights: selectedFlights.join(', ') })}
+        subtitle={t('deliveryRequest.steps.uzpost.flightsFor', { flights: selectedFlights.map((f) => flightDisplayMap[f] || f).join(', ') })}
       />
 
       {/* Summary Grid */}
@@ -900,6 +904,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
 
   // API state
   const [flights, setFlights] = useState<FlightItem[]>([]);
+  const [flightDisplayMap, setFlightDisplayMap] = useState<Record<string, string>>({});
   const [flightsLoading, setFlightsLoading] = useState(false);
   const [calcData, setCalcData] = useState<CalculateUzpostResponse | null>(null);
   const [calcLoading, setCalcLoading] = useState(false);
@@ -921,10 +926,12 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
     try {
       const res = await getPaidFlights();
       setFlights(res.flights);
+      setFlightDisplayMap(Object.fromEntries(res.flights.map((f) => [f.flight_name, f.display_name])));
     } catch (err: unknown) {
       const e = err as { message?: string };
       toast.error(e?.message || t('deliveryRequest.toast.flightsError'));
       setFlights([]);
+      setFlightDisplayMap({});
     } finally {
       setFlightsLoading(false);
     }
@@ -1078,6 +1085,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
           calcData={calcData}
           loading={calcLoading}
           selectedFlights={selectedFlights}
+          flightDisplayMap={flightDisplayMap}
           submitting={submitting}
           onSubmit={handleUzpostSubmit}
           onBack={goBackStep}
@@ -1088,6 +1096,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
         <StepStandardConfirm
           deliveryType={deliveryType}
           selectedFlights={selectedFlights}
+          flightDisplayMap={flightDisplayMap}
           submitting={submitting}
           onSubmit={handleStandardSubmit}
           onBack={goBackStep}

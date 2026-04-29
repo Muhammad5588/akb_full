@@ -6,6 +6,7 @@ import { apiClient, apiClientFormData } from '@/api/client';
 
 export interface FlightItem {
   flight_name: string;
+  display_name: string;
 }
 
 export interface PaidFlightsResponse {
