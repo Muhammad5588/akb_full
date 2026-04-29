@@ -1,12 +1,11 @@
 # Objective
-`DeliveryRequestPage` ichidagi yangi qo'shilgan matnlarning i18n tarjimalarini tekshirish va yetishmayotgan kalitlarni `uz/ru` locale'lariga qo'shish.
+`FlightSchedulePage` dizaynini AKB vizual uslubiga moslash: oq/ko'k ranglar, yumshoq cardlar, kuchli ierarxiya va yanada premium calendar ko'rinishi.
 
 ## Implementation Plan
-- [x] `deliveryRequest.headerTitleShort` kaliti mavjudligini tekshirish
-- [x] `AddressConfirmation` ichidagi hardcoded matnlarni i18n kalitlariga o'tkazish
-- [x] `uz.json` va `ru.json` ichiga yangi kalitlarni qo'shish
-- [x] Type/syntax xatolarini tekshirish
+- [ ] Sahifaning umumiy rang palitrasini AKB ko'k/oq uslubiga o'tkazish
+- [ ] Header, calendar panel va sidebar cardlarni qayta stilizatsiya qilish
+- [ ] Flight cardlar, CTA va upcoming bloklarni AKB surfaces bilan yangilash
+- [ ] Type/syntax xatolarini tekshirish
 
 ## Walkthrough / Architecture
-`deliveryRequest.headerTitleShort` allaqachon locale fayllarda mavjud.
-Qo'shimcha ravishda `AddressConfirmation` ichidagi matnlar hardcoded bo'lgani uchun ular `deliveryRequest.addressConfirmation.*` kalitlariga o'tkaziladi va ikki tilda to'ldiriladi.
+Sahifa mavjud data-flow va calendar logic'ni saqlab qoladi; faqat visual layer yangilanadi. Asosiy e'tibor `BackgroundGlow`, month navigation, selected-day detail card va `FlightCard` komponentlaridagi AKB-style surface, border va accent ranglariga beriladi.
