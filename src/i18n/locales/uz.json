@@ -987,6 +987,10 @@
     "headerTitle": "Zayavka qoldirish",
     "headerTitleShort": "Zayavka",
     "historyButton": "Tarix",
+    "addressConfirmation": {
+      "question": "Sizning manzilingiz to'g'rimi?",
+      "editButton": "O'zgartirish"
+    },
     "steps": {
       "type": {
         "title": "Yetkazish turini tanlang",

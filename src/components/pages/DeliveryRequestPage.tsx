@@ -29,6 +29,9 @@ import {
   type FlightItem,
   type CalculateUzpostResponse,
 } from '@/api/services/deliveryService';
+import { useProfile } from '@/hooks/useProfile';
+import type { ProfileResponse } from '@/types/profile';
+import { EditProfileModal } from '@/components/profile/EditProfileModal';
 
 // ============================================
 // TYPES
@@ -390,12 +393,14 @@ interface StepStandardProps {
   selectedFlights: string[];
   flightDisplayMap: Record<string, string>;
   submitting: boolean;
+  profile?: ProfileResponse;
+  onEditProfile?: () => void;
   onSubmit: () => void;
   onBack: () => void;
 }
 
 const StepStandardConfirm = memo(
-  ({ deliveryType, selectedFlights, flightDisplayMap, submitting, onSubmit, onBack }: StepStandardProps) => {
+  ({ deliveryType, selectedFlights, flightDisplayMap, submitting, profile, onEditProfile, onSubmit, onBack }: StepStandardProps) => {
     const { t } = useTranslation();
     const typeLabel =
       DELIVERY_OPTIONS.find((o) => o.id === deliveryType)?.label ?? deliveryType;
@@ -407,6 +412,8 @@ const StepStandardConfirm = memo(
           title={t('deliveryRequest.steps.confirm.title')}
           subtitle={t('deliveryRequest.steps.confirm.subtitle')}
         />
+
+        <AddressConfirmation profile={profile} onEditProfile={onEditProfile} />
 
         {/* Summary Card */}
         <div className="mb-4 rounded-lg border border-[#dbe8f4] bg-white p-5 shadow-[0_8px_20px_rgba(15,47,87,0.05)]">
@@ -497,6 +504,8 @@ interface StepUzpostProps {
   selectedFlights: string[];
   flightDisplayMap: Record<string, string>;
   submitting: boolean;
+  profile?: ProfileResponse;
+  onEditProfile?: () => void;
   onSubmit: (walletUsed: number, file: File | null) => void;
   onBack: () => void;
 }
@@ -507,6 +516,8 @@ function StepUzpostPayment({
   selectedFlights,
   flightDisplayMap,
   submitting,
+  profile,
+  onEditProfile,
   onSubmit,
   onBack,
 }: StepUzpostProps) {
@@ -594,6 +605,8 @@ function StepUzpostPayment({
         title={t('deliveryRequest.steps.uzpost.paymentTitle')}
         subtitle={t('deliveryRequest.steps.uzpost.flightsFor', { flights: selectedFlights.map((f) => flightDisplayMap[f] || f).join(', ') })}
       />
+
+      <AddressConfirmation profile={profile} onEditProfile={onEditProfile} />
 
       {/* Summary Grid */}
       <div className="grid grid-cols-2 gap-3 mb-4">
@@ -892,11 +905,45 @@ const ProfileIncompleteAlert = memo(
 );
 
 // ============================================
+// ADDRESS CONFIRMATION
+// ============================================
+
+const AddressConfirmation = memo(
+  ({ profile, onEditProfile }: { profile?: ProfileResponse; onEditProfile?: () => void }) => {
+    const { t } = useTranslation();
+    return (
+      <div className="mb-4 rounded-lg border border-[#cfe0f1] bg-[#eef7ff] p-4">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="mb-1 text-xs font-medium text-[#0b4edb]">{t('deliveryRequest.addressConfirmation.question')}</p>
+            <p className="text-sm font-semibold text-[#07182f]">
+              {[profile?.region, profile?.district].filter(Boolean).join(', ') || '-'}
+            </p>
+            {profile?.address && (
+              <p className="mt-0.5 text-sm text-[#63758a]">{profile.address}</p>
+            )}
+          </div>
+          {onEditProfile && (
+            <button
+              onClick={onEditProfile}
+              className="rounded-lg border border-[#cfe0f1] bg-white px-3 py-1.5 text-xs font-semibold text-[#0b4edb] transition-colors active:scale-95 hover:bg-[#f8fbfe]"
+            >
+              {t('deliveryRequest.addressConfirmation.editButton')}
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+);
+
+// ============================================
 // MAIN COMPONENT
 // ============================================
 
 export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNavigateToHistory }: Props) {
   const { t } = useTranslation();
+  const { data: userProfile, isLoading: profileLoading } = useProfile();
   // Wizard state
   const [currentStep, setCurrentStep] = useState(1);
   const [deliveryType, setDeliveryType] = useState<DeliveryType | null>(null);
@@ -910,6 +957,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
   const [calcLoading, setCalcLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [profileIncomplete, setProfileIncomplete] = useState(false);
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
 
   const totalSteps = deliveryType === 'uzpost' ? 4 : 4;
 
@@ -1010,6 +1058,39 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
 
   // ---- Render ----
 
+  const isAddressIncomplete =
+    !profileLoading && !!userProfile && (!userProfile.region || !userProfile.district);
+
+  if (isAddressIncomplete) {
+    return (
+      <div className="pb-8">
+        <div className="mb-5 flex items-center gap-3">
+          <button
+            onClick={onBack}
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#dbe8f4] bg-white text-[#63758a] transition-colors active:scale-95 hover:bg-[#f8fbfe]"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div>
+            <p className="text-[11px] font-semibold uppercase text-[#0b84e5]">AKB Cargo</p>
+            <h1 className="text-lg font-semibold text-[#07182f] dark:text-[#ffffff]">{t('deliveryRequest.headerTitleShort')}</h1>
+          </div>
+        </div>
+        <ProfileIncompleteAlert
+          onGoProfile={() => setIsEditProfileOpen(true)}
+          onBack={onBack}
+        />
+        {userProfile && (
+          <EditProfileModal
+            isOpen={isEditProfileOpen}
+            onClose={() => setIsEditProfileOpen(false)}
+            user={userProfile}
+          />
+        )}
+      </div>
+    );
+  }
+
   // Profile incomplete overlay
   if (profileIncomplete) {
     return (
@@ -1028,9 +1109,22 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
           </div>
         </div>
         <ProfileIncompleteAlert
-          onGoProfile={onNavigateToProfile}
+          onGoProfile={() => {
+            if (userProfile) {
+              setIsEditProfileOpen(true);
+              return;
+            }
+            onNavigateToProfile?.();
+          }}
           onBack={() => setProfileIncomplete(false)}
         />
+        {userProfile && (
+          <EditProfileModal
+            isOpen={isEditProfileOpen}
+            onClose={() => setIsEditProfileOpen(false)}
+            user={userProfile}
+          />
+        )}
       </div>
     );
   }
@@ -1087,6 +1181,8 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
           selectedFlights={selectedFlights}
           flightDisplayMap={flightDisplayMap}
           submitting={submitting}
+          profile={userProfile}
+          onEditProfile={() => setIsEditProfileOpen(true)}
           onSubmit={handleUzpostSubmit}
           onBack={goBackStep}
         />
@@ -1098,12 +1194,22 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
           selectedFlights={selectedFlights}
           flightDisplayMap={flightDisplayMap}
           submitting={submitting}
+          profile={userProfile}
+          onEditProfile={() => setIsEditProfileOpen(true)}
           onSubmit={handleStandardSubmit}
           onBack={goBackStep}
         />
       )}
 
       {currentStep === 4 && <StepSuccess onGoHome={onBack} />}
+
+      {userProfile && (
+        <EditProfileModal
+          isOpen={isEditProfileOpen}
+          onClose={() => setIsEditProfileOpen(false)}
+          user={userProfile}
+        />
+      )}
     </div>
   );
 }

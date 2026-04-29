@@ -987,6 +987,10 @@
     "headerTitle": "Оставить заявку",
     "headerTitleShort": "Заявка",
     "historyButton": "История",
+    "addressConfirmation": {
+      "question": "Ваш адрес верный?",
+      "editButton": "Изменить"
+    },
     "steps": {
       "type": {
         "title": "Выберите тип доставки",
