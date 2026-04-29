@@ -638,10 +638,15 @@ export default function AddCargoForm({
       setUploadQueue((prev) => [...prev, item]);
 
       const currentPrefix = (() => {
+        // 1. Avvalo O'zbekiston viloyatlari bazasidan izlaymiz (masalan A01-, ATV)
         const { district: d, region: r } = getRegionAndDistrictFromCode(clientId);
         if (d && AVIA_CODES[d] && clientId.startsWith(AVIA_CODES[d])) return AVIA_CODES[d];
         if (r && REGION_PREFIXES[r] && clientId.startsWith(REGION_PREFIXES[r])) return REGION_PREFIXES[r];
-        return "";
+        
+        // 2. Agar viloyat kodlari bo'lmasa, u holda raqamgacha bo'lgan barcha belgilarni prefix deb olamiz
+        // Masalan: "PP213" -> "PP", "KG-456" -> "KG-", "USA-202" -> "USA-"
+        const match = clientId.match(/^[^0-9]+/);
+        return match ? match[0] : "";
       })();
 
       if (keepClientRegion) {
