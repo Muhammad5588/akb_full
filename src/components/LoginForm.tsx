@@ -158,7 +158,7 @@ export default function LoginForm({ onNavigateToRegister, onLoginSuccess }: Logi
     setSubmitMessage('');
   };
 
-  const handleClientCodeInput = (v: string) => v.toUpperCase().replace(/[^A-Z0-9-/]/g, '');
+  const handleClientCodeInput = (v: string) => v.toUpperCase().replace(/[^A-Z0-9:/-]/g, '');
 
   const handlePhoneInput = (v: string) => {
     const c = v.replace(/\D/g, '');

@@ -53,7 +53,7 @@ export default function EditCargoModal({ cargo, onClose, onSuccess }: EditCargoM
   };
 
   const handleClientIdChange = (value: string) => {
-    const cleaned = value.toUpperCase().replace(/[^A-Z0-9-/]/g, '');
+    const cleaned = value.toUpperCase().replace(/[^A-Z0-9:/-]/g, '');
     setClientId(cleaned);
     if (errors.client_id) setErrors(prev => { const n = { ...prev }; delete n.client_id; return n; });
   };

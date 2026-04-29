@@ -461,7 +461,7 @@ export default function AddCargoForm({
 
   const handleClientIdChange = useCallback(
     (value: string) => {
-      const cleaned = value.toUpperCase().replace(/[^A-Z0-9-/]/g, "");
+      const cleaned = value.toUpperCase().replace(/[^A-Z0-9:/-]/g, "");
       setClientId(cleaned);
       clearError("client_id");
 
