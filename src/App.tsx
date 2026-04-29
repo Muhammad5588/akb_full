@@ -82,7 +82,7 @@ const ROLE_CONFIG: Record<string, { default: Page; allowed: Page[] }> = {
   },
   worker: {
     default: "flights",
-    allowed: ["flights", "cargo-list", "cargo-add", "passkey-page", "expected-cargo"],
+    allowed: ["flights", "cargo-list", "cargo-add", "passkey-page", "expected-cargo", "admin-partners"],
   },
   accountant: {
     default: "pos-dashboard",
@@ -737,6 +737,7 @@ function AppContent() {
                 navigateToPage("cargo-list", flightName)
               }
               onLogout={handleLogout}
+              onNavigate={(page) => navigateToPage(page as Page)}
             />
           )}
 

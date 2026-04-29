@@ -3,7 +3,7 @@ import { getFlights, type Flight } from '@/api/services/flight';
 import { getFlightList, type FlightListItem } from '@/api/services/expectedCargo';
 import { useTranslation } from 'react-i18next';
 import { offlineStorage } from '@/utils/offlineStorage';
-import { Plane, ChevronDown, ChevronRight, RefreshCw, WifiOff, ArrowRight, Lock, LogOut, ClipboardList } from 'lucide-react';
+import { Plane, ChevronDown, ChevronRight, RefreshCw, WifiOff, ArrowRight, Lock, LogOut, ClipboardList, Building2 } from 'lucide-react';
 import { getAdminJwtClaims } from '@/api/services/adminManagement';
 import { refreshAdminToken } from '@/api/services/adminAuth';
 
@@ -45,6 +45,7 @@ export default function FlightsPage({ onSelectFlight, onLogout, onNavigate }: Fl
   const [jwtClaims, setJwtClaims] = useState(() => getAdminJwtClaims());
   const canView = jwtClaims.isSuperAdmin || jwtClaims.permissions.has('flights:read');
   const canViewExpectedCargo = jwtClaims.isSuperAdmin || jwtClaims.permissions.has('expected_cargo:manage');
+  const canManagePartners = jwtClaims.isSuperAdmin || jwtClaims.permissions.has('partners:manage');
   const [flights, setFlights] = useState<Flight[]>([]);
   const [expectedFlights, setExpectedFlights] = useState<FlightListItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -109,7 +110,16 @@ export default function FlightsPage({ onSelectFlight, onLogout, onNavigate }: Fl
   if (isLoading) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-4">
-        <PageHeader t={t} count={0} isRefreshing={false} onRefresh={() => {}} onLogout={onLogout} onOpenExpectedCargo={canViewExpectedCargo && onNavigate ? () => onNavigate('expected-cargo') : undefined} loading />
+        <PageHeader
+          t={t}
+          count={0}
+          isRefreshing={false}
+          onRefresh={() => {}}
+          onLogout={onLogout}
+          onOpenExpectedCargo={canViewExpectedCargo && onNavigate ? () => onNavigate('expected-cargo') : undefined}
+          onOpenPartners={canManagePartners && onNavigate ? () => onNavigate('admin-partners') : undefined}
+          loading
+        />
         <div className="space-y-3">
           <div className="h-4 w-28 bg-gray-100 dark:bg-white/[0.05] rounded-lg mb-2" />
           <div className="bg-white dark:bg-[#0d0a04] rounded-2xl border border-gray-100 dark:border-white/[0.06] overflow-hidden">
@@ -131,7 +141,15 @@ export default function FlightsPage({ onSelectFlight, onLogout, onNavigate }: Fl
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-4">
-      <PageHeader t={t} count={flights.length} isRefreshing={isRefreshing} onRefresh={() => loadFlights(true)} onLogout={onLogout} onOpenExpectedCargo={canViewExpectedCargo && onNavigate ? () => onNavigate('expected-cargo') : undefined} />
+      <PageHeader
+        t={t}
+        count={flights.length}
+        isRefreshing={isRefreshing}
+        onRefresh={() => loadFlights(true)}
+        onLogout={onLogout}
+        onOpenExpectedCargo={canViewExpectedCargo && onNavigate ? () => onNavigate('expected-cargo') : undefined}
+        onOpenPartners={canManagePartners && onNavigate ? () => onNavigate('admin-partners') : undefined}
+      />
 
       {flights.length === 0 ? (
         <div className="bg-white dark:bg-[#0d0a04] rounded-2xl border border-gray-100 dark:border-white/[0.06] flex flex-col items-center justify-center py-16">
@@ -227,13 +245,14 @@ export default function FlightsPage({ onSelectFlight, onLogout, onNavigate }: Fl
   );
 }
 
-function PageHeader({ t, count, isRefreshing, onRefresh, onLogout, onOpenExpectedCargo, loading = false }: {
+function PageHeader({ t, count, isRefreshing, onRefresh, onLogout, onOpenExpectedCargo, onOpenPartners, loading = false }: {
   t: (k: string) => string;
   count: number;
   isRefreshing: boolean;
   onRefresh: () => void;
   onLogout?: () => void;
   onOpenExpectedCargo?: () => void;
+  onOpenPartners?: () => void;
   loading?: boolean;
 }) {
   return (
@@ -255,6 +274,16 @@ function PageHeader({ t, count, isRefreshing, onRefresh, onLogout, onOpenExpecte
           >
             <ClipboardList className="w-3 h-3" />
             Kutilayotgan
+          </button>
+        )}
+        {onOpenPartners && (
+          <button
+            onClick={onOpenPartners}
+            title="Partnerlar"
+            className="flex items-center gap-1.5 h-8 px-3 text-[12px] font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/20 rounded-xl hover:bg-cyan-100 dark:hover:bg-cyan-500/20 transition-colors"
+          >
+            <Building2 className="w-3 h-3" />
+            Partnerlar
           </button>
         )}
         <button
