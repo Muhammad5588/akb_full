@@ -56,6 +56,7 @@ import {
 } from "@/hooks/useBroadcastChannel";
 import type {
   PaymentProvider,
+  CashierLogProvider,
   CashierLogItem,
   CardWithBalance,
   AdjustBalanceRequest,
@@ -85,6 +86,15 @@ const PAYMENT_TYPES: { id: PaymentProvider; label: string }[] = [
   { id: "payme", label: "Payme" },
 ];
 
+const CASHIER_LOG_FILTERS: { id: CashierLogProvider | "all"; label: string }[] = [
+  { id: "all", label: "Hammasi" },
+  { id: "cash", label: "Naqd" },
+  { id: "card", label: "Karta" },
+  { id: "click", label: "Click" },
+  { id: "payme", label: "Payme" },
+  { id: "wallet", label: "Hamyon" },
+];
+
 const PROVIDER_CHIP: Record<string, string> = {
   cash: "bg-green-50  dark:bg-green-500/10  text-green-600  dark:text-green-400",
   card: "bg-blue-50   dark:bg-blue-500/10   text-blue-600   dark:text-blue-400",
@@ -92,6 +102,8 @@ const PROVIDER_CHIP: Record<string, string> = {
     "bg-purple-50 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400",
   payme:
     "bg-cyan-50   dark:bg-cyan-500/10   text-cyan-600   dark:text-cyan-400",
+  wallet:
+    "bg-amber-50  dark:bg-amber-500/10  text-amber-600  dark:text-amber-400",
 };
 
 /**
@@ -1548,6 +1560,9 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
   const [useWallet, setUseWallet] = useState(false);
   const [receivedInput, setReceivedInput] = useState("");
+  const [cashierLogProvider, setCashierLogProvider] = useState<
+    CashierLogProvider | "all"
+  >("all");
 
   //  UI overlays 
   const [showProfile, setShowProfile] = useState(false);
@@ -1565,8 +1580,14 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     isLoading: logLoading,
     refetch: refetchLog,
   } = useQuery({
-    queryKey: ["cashier-log"],
-    queryFn: () => getCashierLog({ page: 1, size: 30 }),
+    queryKey: ["cashier-log", cashierLogProvider],
+    queryFn: () =>
+      getCashierLog({
+        page: 1,
+        size: 30,
+        payment_provider:
+          cashierLogProvider === "all" ? undefined : cashierLogProvider,
+      }),
     // Poll every 10 s so all cashiers see each other's entries in near-real-time
     // without requiring a manual refresh.
     refetchInterval: 10_000,
@@ -1901,6 +1922,54 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                     >
                       <RefreshCw className="w-3 h-3" />
                     </button>
+                  </div>
+                  <div className="px-4 py-3 border-b border-gray-50 dark:border-white/[0.05] space-y-3">
+                    <div className="flex items-center gap-2">
+                      <SlidersHorizontal className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 shrink-0" />
+                      <div className="flex gap-1.5 overflow-x-auto overscroll-x-contain pb-0.5">
+                        {CASHIER_LOG_FILTERS.map((filter) => {
+                          const isActive = cashierLogProvider === filter.id;
+                          return (
+                            <button
+                              key={filter.id}
+                              type="button"
+                              onClick={() => setCashierLogProvider(filter.id)}
+                              className={`shrink-0 rounded-lg px-2.5 py-1.5 text-[10px] font-bold transition-colors ${
+                                isActive
+                                  ? "bg-blue-500 text-white shadow-sm shadow-blue-500/20"
+                                  : "bg-gray-50 text-gray-500 hover:bg-gray-100 dark:bg-white/[0.04] dark:text-gray-400 dark:hover:bg-white/[0.07]"
+                              }`}
+                            >
+                              {filter.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    {logData?.summary && (
+                      <div className="grid grid-cols-2 gap-2 text-[10px]">
+                        <div className="rounded-lg bg-gray-50 dark:bg-white/[0.04] px-2.5 py-2">
+                          <p className="font-semibold text-gray-400 dark:text-gray-500">
+                            Filter jami
+                          </p>
+                          <p className="mt-0.5 font-black text-gray-800 dark:text-white">
+                            {formatCurrencySum(
+                              cashierLogProvider === "all"
+                                ? logData.summary.total
+                                : logData.summary[cashierLogProvider],
+                            )}
+                          </p>
+                        </div>
+                        <div className="rounded-lg bg-gray-50 dark:bg-white/[0.04] px-2.5 py-2">
+                          <p className="font-semibold text-gray-400 dark:text-gray-500">
+                            Naqd/Karta/Online
+                          </p>
+                          <p className="mt-0.5 font-black text-gray-800 dark:text-white">
+                            {formatCurrencySum(logData.summary.total)}
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="px-4 py-1 max-h-[50vh] lg:max-h-[65vh] overflow-y-auto overscroll-contain">
                     {logLoading ? (

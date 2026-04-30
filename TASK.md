@@ -1,22 +1,20 @@
 # Objective
 
-Zayafka yuborishdan oldin foydalanuvchi yetkazib berish manzilini majburiy tekshirishi/tahrirlashini ta'minlash. Yangi matnlar `uz` va `ru` locale JSON fayllariga qo'shiladi.
+Apply the backend POS cashier-log update in the frontend by supporting the new `payment_provider` query filter and exposing it in the POS dashboard without breaking the existing shared cashier log flow.
 
 # Implementation Plan
 
-- [x] Delivery request UI oqimini aniqlash (`DeliveryRequestModal` yoki `DeliveryRequestPage`)
-- [x] Mavjud profil/manzil tahrirlash imkoniyatini topish
-- [x] Zayafka submitdan oldin manzil tasdiqlash gate qo'shish
-- [x] Kerakli `uz.json` va `ru.json` translation keylarini qo'shish
-- [x] Build/lint bilan tekshirish
+- [x] Update POS API types to include cashier-log providers, summary totals, and the `payment_provider` request parameter.
+- [x] Add POS dashboard state and query-key wiring for the cashier-log provider filter.
+- [x] Add compact provider filter controls and summary display to the cashier-log panel.
+- [x] Run lint/build verification and fix any TypeScript issues.
 
 # Verification
 
-- `npm.cmd run build` sandbox tashqarisida muvaffaqiyatli yakunlandi.
-- `npx.cmd eslint src\components\pages\DeliveryRequestPage.tsx src\components\profile\EditProfileModal.tsx` muvaffaqiyatli o'tdi.
-- `npm.cmd run lint` mavjud pre-existing lint xatolari sabab to'xtadi: `generated_districts.ts`, `CargoListPage.tsx`, va UI wrapper fast-refresh qoidalari.
-- `uz.json` va `ru.json` JSON parse tekshiruvidan o'tdi.
+- `node_modules\.bin\eslint.cmd src\api\pos.ts src\pages\POSDashboard.tsx` passed.
+- `npm.cmd run build` passed when run outside the sandbox after `esbuild` hit `spawn EPERM` inside the sandbox.
+- `npm.cmd run lint` still fails on pre-existing unrelated files: `generated_districts.ts`, `src\components\CargoListPage.tsx`, and shadcn-style UI wrapper fast-refresh rules.
 
 # Walkthrough/Architecture
 
-Delivery request komponenti user profilidagi manzilni ko'rsatadi. Submit tugmasi manzil tasdiqlanmaguncha bloklanadi, user esa edit action orqali profil manzilini yangilaydi. Confirmation holati vaqtinchalik frontend session state orqali saqlanadi, shunda user bir sessiyada qayta-qayta majburlanmaydi.
+`POSDashboard` reads cashier logs through `getCashierLog()` from `src/api/pos.ts`. The backend now accepts `payment_provider` (`cash`, `card`, `click`, `payme`, `wallet`) and returns provider-level `summary`. The frontend should keep this as API state in TanStack Query by including the selected provider in the query key, pass it as a query parameter, and render filter controls beside the existing recent-payments log. The list remains shared across cashiers, while the filter narrows rows by provider when selected.

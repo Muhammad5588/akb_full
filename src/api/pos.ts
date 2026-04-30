@@ -17,6 +17,7 @@ const getAdminHeaders = () => {
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export type PaymentProvider = 'cash' | 'click' | 'payme' | 'card';
+export type CashierLogProvider = PaymentProvider | 'wallet';
 
 /** Card with collected balance — returned by GET /payments/cards. */
 export interface CardWithBalance {
@@ -60,6 +61,8 @@ export interface BulkItemResult {
   expected_amount: number;
   payment_status: string;
   is_taken_away: boolean;
+  delivery_request_type?: string | null;
+  delivery_proof_method?: string | null;
 }
 
 /** Response for a successfully committed atomic bulk payment. */
@@ -76,7 +79,7 @@ export interface CashierLogItem {
   client_code: string | null;
   flight: string | null;
   paid_amount: number;
-  payment_provider: string;
+  payment_provider: CashierLogProvider;
   /**
    * Admin DB PK of the cashier who processed this entry.
    * Populated for all entries — used by the frontend to colour-code rows
@@ -84,6 +87,17 @@ export interface CashierLogItem {
    */
   cashier_id: number | null;
   created_at: string;
+}
+
+export interface CashierLogSummary {
+  cash: number;
+  card: number;
+  click: number;
+  payme: number;
+  /** Signed balance adjustments; not a real cash inflow. */
+  wallet: number;
+  /** Cash/card/click/payme total. Excludes wallet adjustments. */
+  total: number;
 }
 
 /** Paginated cashier log with daily totals. */
@@ -95,6 +109,7 @@ export interface CashierLogResponse {
   total_pages: number;
   /** Sum of all amounts processed today (UTC calendar day). */
   today_total: number;
+  summary: CashierLogSummary;
 }
 
 export interface CashierLogParams {
@@ -102,6 +117,7 @@ export interface CashierLogParams {
   size?: number;
   date_from?: string;
   date_to?: string;
+  payment_provider?: CashierLogProvider;
 }
 
 /** Manual cashier balance correction request. */
