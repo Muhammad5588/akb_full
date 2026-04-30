@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, memo } from 'react';
+import { useState, useCallback, useRef, memo, useEffect } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import {
   ChevronRight,
@@ -87,6 +87,12 @@ const DELIVERY_OPTIONS: DeliveryOption[] = [
     iconBg: 'bg-[#eafaff] text-[#0784a6]',
   },
 ];
+
+const DELIVERY_ADDRESS_SESSION_KEY = 'delivery_address_confirmed_this_session';
+
+function hasRequiredDeliveryAddress(profile?: ProfileResponse): boolean {
+  return Boolean(profile?.region?.trim() && profile?.district?.trim() && profile?.address?.trim());
+}
 
 // ============================================
 // SKELETON COMPONENTS
@@ -394,13 +400,14 @@ interface StepStandardProps {
   flightDisplayMap: Record<string, string>;
   submitting: boolean;
   profile?: ProfileResponse;
+  isAddressConfirmed: boolean;
   onEditProfile?: () => void;
   onSubmit: () => void;
   onBack: () => void;
 }
 
 const StepStandardConfirm = memo(
-  ({ deliveryType, selectedFlights, flightDisplayMap, submitting, profile, onEditProfile, onSubmit, onBack }: StepStandardProps) => {
+  ({ deliveryType, selectedFlights, flightDisplayMap, submitting, profile, isAddressConfirmed, onEditProfile, onSubmit, onBack }: StepStandardProps) => {
     const { t } = useTranslation();
     const typeLabel =
       DELIVERY_OPTIONS.find((o) => o.id === deliveryType)?.label ?? deliveryType;
@@ -413,7 +420,11 @@ const StepStandardConfirm = memo(
           subtitle={t('deliveryRequest.steps.confirm.subtitle')}
         />
 
-        <AddressConfirmation profile={profile} onEditProfile={onEditProfile} />
+        <AddressConfirmation
+          profile={profile}
+          isAddressConfirmed={isAddressConfirmed}
+          onEditProfile={onEditProfile}
+        />
 
         {/* Summary Card */}
         <div className="mb-4 rounded-lg border border-[#dbe8f4] bg-white p-5 shadow-[0_8px_20px_rgba(15,47,87,0.05)]">
@@ -470,14 +481,17 @@ const StepStandardConfirm = memo(
           </button>
           <button
             onClick={onSubmit}
-            disabled={submitting}
-            className="
+            disabled={submitting || !isAddressConfirmed}
+            className={`
               flex-1 h-14 rounded-lg font-semibold text-base text-white
               flex items-center justify-center gap-2
-              bg-[#0b4edb] hover:bg-[#073fba] active:scale-[0.98]
-              shadow-[0_10px_20px_rgba(11,78,219,0.18)] transition-all duration-200
-              disabled:opacity-60 disabled:cursor-not-allowed
-            "
+              active:scale-[0.98] transition-all duration-200
+              ${
+                submitting || !isAddressConfirmed
+                  ? 'bg-[#e8eff6] text-[#9fb7cc] cursor-not-allowed'
+                  : 'bg-[#0b4edb] hover:bg-[#073fba] shadow-[0_10px_20px_rgba(11,78,219,0.18)]'
+              }
+            `}
           >
             {submitting ? (
               <Loader2 className="w-5 h-5 animate-spin" />
@@ -505,6 +519,7 @@ interface StepUzpostProps {
   flightDisplayMap: Record<string, string>;
   submitting: boolean;
   profile?: ProfileResponse;
+  isAddressConfirmed: boolean;
   onEditProfile?: () => void;
   onSubmit: (walletUsed: number, file: File | null) => void;
   onBack: () => void;
@@ -517,6 +532,7 @@ function StepUzpostPayment({
   flightDisplayMap,
   submitting,
   profile,
+  isAddressConfirmed,
   onEditProfile,
   onSubmit,
   onBack,
@@ -606,7 +622,11 @@ function StepUzpostPayment({
         subtitle={t('deliveryRequest.steps.uzpost.flightsFor', { flights: selectedFlights.map((f) => flightDisplayMap[f] || f).join(', ') })}
       />
 
-      <AddressConfirmation profile={profile} onEditProfile={onEditProfile} />
+      <AddressConfirmation
+        profile={profile}
+        isAddressConfirmed={isAddressConfirmed}
+        onEditProfile={onEditProfile}
+      />
 
       {/* Summary Grid */}
       <div className="grid grid-cols-2 gap-3 mb-4">
@@ -797,13 +817,13 @@ function StepUzpostPayment({
         </button>
         <button
           onClick={() => onSubmit(walletApplied, receiptFile)}
-          disabled={submitting || (!fullyCoveredByWallet && !receiptFile)}
+          disabled={submitting || !isAddressConfirmed || (!fullyCoveredByWallet && !receiptFile)}
           className={`
             flex-1 h-14 rounded-lg font-semibold text-base text-white
             flex items-center justify-center gap-2
             transition-all duration-200 active:scale-[0.98]
             ${
-              submitting || (!fullyCoveredByWallet && !receiptFile)
+              submitting || !isAddressConfirmed || (!fullyCoveredByWallet && !receiptFile)
                 ? 'bg-[#e8eff6] text-[#9fb7cc] cursor-not-allowed'
                 : 'bg-[#0b4edb] hover:bg-[#073fba] shadow-[0_10px_20px_rgba(11,78,219,0.18)]'
             }
@@ -909,26 +929,60 @@ const ProfileIncompleteAlert = memo(
 // ============================================
 
 const AddressConfirmation = memo(
-  ({ profile, onEditProfile }: { profile?: ProfileResponse; onEditProfile?: () => void }) => {
+  ({
+    profile,
+    isAddressConfirmed,
+    onEditProfile,
+  }: {
+    profile?: ProfileResponse;
+    isAddressConfirmed: boolean;
+    onEditProfile?: () => void;
+  }) => {
     const { t } = useTranslation();
+    const hasAddress = hasRequiredDeliveryAddress(profile);
     return (
-      <div className="mb-4 rounded-lg border border-[#cfe0f1] bg-[#eef7ff] p-4">
+      <div className={`mb-4 rounded-lg border p-4 ${
+        isAddressConfirmed
+          ? 'border-[#bde6d2] bg-[#effbf5]'
+          : 'border-[#f2d5a7] bg-[#fff8ed]'
+      }`}>
         <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="mb-1 text-xs font-medium text-[#0b4edb]">{t('deliveryRequest.addressConfirmation.question')}</p>
+          <div className="min-w-0">
+            <p className={`mb-1 text-xs font-semibold ${isAddressConfirmed ? 'text-[#15835b]' : 'text-[#a15c00]'}`}>
+              {isAddressConfirmed
+                ? t('deliveryRequest.addressConfirmation.confirmedTitle')
+                : t('deliveryRequest.addressConfirmation.requiredTitle')}
+            </p>
             <p className="text-sm font-semibold text-[#07182f]">
               {[profile?.region, profile?.district].filter(Boolean).join(', ') || '-'}
             </p>
-            {profile?.address && (
+            {profile?.address ? (
               <p className="mt-0.5 text-sm text-[#63758a]">{profile.address}</p>
+            ) : (
+              <p className="mt-0.5 text-sm font-medium text-[#a15c00]">
+                {t('deliveryRequest.addressConfirmation.missingAddress')}
+              </p>
+            )}
+            {!isAddressConfirmed && (
+              <p className="mt-2 text-xs leading-5 text-[#7a510f]">
+                {hasAddress
+                  ? t('deliveryRequest.addressConfirmation.mustSaveDesc')
+                  : t('deliveryRequest.addressConfirmation.requiredDesc')}
+              </p>
             )}
           </div>
           {onEditProfile && (
             <button
               onClick={onEditProfile}
-              className="rounded-lg border border-[#cfe0f1] bg-white px-3 py-1.5 text-xs font-semibold text-[#0b4edb] transition-colors active:scale-95 hover:bg-[#f8fbfe]"
+              className={`shrink-0 rounded-lg border bg-white px-3 py-1.5 text-xs font-semibold transition-colors active:scale-95 ${
+                isAddressConfirmed
+                  ? 'border-[#bde6d2] text-[#15835b] hover:bg-[#f6fffa]'
+                  : 'border-[#f2d5a7] text-[#a15c00] hover:bg-[#fffaf1]'
+              }`}
             >
-              {t('deliveryRequest.addressConfirmation.editButton')}
+              {isAddressConfirmed
+                ? t('deliveryRequest.addressConfirmation.editButton')
+                : t('deliveryRequest.addressConfirmation.requiredButton')}
             </button>
           )}
         </div>
@@ -958,8 +1012,14 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
   const [submitting, setSubmitting] = useState(false);
   const [profileIncomplete, setProfileIncomplete] = useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
+  const [addressConfirmedThisSession, setAddressConfirmedThisSession] = useState(
+    () => sessionStorage.getItem(DELIVERY_ADDRESS_SESSION_KEY) === 'true',
+  );
+  const addressEditAutoOpenedRef = useRef(false);
 
   const totalSteps = deliveryType === 'uzpost' ? 4 : 4;
+  const isAddressReady = hasRequiredDeliveryAddress(userProfile);
+  const isDeliveryAddressConfirmed = isAddressReady && addressConfirmedThisSession;
 
   // ---- Actions ----
 
@@ -1009,8 +1069,30 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
     }
   }, [deliveryType, selectedFlights, t]);
 
+  useEffect(() => {
+    if (currentStep !== 3 || profileLoading || !userProfile || isDeliveryAddressConfirmed) return;
+    if (addressEditAutoOpenedRef.current) return;
+
+    addressEditAutoOpenedRef.current = true;
+    setIsEditProfileOpen(true);
+  }, [currentStep, isDeliveryAddressConfirmed, profileLoading, userProfile]);
+
+  const handleDeliveryAddressSaved = useCallback(() => {
+    sessionStorage.setItem(DELIVERY_ADDRESS_SESSION_KEY, 'true');
+    setAddressConfirmedThisSession(true);
+  }, []);
+
+  const requireDeliveryAddressEdit = useCallback(() => {
+    toast.info(t('deliveryRequest.addressConfirmation.requiredToast'));
+    setIsEditProfileOpen(true);
+  }, [t]);
+
   const handleStandardSubmit = useCallback(async () => {
     if (!deliveryType || deliveryType === 'uzpost') return;
+    if (!isDeliveryAddressConfirmed) {
+      requireDeliveryAddressEdit();
+      return;
+    }
     setSubmitting(true);
     try {
       await submitStandardDelivery(deliveryType as 'yandex' | 'akb' | 'bts', selectedFlights);
@@ -1025,10 +1107,14 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
     } finally {
       setSubmitting(false);
     }
-  }, [deliveryType, selectedFlights, t]);
+  }, [deliveryType, isDeliveryAddressConfirmed, requireDeliveryAddressEdit, selectedFlights, t]);
 
   const handleUzpostSubmit = useCallback(
     async (walletUsed: number, file: File | null) => {
+      if (!isDeliveryAddressConfirmed) {
+        requireDeliveryAddressEdit();
+        return;
+      }
       setSubmitting(true);
       try {
         await submitUzpostDelivery(selectedFlights, walletUsed, file);
@@ -1044,7 +1130,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
         setSubmitting(false);
       }
     },
-    [selectedFlights, t]
+    [isDeliveryAddressConfirmed, requireDeliveryAddressEdit, selectedFlights, t]
   );
 
   const goBackStep = useCallback(() => {
@@ -1059,7 +1145,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
   // ---- Render ----
 
   const isAddressIncomplete =
-    !profileLoading && !!userProfile && (!userProfile.region || !userProfile.district);
+    !profileLoading && !!userProfile && !isAddressReady;
 
   if (isAddressIncomplete) {
     return (
@@ -1085,6 +1171,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
             isOpen={isEditProfileOpen}
             onClose={() => setIsEditProfileOpen(false)}
             user={userProfile}
+            onSaved={handleDeliveryAddressSaved}
           />
         )}
       </div>
@@ -1123,6 +1210,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
             isOpen={isEditProfileOpen}
             onClose={() => setIsEditProfileOpen(false)}
             user={userProfile}
+            onSaved={handleDeliveryAddressSaved}
           />
         )}
       </div>
@@ -1182,6 +1270,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
           flightDisplayMap={flightDisplayMap}
           submitting={submitting}
           profile={userProfile}
+          isAddressConfirmed={isDeliveryAddressConfirmed}
           onEditProfile={() => setIsEditProfileOpen(true)}
           onSubmit={handleUzpostSubmit}
           onBack={goBackStep}
@@ -1195,6 +1284,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
           flightDisplayMap={flightDisplayMap}
           submitting={submitting}
           profile={userProfile}
+          isAddressConfirmed={isDeliveryAddressConfirmed}
           onEditProfile={() => setIsEditProfileOpen(true)}
           onSubmit={handleStandardSubmit}
           onBack={goBackStep}
@@ -1208,6 +1298,7 @@ export default function DeliveryRequestPage({ onBack, onNavigateToProfile, onNav
           isOpen={isEditProfileOpen}
           onClose={() => setIsEditProfileOpen(false)}
           user={userProfile}
+          onSaved={handleDeliveryAddressSaved}
         />
       )}
     </div>

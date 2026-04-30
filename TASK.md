@@ -1,19 +1,22 @@
 # Objective
 
-Flights page headerida `partners:manage` huquqiga ega worker va super-admin foydalanuvchilar uchun "Partnerlar" boshqaruv tugmasini ko'rsatish va bosilganda `/admin/partners` sahifasiga o'tishini ta'minlash.
+Zayafka yuborishdan oldin foydalanuvchi yetkazib berish manzilini majburiy tekshirishi/tahrirlashini ta'minlash. Yangi matnlar `uz` va `ru` locale JSON fayllariga qo'shiladi.
 
 # Implementation Plan
 
-- [x] `FlightsPage.tsx` permission va header actionlarini ko'rib chiqish
-- [x] Worker route whitelistiga `admin-partners` sahifasini qo'shish
-- [x] `FlightsPage`ga partner boshqaruv permission checki va navigation tugmasini qo'shish
-- [x] Build/lint orqali tekshirish
+- [x] Delivery request UI oqimini aniqlash (`DeliveryRequestModal` yoki `DeliveryRequestPage`)
+- [x] Mavjud profil/manzil tahrirlash imkoniyatini topish
+- [x] Zayafka submitdan oldin manzil tasdiqlash gate qo'shish
+- [x] Kerakli `uz.json` va `ru.json` translation keylarini qo'shish
+- [x] Build/lint bilan tekshirish
 
 # Verification
 
-- `npm.cmd run build` muvaffaqiyatli yakunlandi.
-- `npm.cmd run lint` mavjud pre-existing lint xatolari sabab to'xtadi: `generated_districts.ts`, `CargoListPage.tsx`, va UI wrapper fast-refresh qoidalari. Yangi o'zgargan fayllarda lint xatosi chiqmadi.
+- `npm.cmd run build` sandbox tashqarisida muvaffaqiyatli yakunlandi.
+- `npx.cmd eslint src\components\pages\DeliveryRequestPage.tsx src\components\profile\EditProfileModal.tsx` muvaffaqiyatli o'tdi.
+- `npm.cmd run lint` mavjud pre-existing lint xatolari sabab to'xtadi: `generated_districts.ts`, `CargoListPage.tsx`, va UI wrapper fast-refresh qoidalari.
+- `uz.json` va `ru.json` JSON parse tekshiruvidan o'tdi.
 
 # Walkthrough/Architecture
 
-`App.tsx` custom routing orqali sahifa almashadi. `FlightsPage` faqat callback orqali sahifa o'zgartira oladi, shuning uchun App undan `onNavigate` propini o'tkazadi. Tugma JWT claimlardan `isSuperAdmin` yoki `partners:manage` permission borligini tekshiradi va `onNavigate('admin-partners')` chaqiradi. Worker roli uchun static route whitelist ham shu sahifaga ruxsat berishi kerak.
+Delivery request komponenti user profilidagi manzilni ko'rsatadi. Submit tugmasi manzil tasdiqlanmaguncha bloklanadi, user esa edit action orqali profil manzilini yangilaydi. Confirmation holati vaqtinchalik frontend session state orqali saqlanadi, shunda user bir sessiyada qayta-qayta majburlanmaydi.

@@ -15,9 +15,10 @@ interface EditProfileModalProps {
     isOpen: boolean;
     onClose: () => void;
     user: ProfileResponse;
+    onSaved?: () => void;
 }
 
-export const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProps) => {
+export const EditProfileModal = ({ isOpen, onClose, user, onSaved }: EditProfileModalProps) => {
     const { mutate, isPending } = useUpdateProfile();
     const { t } = useTranslation();
 
@@ -56,6 +57,7 @@ export const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProp
         e.preventDefault();
         mutate(formData, {
             onSuccess: () => {
+                onSaved?.();
                 onClose();
                 toast.success(t('profile.edit.saved'));
             }

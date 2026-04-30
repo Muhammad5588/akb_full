@@ -989,7 +989,14 @@
     "historyButton": "Tarix",
     "addressConfirmation": {
       "question": "Sizning manzilingiz to'g'rimi?",
-      "editButton": "O'zgartirish"
+      "confirmedTitle": "Yetkazib berish manzili tasdiqlandi",
+      "requiredTitle": "Zayavka yuborishdan oldin manzilni tahrirlang",
+      "requiredDesc": "Kuryerga aynan shu manzil yuboriladi. Iltimos, viloyat, tuman va aniq manzilni to'ldirib saqlang.",
+      "mustSaveDesc": "Manzil to'g'ri bo'lsa ham, zayavka yuborishdan oldin uni bir marta saqlab tasdiqlang.",
+      "missingAddress": "Aniq uy manzili kiritilmagan",
+      "editButton": "O'zgartirish",
+      "requiredButton": "Manzilni tahrirlash",
+      "requiredToast": "Zayavka yuborishdan oldin yetkazib berish manzilini tahrirlang."
     },
     "steps": {
       "type": {
