@@ -229,6 +229,13 @@ function translatePayment(raw: string): string {
   return PAYMENT_LABEL[raw.toLowerCase()] ?? raw;
 }
 
+function toCashierLogIso(value: string): string | undefined {
+  if (!value) return undefined;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return undefined;
+  return date.toISOString();
+}
+
 const RECENT_KEY = "pos_recent_searches";
 const MAX_RECENT = 5;
 const SOUND_KEY = "pos_sound_enabled";
@@ -1563,6 +1570,16 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
   const [cashierLogProvider, setCashierLogProvider] = useState<
     CashierLogProvider | "all"
   >("all");
+  const [cashierLogDateFrom, setCashierLogDateFrom] = useState("");
+  const [cashierLogDateTo, setCashierLogDateTo] = useState("");
+  const cashierLogDateFromIso = useMemo(
+    () => toCashierLogIso(cashierLogDateFrom),
+    [cashierLogDateFrom],
+  );
+  const cashierLogDateToIso = useMemo(
+    () => toCashierLogIso(cashierLogDateTo),
+    [cashierLogDateTo],
+  );
 
   //  UI overlays 
   const [showProfile, setShowProfile] = useState(false);
@@ -1580,11 +1597,18 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
     isLoading: logLoading,
     refetch: refetchLog,
   } = useQuery({
-    queryKey: ["cashier-log", cashierLogProvider],
+    queryKey: [
+      "cashier-log",
+      cashierLogProvider,
+      cashierLogDateFromIso,
+      cashierLogDateToIso,
+    ],
     queryFn: () =>
       getCashierLog({
         page: 1,
         size: 30,
+        date_from: cashierLogDateFromIso,
+        date_to: cashierLogDateToIso,
         payment_provider:
           cashierLogProvider === "all" ? undefined : cashierLogProvider,
       }),
@@ -1946,6 +1970,43 @@ export default function POSDashboard({ onNavigate, onLogout }: POSDashboardProps
                         })}
                       </div>
                     </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-2">
+                      <label className="min-w-0">
+                        <span className="block mb-1 text-[10px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                          Dan
+                        </span>
+                        <input
+                          type="datetime-local"
+                          value={cashierLogDateFrom}
+                          onChange={(event) => setCashierLogDateFrom(event.target.value)}
+                          className="w-full min-w-0 rounded-lg border border-gray-200/80 bg-gray-50 px-2 py-2 text-[11px] font-semibold text-gray-700 outline-none transition-colors focus:border-blue-400 focus:ring-2 focus:ring-blue-500/10 dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-gray-200"
+                        />
+                      </label>
+                      <label className="min-w-0">
+                        <span className="block mb-1 text-[10px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                          Gacha
+                        </span>
+                        <input
+                          type="datetime-local"
+                          value={cashierLogDateTo}
+                          min={cashierLogDateFrom || undefined}
+                          onChange={(event) => setCashierLogDateTo(event.target.value)}
+                          className="w-full min-w-0 rounded-lg border border-gray-200/80 bg-gray-50 px-2 py-2 text-[11px] font-semibold text-gray-700 outline-none transition-colors focus:border-blue-400 focus:ring-2 focus:ring-blue-500/10 dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-gray-200"
+                        />
+                      </label>
+                    </div>
+                    {(cashierLogDateFrom || cashierLogDateTo) && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCashierLogDateFrom("");
+                          setCashierLogDateTo("");
+                        }}
+                        className="w-full rounded-lg bg-gray-50 px-2.5 py-2 text-[10px] font-bold text-gray-500 transition-colors hover:bg-gray-100 dark:bg-white/[0.04] dark:text-gray-400 dark:hover:bg-white/[0.07]"
+                      >
+                        Vaqt filterini tozalash
+                      </button>
+                    )}
                     {logData?.summary && (
                       <div className="grid grid-cols-2 gap-2 text-[10px]">
                         <div className="rounded-lg bg-gray-50 dark:bg-white/[0.04] px-2.5 py-2">
