@@ -27,9 +27,9 @@ function useDebounce<T>(value: T, delay: number): T {
 type FilterStatus = 'all' | 'sent' | 'pending';
 type SortOrder = 'newest' | 'oldest';
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 // PhotoViewerModal
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 interface PhotoViewerModalProps {
   photo: CargoPhoto;
   onClose: () => void;
@@ -181,9 +181,9 @@ function PhotoViewerModal({ photo, onClose, onEdit, onDelete, isDeleting, format
   );
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 // PhotoCard
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 interface PhotoCardProps {
   photo: CargoPhoto;
   onView: () => void;
@@ -230,7 +230,7 @@ function PhotoCard({ photo, onView, onDelete, onEdit, isDeleting, formatDate, ca
             {photo.weight_kg} kg
           </span>
         ) : (
-          <span className="text-[12px] text-gray-300 dark:text-gray-600 px-2.5 py-1">â€”</span>
+          <span className="text-[12px] text-gray-300 dark:text-gray-600 px-2.5 py-1">€”</span>
         )}
         {photo.price_per_kg && (
           <span className="text-[12px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 border border-blue-200/60 dark:border-blue-500/20 px-2.5 py-1 rounded-lg">
@@ -250,7 +250,7 @@ function PhotoCard({ photo, onView, onDelete, onEdit, isDeleting, formatDate, ca
         </span>
       </div>
 
-      {/* Divider + action row â€” only shown when user has at least one action */}
+      {/* Divider + action row €” only shown when user has at least one action */}
       {(canEdit || canDelete) && (
         <div className="border-t border-gray-50 dark:border-white/[0.04] flex">
           {canEdit && (
@@ -281,9 +281,9 @@ function PhotoCard({ photo, onView, onDelete, onEdit, isDeleting, formatDate, ca
   );
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 // StatPill
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 const PILL_COLOR: Record<string, string> = {
   gray:  'text-gray-600  dark:text-gray-400  bg-gray-100  dark:bg-white/[0.06]  border-gray-200/60  dark:border-white/[0.08]',
   green: 'text-green-700 dark:text-green-400 bg-green-50  dark:bg-green-500/10  border-green-200/60 dark:border-green-500/15',
@@ -299,9 +299,9 @@ function StatPill({ label, color }: { label: string; color: keyof typeof PILL_CO
   );
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 // AccessDenied
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 function AccessDenied() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 text-center px-6">
@@ -318,9 +318,9 @@ function AccessDenied() {
   );
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 // CargoListPage
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 interface CargoListPageProps {
   flightName: string;
   onBack: () => void;
@@ -338,7 +338,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
   const [photos, setPhotos] = useState<CargoPhoto[]>([]);
   const [flight, setFlight] = useState<Flight | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  // Separate flag for search/page re-fetches â€” avoids tearing down the DOM
+  // Separate flag for search/page re-fetches €” avoids tearing down the DOM
   // (and losing keyboard focus) every time the user types in the search box.
   const [isFetching, setIsFetching] = useState(false);
   const isFirstLoad = useRef(true);
@@ -373,7 +373,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
         localStorage.setItem('access_token', data.access_token);
         setJwtClaims(getAdminJwtClaims());
       })
-      .catch(() => { /* ignore â€” keep existing token */ });
+      .catch(() => { /* ignore €” keep existing token */ });
     return () => { cancelled = true; };
   }, []);
 
@@ -398,7 +398,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
       setTotalPages(photosData.total_pages ?? 1);
 
     } catch {
-      toast({ title: "âŒ Ma'lumotlarni yuklashda xatolik", description: 'Qayta urinib ko\'ring', variant: 'error' });
+      toast({ title: "Œ Ma'lumotlarni yuklashda xatolik", description: 'Qayta urinib ko\'ring', variant: 'error' });
     } finally {
       setIsLoading(false);
       setIsFetching(false);
@@ -433,8 +433,8 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
     }
     setFailedItems(remainingItems);
     setIsRetrying(false);
-    if (successCount > 0) { toast({ title: `âœ… ${successCount} ta yuk qayta yuklandi`, description: '', variant: 'success' }); loadData(); }
-    if (remainingItems.length > 0) toast({ title: `âš ï¸ ${remainingItems.length} ta yuk yuklanmadi`, description: "Internetni tekshirib qayta urinib ko'ring", variant: 'warning' });
+    if (successCount > 0) { toast({ title: `œ… ${successCount} ta yuk qayta yuklandi`, description: '', variant: 'success' }); loadData(); }
+    if (remainingItems.length > 0) toast({ title: ` ${remainingItems.length} ta yuk yuklanmadi`, description: "Internetni tekshirib qayta urinib ko'ring", variant: 'warning' });
   };
 
   // Search is now server-side; only apply client-side status filter and sort
@@ -447,7 +447,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
       });
   }, [photos, filterStatus, sortOrder]);
 
-  // All hooks called â€” safe to guard now
+  // All hooks called €” safe to guard now
   if (!canView) return <AccessDenied />;
 
   const handleDelete = async (cargoId: string) => {
@@ -464,9 +464,9 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
       setPhotos(prev => prev.filter(p => p.id !== cargoId));
       setTotalPhotos(prev => prev - 1);
       if (viewingPhoto?.id === cargoId) setViewingPhoto(null);
-      toast({ title: "âœ… Muvaffaqiyatli o'chirildi", description: '', variant: 'success' });
+      toast({ title: "œ… Muvaffaqiyatli o'chirildi", description: '', variant: 'success' });
     } catch (error: unknown) {
-      toast({ title: "âŒ O'chirishda xatolik yuz berdi", description: (error as { message?: string })?.message ?? "Qayta urinib ko'ring", variant: 'error' });
+      toast({ title: "Œ O'chirishda xatolik yuz berdi", description: (error as { message?: string })?.message ?? "Qayta urinib ko'ring", variant: 'error' });
     } finally { setDeletingId(null); }
   };
 
@@ -480,7 +480,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
     setIsExporting(true);
     try {
       await exportFlightCargoExcel(flightName);
-      toast({ title: 'âœ… Excel fayl yuklab olindi', description: '', variant: 'success' });
+      toast({ title: 'œ… Excel fayl yuklab olindi', description: '', variant: 'success' });
     } catch (err: unknown) {
       const e = err as { message?: string; status?: number };
       let msg = "Excel yuklab olishda xatolik yuz berdi";
@@ -488,7 +488,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
       else if (e.message === 'no_data' || e.status === 404) msg = "Bu reys uchun ma'lumot topilmadi";
       else if (e.message === 'network_error' || e.status === 0) msg = "Internet aloqasi yo'q";
       else if (e.message && e.message !== 'Export failed') msg = e.message;
-      toast({ title: 'âŒ Excel yuklab olishda xatolik', description: msg, variant: 'error' });
+      toast({ title: 'Œ Excel yuklab olishda xatolik', description: msg, variant: 'error' });
     } finally { setIsExporting(false); }
   };
 
@@ -619,7 +619,7 @@ export default function CargoListPage({ flightName, onBack, onAddCargo, onLogout
               <input type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Mijoz kodi bo'yicha qidirish..."
                 className="w-full h-11 pl-10 pr-9 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-sm text-gray-800 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all" />
-              {/* Subtle fetch spinner â€” keeps search input mounted so focus is never lost */}
+              {/* Subtle fetch spinner €” keeps search input mounted so focus is never lost */}
               {isFetching ? (
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-blue-300 border-t-blue-500 rounded-full animate-spin" />
               ) : searchTerm ? (

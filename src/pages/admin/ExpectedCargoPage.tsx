@@ -68,7 +68,7 @@ export default function ExpectedCargoPage({ onNavigate }: ExpectedCargoPageProps
 function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (page: string) => void }) {
   const queryClient = useQueryClient();
 
-  // â”€â”€ Store state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Store state ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
   const {
     activeFlightName,
     expandedClientCode,
@@ -87,7 +87,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
     setFlightTabOrder,
   } = useExpectedCargoStore();
 
-  // â”€â”€ Modal / dialog state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Modal / dialog state ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
   const [renameTarget, setRenameTarget] = useState<string | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null);
   const [deleteFlightTarget, setDeleteFlightTarget] = useState<string | null>(null);
@@ -97,7 +97,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
   } | null>(null);
   const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
 
-  // â”€â”€ Queries â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Queries ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
   const flightsQuery = useQuery({
     queryKey: ['expectedCargo', 'flights'],
@@ -112,7 +112,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
     staleTime: 30_000,
   });
 
-  // â”€â”€ Effects â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Effects ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
   // Sync tab order whenever the flights list changes
   useEffect(() => {
@@ -127,7 +127,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
     }
   }, [flightsQuery.data, syncFlightTabOrder, activeFlightName, setActiveFlight]);
 
-  // â”€â”€ Derived data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Derived data ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
   const filteredSummaryItems = useMemo(() => {
     const items: ClientSummaryItem[] = summaryQuery.data?.items ?? [];
@@ -136,7 +136,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
     return items.filter((item) => item.client_code.toLowerCase().includes(q));
   }, [summaryQuery.data?.items, searchQuery]);
 
-  // â”€â”€ Mutations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Mutations ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
   /** Deletes every record belonging to a specific flight. */
   const deleteFlightMutation = useMutation({
@@ -221,7 +221,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
     },
   });
 
-  // â”€â”€ Handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Handlers ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
   const handleExport = () => {
     exportExpectedCargoExcel(activeFlightName ?? undefined).catch((err: Error) =>
@@ -287,7 +287,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#000] flex flex-col">
-      {/* â”€â”€ Fixed header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Fixed header ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       <ExpectedCargoHeader
         activeFlightName={activeFlightName}
         searchQuery={searchQuery}
@@ -304,7 +304,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
         onOpenNotifications={() => setIsNotificationPanelOpen(true)}
       />
 
-      {/* â”€â”€ Main scrollable content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Main scrollable content ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       <div
         className="flex flex-col bg-white dark:bg-[#070F2B]"
         style={{
@@ -314,7 +314,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
           height: `calc(100dvh - ${headerHeight}px - ${bottomTabsHeight}px)`,
         }}
       >
-        {/* Fast entry panel â€” when client list is hidden it fills the remaining space */}
+        {/* Fast entry panel €” when client list is hidden it fills the remaining space */}
         {isFastEntryOpen && (
           <FastEntryPanel
             flightName={activeFlightName}
@@ -323,7 +323,7 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
           />
         )}
 
-        {/* Client summary list â€” hidden when the user toggled it off */}
+        {/* Client summary list €” hidden when the user toggled it off */}
         <div
           className="flex-1"
           style={{
@@ -378,10 +378,10 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
         </div>
       </div>
 
-      {/* â”€â”€ Floating action button (save queue) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Floating action button (save queue) ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       <BulkSaveFAB flightName={activeFlightName} />
 
-      {/* â”€â”€ Fixed bottom flight tabs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Fixed bottom flight tabs ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       <FlightBottomTabs
         flights={flightsQuery.data?.items ?? []}
         orderedFlightNames={flightTabOrder}
@@ -392,14 +392,14 @@ function ExpectedCargoPageContent({ onNavigate: _onNavigate }: { onNavigate: (pa
         onAddFlight={handleAddFlight}
       />
 
-      {/* â”€â”€ Notification panel (slide-in) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Notification panel (slide-in) ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       <NotificationPanel
         isOpen={isNotificationPanelOpen}
         onClose={() => setIsNotificationPanelOpen(false)}
         onNavigateToClient={handleNavigateToClient}
       />
 
-      {/* â”€â”€ Modals â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Modals ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       <RenameFlightModal
         flightName={renameTarget}
         isOpen={renameTarget !== null}

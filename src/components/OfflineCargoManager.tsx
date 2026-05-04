@@ -241,9 +241,9 @@ export default function OfflineCargoManager({ onClose, onRefreshHost, flightName
   );
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 // OfflineItemCard
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 function OfflineItemCard({ item, onDelete, onRetry, onEdit, isRetrying }: {
   item: FailedItem;
   onDelete: () => void;
@@ -311,15 +311,15 @@ function OfflineItemCard({ item, onDelete, onRetry, onEdit, isRetrying }: {
         <div className="grid grid-cols-2 gap-2 mb-3">
           <div className="bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-xl px-3 py-2">
             <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Vazn</p>
-            <p className="text-sm font-black text-gray-800 dark:text-gray-100">{item.weightKg || 'â€”'} kg</p>
+            <p className="text-sm font-black text-gray-800 dark:text-gray-100">{item.weightKg || '€”'} kg</p>
           </div>
           <div className="bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-xl px-3 py-2">
             <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Narx</p>
-            <p className="text-sm font-black text-gray-800 dark:text-gray-100">{item.pricePerKg ? `$${item.pricePerKg}` : 'â€”'}</p>
+            <p className="text-sm font-black text-gray-800 dark:text-gray-100">{item.pricePerKg ? `$${item.pricePerKg}` : '€”'}</p>
           </div>
         </div>
 
-        {/* Error message â€” shown only when there's a last-known error */}
+        {/* Error message €” shown only when there's a last-known error */}
         {item.error && !isRetrying && (
           <div className="flex items-start gap-2 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/15 text-red-600 dark:text-red-400 text-xs font-medium p-2.5 rounded-xl mb-3">
             <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
@@ -355,9 +355,9 @@ function OfflineItemCard({ item, onDelete, onRetry, onEdit, isRetrying }: {
   );
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 // EditOfflineItem
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 function EditOfflineItem({ item, onCancel, onSave }: {
   item: FailedItem;
   onCancel: () => void;

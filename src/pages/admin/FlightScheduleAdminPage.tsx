@@ -29,7 +29,7 @@ import {
 import { getAdminJwtClaims } from '@/api/services/adminManagement';
 import { cn } from '@/lib/utils';
 
-// â”€â”€ Constants â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€ Constants ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 const UZ_MONTHS = [
   'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun',
@@ -67,7 +67,7 @@ const TYPE_CONFIG = {
   },
 } as const;
 
-// â”€â”€ Entry Form Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€ Entry Form Modal ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface EntryFormValues {
   flight_name: string;
@@ -260,7 +260,7 @@ function EntryFormModal({ initial, onClose, onSave, isSaving }: EntryFormModalPr
   );
 }
 
-// â”€â”€ Delete confirm â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€ Delete confirm ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface DeleteConfirmProps {
   item: FlightScheduleItem;
@@ -316,7 +316,7 @@ function DeleteConfirm({ item, onCancel, onConfirm, isDeleting }: DeleteConfirmP
   );
 }
 
-// â”€â”€ Single entry card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€ Single entry card ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface EntryCardProps {
   item: FlightScheduleItem;
@@ -372,7 +372,7 @@ function EntryCard({ item, onEdit, onDelete, canManage }: EntryCardProps) {
         )}
       </div>
 
-      {/* Actions â€” only visible to users with manage permission */}
+      {/* Actions €” only visible to users with manage permission */}
       {canManage && (
         <div className="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 sm:opacity-100 transition-opacity">
           <button
@@ -395,7 +395,7 @@ function EntryCard({ item, onEdit, onDelete, canManage }: EntryCardProps) {
   );
 }
 
-// â”€â”€ Main page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€ Main page ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface FlightScheduleAdminPageProps {
   onBack?: () => void;
@@ -404,7 +404,7 @@ interface FlightScheduleAdminPageProps {
 export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminPageProps) {
   const queryClient = useQueryClient();
   const jwtClaims = getAdminJwtClaims();
-  // canManage â†’ full CRUD; canView â†’ read-only (includes canManage users)
+  // canManage †’ full CRUD; canView †’ read-only (includes canManage users)
   const canManage = jwtClaims.isSuperAdmin || jwtClaims.permissions.has('flight_schedule:manage');
   const canView   = canManage || jwtClaims.permissions.has('flight_schedule:read');
 
@@ -413,14 +413,14 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
   const [editTarget, setEditTarget] = useState<FlightScheduleItem | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<FlightScheduleItem | null>(null);
 
-  // â”€â”€ Query â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Query ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
   const { data, isLoading, isError } = useQuery({
     queryKey: ['flightSchedule', year],
     queryFn: () => getFlightSchedule(year),
     staleTime: 5 * 60_000,
   });
 
-  // â”€â”€ Mutations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Mutations ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
   const createMutation = useMutation({
     mutationFn: (body: CreateFlightScheduleRequest) => createFlightSchedule(body),
     onSuccess: () => {
@@ -454,7 +454,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
     onError: () => toast.error("O'chirishda xatolik"),
   });
 
-  // â”€â”€ Derived data â€” group by month â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Derived data €” group by month ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
   const groupedByMonth = useMemo(() => {
     const items = [...(data?.items ?? [])].sort(
       (a, b) => a.flight_date.localeCompare(b.flight_date),
@@ -468,7 +468,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
     return groups;
   }, [data]);
 
-  // â”€â”€ Handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Handlers ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
   const handleSave = (values: EntryFormValues) => {
     const body: UpdateFlightScheduleRequest & CreateFlightScheduleRequest = {
       flight_name: values.flight_name.trim(),
@@ -498,7 +498,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
 
   return (
     <div className="min-h-full">
-      {/* â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Header ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       <div className="flex items-center justify-between mb-6 gap-3">
         <div className="flex items-center gap-3 min-w-0">
           {onBack && (
@@ -517,7 +517,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
               </h1>
             </div>
             <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-0.5">
-              {data?.total ?? 0} ta yozuv Â· {year} yil
+              {data?.total ?? 0} ta yozuv · {year} yil
             </p>
           </div>
         </div>
@@ -542,7 +542,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
             </button>
           </div>
 
-          {/* Add button â€” only for manage permission */}
+          {/* Add button €” only for manage permission */}
           {canManage && (
             <button
               onClick={() => { setEditTarget(null); setFormOpen(true); }}
@@ -555,7 +555,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
         </div>
       </div>
 
-      {/* â”€â”€ Content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Content ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       {isLoading && (
         <div className="flex items-center justify-center py-20 gap-3 text-zinc-400">
           <Loader2 className="size-5 animate-spin" />
@@ -629,7 +629,7 @@ export default function FlightScheduleAdminPage({ onBack }: FlightScheduleAdminP
         </div>
       )}
 
-      {/* â”€â”€ Modals â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Modals ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       {formOpen && (
         <EntryFormModal
           initial={editTarget}

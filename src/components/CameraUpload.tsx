@@ -75,7 +75,7 @@ export default function CameraUpload({
    * iOS-SPECIFIC HANDLING:
    * - playsInline is REQUIRED (without it, iOS opens fullscreen native player)
    * - muted is REQUIRED (iOS won't autoplay videos with audio)
-   * - facingMode: 'environment' may fail on some iOS devices â†’ we fallback to 'user'
+   * - facingMode: 'environment' may fail on some iOS devices †’ we fallback to 'user'
    * - Must be triggered by user interaction (button click)
    */
   const openCamera = useCallback(async () => {
@@ -150,7 +150,7 @@ export default function CameraUpload({
 
           // SUCCESS: Video is ready when dimensions are available
           if (video.videoWidth > 0 && video.videoHeight > 0) {
-            console.log('âœ… Camera ready:', video.videoWidth, 'x', video.videoHeight);
+            console.log('œ… Camera ready:', video.videoWidth, 'x', video.videoHeight);
             setIsCameraReady(true); // Update state to hide loader
 
             return; // Stop polling
@@ -158,7 +158,7 @@ export default function CameraUpload({
 
           // TIMEOUT: Prevent infinite polling
           if (pollAttempts >= maxPollAttempts) {
-            console.error('âŒ Camera ready timeout after', maxPollAttempts, 'attempts');
+            console.error('Œ Camera ready timeout after', maxPollAttempts, 'attempts');
             setIsCameraReady(false);
 
             // Show error to user

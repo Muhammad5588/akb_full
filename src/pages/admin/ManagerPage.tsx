@@ -57,7 +57,7 @@ export default function ManagerPage({ onNavigate, onLogout }: ManagerPageProps) 
         setJwtClaims(getAdminJwtClaims());
       })
       .catch(() => {
-        // Non-fatal â€” continue with existing token
+        // Non-fatal €” continue with existing token
       });
     return () => { cancelled = true; };
   }, []);
@@ -136,7 +136,7 @@ export default function ManagerPage({ onNavigate, onLogout }: ManagerPageProps) 
                 {jwtClaims.role_name}
               </span>
 
-              {/* Carousel management â€” only visible when the JWT contains carousel:read */}
+              {/* Carousel management €” only visible when the JWT contains carousel:read */}
               {jwtClaims.permissions.has('carousel:read') && (
                 <button
                   onClick={() => onNavigate('admin-carousel')}
@@ -147,7 +147,7 @@ export default function ManagerPage({ onNavigate, onLogout }: ManagerPageProps) 
                 </button>
               )}
 
-              {/* Flight schedule â€” visible for both read-only and manage roles */}
+              {/* Flight schedule €” visible for both read-only and manage roles */}
               {(jwtClaims.isSuperAdmin || jwtClaims.permissions.has('flight_schedule:manage') || jwtClaims.permissions.has('flight_schedule:read')) && (
                 <button
                   onClick={() => onNavigate('flight-schedule-admin')}

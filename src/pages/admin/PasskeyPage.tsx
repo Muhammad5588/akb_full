@@ -16,7 +16,7 @@ interface PasskeyPageProps {
   onLogout: () => void;
 }
 
-// Stable device name derived from the browser UA â€” used as the passkey identifier.
+// Stable device name derived from the browser UA €” used as the passkey identifier.
 function getDeviceName(): string {
   const ua = navigator.userAgent;
   if (/iPhone/.test(ua)) return 'iPhone';
@@ -67,7 +67,7 @@ export default function PasskeyPage({ onLogout }: PasskeyPageProps) {
         localStorage.setItem('access_token', data.access_token);
         setJwtClaims(getAdminJwtClaims());
       })
-      .catch(() => { /* Non-fatal â€” continue with existing token */ });
+      .catch(() => { /* Non-fatal €” continue with existing token */ });
     return () => { cancelled = true; };
   }, []);
 
@@ -246,7 +246,7 @@ export default function PasskeyPage({ onLogout }: PasskeyPageProps) {
         {/* Info box */}
         <div className="bg-blue-50 dark:bg-blue-500/[0.06] rounded-2xl border border-blue-100 dark:border-blue-500/20 p-4">
           <p className="text-[12px] text-blue-600 dark:text-blue-400 leading-relaxed">
-            Passkey â€” bu PIN o&apos;rniga ishlatiluvchi zamonaviy xavfsizlik usuli.
+            Passkey €” bu PIN o&apos;rniga ishlatiluvchi zamonaviy xavfsizlik usuli.
             Barmoq izi, yuz tanish yoki qurilma qulfi orqali tezda kira olasiz.
           </p>
         </div>

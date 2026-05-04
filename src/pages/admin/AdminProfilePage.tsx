@@ -60,7 +60,7 @@ export default function AdminProfilePage({ onBack }: AdminProfilePageProps) {
 
   const features = [
     { icon: 'ðŸ”', title: 'Parolsiz kirish', desc: 'PIN eslab qolish shart emas' },
-    { icon: 'âš¡', title: 'Tezkor', desc: '1 soniyada tizimga kirish' },
+    { icon: 'š¡', title: 'Tezkor', desc: '1 soniyada tizimga kirish' },
     { icon: 'ðŸ›¡ï¸', title: 'Xavfsiz', desc: 'End-to-end shifrlangan' },
   ];
 

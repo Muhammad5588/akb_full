@@ -30,11 +30,11 @@ import {
 } from '../../components/ui/table';
 import { Skeleton } from '../../components/ui/skeleton';
 
-// â”€â”€â”€ Constants â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Constants ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 const PAGE_SIZE = 50;
 
-// â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Helpers ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 function formatDateTime(isoString: string): { date: string; time: string } {
   const d = new Date(isoString);
@@ -82,7 +82,7 @@ function getActionBadgeClass(action: string): string {
   return 'bg-gray-50 dark:bg-white/[0.05] text-gray-600 dark:text-gray-400 border-gray-200/70 dark:border-white/[0.05]';
 }
 
-// â”€â”€â”€ Action label translations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Action label translations ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 const ACTION_TRANSLATIONS: Record<string, string> = {
   'POS_BULK_PAYMENT':         "Kassa: Yuk to'lovi",
@@ -112,7 +112,7 @@ const ACTION_TRANSLATIONS: Record<string, string> = {
   'DELETED_CAROUSEL_ITEM':   'Karousel elementi o\'chirildi',
 };
 
-// â”€â”€â”€ Sub-components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Sub-components ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 function ActionBadge({ action }: { action: string }) {
   const label = ACTION_TRANSLATIONS[action] ?? action;
@@ -136,7 +136,7 @@ function DetailsExpander({
   onToggle: () => void;
 }) {
   if (!details || Object.keys(details).length === 0) {
-    return <span className="text-[12px] text-gray-400 dark:text-gray-600 italic">â€”</span>;
+    return <span className="text-[12px] text-gray-400 dark:text-gray-600 italic">€”</span>;
   }
 
   return (
@@ -173,7 +173,7 @@ function DetailsExpander({
   );
 }
 
-// â”€â”€â”€ Skeletons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Skeletons ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 function TableSkeletons() {
   return (
@@ -201,7 +201,7 @@ function CardSkeletons() {
   );
 }
 
-// â”€â”€â”€ Desktop Row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Desktop Row ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 function AuditDesktopRow({
   log,
@@ -262,7 +262,7 @@ function AuditDesktopRow({
             {log.ip_address}
           </div>
         ) : (
-          <span className="text-[12px] text-gray-400 dark:text-gray-600 italic">â€”</span>
+          <span className="text-[12px] text-gray-400 dark:text-gray-600 italic">€”</span>
         )}
       </TableCell>
 
@@ -278,7 +278,7 @@ function AuditDesktopRow({
   );
 }
 
-// â”€â”€â”€ Mobile Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Mobile Card ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 function AuditMobileCard({
   log,
@@ -349,7 +349,7 @@ function AuditMobileCard({
   );
 }
 
-// â”€â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Main Page ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 export default function AdminAuditLogsPage() {
   const [page, setPage] = useState(1);
@@ -428,14 +428,14 @@ export default function AdminAuditLogsPage() {
   return (
     <div className="space-y-6">
 
-      {/* â”€â”€ Header â”€â”€ */}
+      {/* ”€”€ Header ”€”€ */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-[22px] font-bold text-gray-900 dark:text-white tracking-tight">
             Tizim Jurnali
           </h1>
           <p className="text-[13px] text-gray-500 dark:text-gray-500 mt-1">
-            Audit Logs â€” barcha admin harakatlari tarixi
+            Audit Logs €” barcha admin harakatlari tarixi
           </p>
         </div>
         <button
@@ -448,7 +448,7 @@ export default function AdminAuditLogsPage() {
         </button>
       </div>
 
-      {/* â”€â”€ Filter Bar â”€â”€ */}
+      {/* ”€”€ Filter Bar ”€”€ */}
       <div className="bg-white dark:bg-[#111] rounded-[18px] border border-black/[0.05] dark:border-white/[0.06] p-4 shadow-sm">
         <div className="flex items-center gap-2 mb-3">
           <Search className="w-3.5 h-3.5 text-gray-400" />
@@ -522,7 +522,7 @@ export default function AdminAuditLogsPage() {
         </div>
       </div>
 
-      {/* â”€â”€ Content â”€â”€ */}
+      {/* ”€”€ Content ”€”€ */}
       {isError ? (
         <div className="flex flex-col items-center justify-center py-16 gap-3 bg-white dark:bg-[#111] rounded-[20px] border border-black/[0.05] dark:border-white/[0.06]">
           <AlertCircle className="w-10 h-10 text-red-400" strokeWidth={1.5} />
@@ -615,7 +615,7 @@ export default function AdminAuditLogsPage() {
         </>
       )}
 
-      {/* â”€â”€ Pagination â”€â”€ */}
+      {/* ”€”€ Pagination ”€”€ */}
       {!isLoading && !isError && (
         <div className="flex items-center justify-between pb-8">
           <div className="text-[12px] text-gray-400 dark:text-gray-600">

@@ -38,7 +38,7 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } f
 import { Skeleton } from '../../components/ui/skeleton';
 import LightSelect from '../../components/ui/LightSelect';
 
-// â”€â”€â”€ Constants â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Constants ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 const ITEM_TYPE_OPTIONS = [
   { value: 'ad',      label: 'Reklama' },
@@ -57,7 +57,7 @@ const MEDIA_TYPE_ICON: Record<string, React.ReactNode> = {
   gif:   <Film  className="w-4 h-4" />,
 };
 
-/** Named colours displayed as swatches â€” ordinary users don't need to know hex. */
+/** Named colours displayed as swatches €” ordinary users don't need to know hex. */
 const PRESET_COLORS: { hex: string; name: string }[] = [
   { hex: '#ffffff', name: "Oq" },
   { hex: '#f8fafc', name: "Oppoq" },
@@ -78,7 +78,7 @@ const PRESET_COLORS: { hex: string; name: string }[] = [
 const ACCEPTED_MIME_TYPES =
   'image/jpeg,image/png,image/webp,image/heic,image/gif,video/mp4,video/quicktime,video/webm,video/x-msvideo,video/mpeg';
 
-// â”€â”€â”€ Zod schema â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Zod schema ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 const carouselFormSchema = z
   .object({
@@ -116,13 +116,13 @@ const EMPTY_FORM: CarouselFormValues = {
   is_active:    true,
 };
 
-// â”€â”€â”€ Upload state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Upload state ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 type UploadStatus = 'idle' | 'uploading' | 'success' | 'error';
 
 interface UploadState {
   status:   UploadStatus;
-  progress: number; // 0â€“100
+  progress: number; // 0€“100
   file:     File | null;
   result:   CarouselMediaUploadResponse | null;
   errorMsg: string | null;
@@ -132,12 +132,12 @@ const UPLOAD_IDLE: UploadState = {
   status: 'idle', progress: 0, file: null, result: null, errorMsg: null,
 };
 
-// â”€â”€â”€ Gallery item state (feature type media slides) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Gallery item state (feature type media slides) ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface GalleryItemState {
-  /** Local React key â€” not related to API id */
+  /** Local React key €” not related to API id */
   localId: string;
-  /** API id â€” only present when editing an existing media item */
+  /** API id €” only present when editing an existing media item */
   id?: number;
   uploadState: UploadState;
   order: number;
@@ -163,7 +163,7 @@ function galleryItemFromApiMedia(media: CarouselMediaItemResponse): GalleryItemS
   };
 }
 
-// â”€â”€â”€ Gallery media section UI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Gallery media section UI ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface GalleryMediaSectionProps {
   items:          GalleryItemState[];
@@ -272,13 +272,13 @@ function GalleryMediaSection({
       )}
 
       <p className="text-[10px] text-gray-400 dark:text-gray-600">
-        Rasm/GIF: {imageCount}/{LIMITS.image} Â· Video: {videoCount}/{LIMITS.video}
+        Rasm/GIF: {imageCount}/{LIMITS.image} · Video: {videoCount}/{LIMITS.video}
       </p>
     </div>
   );
 }
 
-// â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Helpers ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 function useIsDesktop(): boolean {
   const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 768);
@@ -308,20 +308,20 @@ function detectMediaTypeFromMime(mime: string): CarouselMediaType | null {
   return null;
 }
 
-// â”€â”€â”€ Shared input style â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Shared input style ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 const inputClass =
   'w-full p-3 bg-gray-50/80 dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/[0.08] rounded-xl text-[14px] focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all outline-none text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600';
 
-// â”€â”€â”€ SVG Progress Ring â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ SVG Progress Ring ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface ProgressRingProps {
-  progress: number; // 0â€“100
+  progress: number; // 0€“100
   size?: number;
 }
 
 function ProgressRing({ progress, size = 48 }: ProgressRingProps) {
-  // r=15.9 â†’ circumference â‰ˆ 99.9 â‰ˆ 100, convenient for % math
+  // r=15.9 †’ circumference ‰ˆ 99.9 ‰ˆ 100, convenient for % math
   const r   = 15.9;
   const circ = 2 * Math.PI * r;
   const filled = (progress / 100) * circ;
@@ -350,7 +350,7 @@ function ProgressRing({ progress, size = 48 }: ProgressRingProps) {
   );
 }
 
-// â”€â”€â”€ Upload Zone â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Upload Zone ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface UploadZoneProps {
   uploadState:     UploadState;
@@ -376,7 +376,7 @@ function UploadZone({ uploadState, onFileSelected, onClear }: UploadZoneProps) {
     e.target.value = '';
   };
 
-  // â”€â”€ Uploading state â”€â”€
+  // ”€”€ Uploading state ”€”€
   if (uploadState.status === 'uploading') {
     return (
       <div className="flex items-center gap-3 p-4 bg-blue-50 dark:bg-blue-500/10 rounded-2xl border border-blue-200 dark:border-blue-500/20">
@@ -388,7 +388,7 @@ function UploadZone({ uploadState, onFileSelected, onClear }: UploadZoneProps) {
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-[13px] font-semibold text-blue-700 dark:text-blue-300">
-            Yuklanmoqdaâ€¦
+            Yuklanmoqda€¦
           </p>
           <p className="text-[11px] text-blue-500 dark:text-blue-400/70 truncate mt-0.5">
             {uploadState.file?.name}
@@ -399,7 +399,7 @@ function UploadZone({ uploadState, onFileSelected, onClear }: UploadZoneProps) {
     );
   }
 
-  // â”€â”€ Success state â”€â”€
+  // ”€”€ Success state ”€”€
   if (uploadState.status === 'success' && uploadState.result) {
     const { result, file } = uploadState;
     return (
@@ -423,7 +423,7 @@ function UploadZone({ uploadState, onFileSelected, onClear }: UploadZoneProps) {
             </p>
           </div>
           <p className="text-[11px] text-emerald-600/70 dark:text-emerald-400/60 truncate mt-0.5">
-            {file?.name} â€¢ {formatBytes(result.size_bytes)}
+            {file?.name} €¢ {formatBytes(result.size_bytes)}
           </p>
         </div>
         <button
@@ -438,7 +438,7 @@ function UploadZone({ uploadState, onFileSelected, onClear }: UploadZoneProps) {
     );
   }
 
-  // â”€â”€ Error state â”€â”€
+  // ”€”€ Error state ”€”€
   if (uploadState.status === 'error') {
     return (
       <div className="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-500/10 rounded-2xl border border-red-200 dark:border-red-500/20">
@@ -462,7 +462,7 @@ function UploadZone({ uploadState, onFileSelected, onClear }: UploadZoneProps) {
     );
   }
 
-  // â”€â”€ Idle / drop zone â”€â”€
+  // ”€”€ Idle / drop zone ”€”€
   return (
     <div
       role="button"
@@ -494,7 +494,7 @@ function UploadZone({ uploadState, onFileSelected, onClear }: UploadZoneProps) {
         </p>
       </div>
       <p className="text-[10px] text-gray-400 dark:text-gray-600">
-        JPEG Â· PNG Â· WebP Â· GIF Â· MP4 Â· MOV Â· WebM &nbsp;â€¢&nbsp; Rasm â‰¤50 MB Â· Video â‰¤200 MB
+        JPEG · PNG · WebP · GIF · MP4 · MOV · WebM &nbsp;€¢&nbsp; Rasm ‰¤50 MB · Video ‰¤200 MB
       </p>
       <input
         ref={inputRef}
@@ -507,7 +507,7 @@ function UploadZone({ uploadState, onFileSelected, onClear }: UploadZoneProps) {
   );
 }
 
-// â”€â”€â”€ Color Picker Field â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Color Picker Field ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface ColorPickerFieldProps {
   value:    string;
@@ -540,7 +540,7 @@ function ColorPickerField({ value, onChange, error }: ColorPickerFieldProps) {
     }
   };
 
-  // Native color picker â€” update form value on every change (no "OK" step)
+  // Native color picker €” update form value on every change (no "OK" step)
   const handleNativePickerChange = (e: ChangeEvent<HTMLInputElement>) => {
     const hex = e.target.value;
     onChange(hex);
@@ -628,7 +628,7 @@ function ColorPickerField({ value, onChange, error }: ColorPickerFieldProps) {
             className="overflow-hidden"
           >
             <div className="flex items-center gap-2 p-3 bg-gray-50 dark:bg-white/[0.03] rounded-xl border border-gray-200 dark:border-white/[0.08]">
-              {/* Native colour picker â€” clicking swatch opens browser picker immediately */}
+              {/* Native colour picker €” clicking swatch opens browser picker immediately */}
               <input
                 ref={nativePickerRef}
                 type="color"
@@ -637,7 +637,7 @@ function ColorPickerField({ value, onChange, error }: ColorPickerFieldProps) {
                 className="w-10 h-10 rounded-lg border border-gray-200 dark:border-white/[0.08] cursor-pointer bg-transparent p-0.5 shrink-0"
                 title="Rang tanlang"
               />
-              {/* Hex text input â€” live sync with no separate "OK" step */}
+              {/* Hex text input €” live sync with no separate "OK" step */}
               <input
                 type="text"
                 value={hexInput}
@@ -659,7 +659,7 @@ function ColorPickerField({ value, onChange, error }: ColorPickerFieldProps) {
   );
 }
 
-// â”€â”€â”€ Stat card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Stat card ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface StatCardProps {
   icon:   React.ReactNode;
@@ -679,7 +679,7 @@ const StatCard = memo(({ icon, label, value, accent }: StatCardProps) => (
 ));
 StatCard.displayName = 'StatCard';
 
-// â”€â”€â”€ Carousel item card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Carousel item card ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface CarouselCardProps {
   item:            CarouselItemStatsResponse;
@@ -887,7 +887,7 @@ const CarouselCard = memo(({
 });
 CarouselCard.displayName = 'CarouselCard';
 
-// â”€â”€â”€ Global upload badge (visible even when modal is open) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Global upload badge (visible even when modal is open) ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface GlobalUploadBadgeProps {
   uploadState: UploadState;
@@ -914,7 +914,7 @@ const GlobalUploadBadge = memo(({ uploadState }: GlobalUploadBadgeProps) => {
             </div>
             <div className="min-w-0">
               <p className="text-[12px] font-semibold text-gray-800 dark:text-gray-100">
-                Media yuklanmoqdaâ€¦
+                Media yuklanmoqda€¦
               </p>
               <p className="text-[10px] text-gray-400 truncate max-w-[160px]">
                 {uploadState.file?.name}
@@ -944,7 +944,7 @@ const GlobalUploadBadge = memo(({ uploadState }: GlobalUploadBadgeProps) => {
 });
 GlobalUploadBadge.displayName = 'GlobalUploadBadge';
 
-// â”€â”€â”€ Carousel form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Carousel form ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 type MediaInputMode = 'upload' | 'url';
 
@@ -971,7 +971,7 @@ function CarouselForm({ defaultValues, defaultMediaItems, onSubmit, onUploadStat
   // Portal target for LightSelect dropdowns inside this form's parent modal.
   const [lsPortalEl, setLsPortalEl] = useState<HTMLDivElement | null>(null);
 
-  // Determine initial mode: if editing and existing item has s3_key â†’ upload mode (show success)
+  // Determine initial mode: if editing and existing item has s3_key †’ upload mode (show success)
   const initialMode: MediaInputMode = defaultValues?.media_s3_key
     ? 'upload'
     : defaultValues?.media_url
@@ -1004,7 +1004,7 @@ function CarouselForm({ defaultValues, defaultMediaItems, onSubmit, onUploadStat
   const watchedTitle    = useWatch({ control, name: 'title' });
   const watchedType     = useWatch({ control, name: 'type' });
 
-  // â”€â”€ Gallery items state (feature type only) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Gallery items state (feature type only) ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
   const [galleryItems, setGalleryItems] = useState<GalleryItemState[]>(() =>
     defaultMediaItems ? defaultMediaItems.map(galleryItemFromApiMedia) : [],
   );
@@ -1194,7 +1194,7 @@ function CarouselForm({ defaultValues, defaultMediaItems, onSubmit, onUploadStat
     <form id="carousel-form" onSubmit={handleSubmit(submit)} className="space-y-5">
       <div ref={setLsPortalEl} />
 
-      {/* â”€â”€ Type selector (must be chosen first) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Type selector (must be chosen first) ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       <div className="space-y-3">
         <p className={labelClass}>Tur</p>
         <Controller
@@ -1219,7 +1219,7 @@ function CarouselForm({ defaultValues, defaultMediaItems, onSubmit, onUploadStat
         )}
       </div>
 
-      {/* â”€â”€ Media section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Media section ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       <div className="space-y-3">
         <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-white/[0.05] rounded-xl">
           {([
@@ -1266,7 +1266,7 @@ function CarouselForm({ defaultValues, defaultMediaItems, onSubmit, onUploadStat
         )}
       </div>
 
-      {/* â”€â”€ Media gallery (feature type only) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Media gallery (feature type only) ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       {watchedType === 'feature' && (
         <GalleryMediaSection
           items={galleryItems}
@@ -1278,7 +1278,7 @@ function CarouselForm({ defaultValues, defaultMediaItems, onSubmit, onUploadStat
         />
       )}
 
-      {/* â”€â”€ Content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Content ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       <div className="space-y-3">
         <p className={labelClass}>Kontent</p>
         <div>
@@ -1298,7 +1298,7 @@ function CarouselForm({ defaultValues, defaultMediaItems, onSubmit, onUploadStat
         <div>
           <input
             {...register('action_url')}
-            placeholder="Havola â€” https://... (ixtiyoriy)"
+            placeholder="Havola €” https://... (ixtiyoriy)"
             className={inputClass}
           />
           {errors.action_url && (
@@ -1307,7 +1307,7 @@ function CarouselForm({ defaultValues, defaultMediaItems, onSubmit, onUploadStat
         </div>
       </div>
 
-      {/* â”€â”€ Appearance â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Appearance ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       <div className="space-y-3">
         <p className={labelClass}>Ko'rinish</p>
 
@@ -1385,7 +1385,7 @@ function CarouselForm({ defaultValues, defaultMediaItems, onSubmit, onUploadStat
         </div>
       </div>
 
-      {/* â”€â”€ Active toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ”€”€ Active toggle ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */}
       <Controller
         name="is_active"
         control={control}
@@ -1425,14 +1425,14 @@ function CarouselForm({ defaultValues, defaultMediaItems, onSubmit, onUploadStat
 
       {isUploading && (
         <p className="text-[11px] text-center text-gray-400 dark:text-gray-500">
-          Fayl yuklanayapti â€” boshqa maydonlarni to'ldiringâ€¦
+          Fayl yuklanayapti €” boshqa maydonlarni to'ldiring€¦
         </p>
       )}
     </form>
   );
 }
 
-// â”€â”€â”€ Main page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Main page ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface AdminCarouselPageProps {
   /** When provided the page renders standalone (no AdminLayout) with a back button. */
@@ -1453,14 +1453,14 @@ export default function AdminCarouselPage({ onBack }: AdminCarouselPageProps) {
   /** Tracks active upload state from the form for the global floating badge. */
   const [globalUpload,     setGlobalUpload]      = useState<UploadState>(UPLOAD_IDLE);
 
-  // â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Data ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
   const { data: statsItems, isLoading } = useQuery<CarouselItemStatsResponse[]>({
     queryKey: ['admin-carousel-stats'],
     queryFn: getCarouselStats,
   });
 
-  // â”€â”€ Derived stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Derived stats ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
   const summary = useMemo(() => {
     if (!statsItems) return { total: 0, active: 0, views: 0, clicks: 0 };
@@ -1486,7 +1486,7 @@ export default function AdminCarouselPage({ onBack }: AdminCarouselPageProps) {
     else { setSortBy(col); setSortDir('desc'); }
   };
 
-  // â”€â”€ Mutations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Mutations ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
   const createMut = useMutation({
     mutationFn: createCarouselItem,
@@ -1537,7 +1537,7 @@ export default function AdminCarouselPage({ onBack }: AdminCarouselPageProps) {
     onSettled: () => setTogglingId(null),
   });
 
-  // â”€â”€ Handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Handlers ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
   const handleFormSubmit = useCallback(
     (data: CarouselItemCreateRequest) => {
@@ -1628,7 +1628,7 @@ export default function AdminCarouselPage({ onBack }: AdminCarouselPageProps) {
       ) : isUploading ? (
         <>
           <Loader2 className="w-4 h-4 animate-spin" />
-          Yuklanmoqdaâ€¦ {globalUpload.progress}%
+          Yuklanmoqda€¦ {globalUpload.progress}%
         </>
       ) : (
         'Saqlash'
@@ -1636,7 +1636,7 @@ export default function AdminCarouselPage({ onBack }: AdminCarouselPageProps) {
     </motion.button>
   );
 
-  // â”€â”€ Render â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Render ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
   const content = (
     <div className="space-y-6">
@@ -1817,7 +1817,7 @@ export default function AdminCarouselPage({ onBack }: AdminCarouselPageProps) {
     </div>
   );
 
-  // â”€â”€ Standalone wrap (manager view) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€ Standalone wrap (manager view) ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
   if (onBack) {
     return (
       <div className="min-h-screen bg-[#f5f5f4] dark:bg-[#09090b]">

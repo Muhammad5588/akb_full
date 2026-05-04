@@ -28,9 +28,9 @@ import { useToast } from "@/hooks/useToast";
 import { useTranslation } from "react-i18next";
 import { getAdminJwtClaims } from "@/api/services/adminManagement";
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
    Types
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+   ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */
 interface AddCargoFormProps {
   flightName: string;
   onBack: () => void;
@@ -55,9 +55,9 @@ interface SelectOption {
   label: string;
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
    Lightweight Searchable Select (no radix overhead)
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+   ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */
 interface LightSelectProps {
   options: SelectOption[];
   value: string;
@@ -116,7 +116,7 @@ const LightSelect = memo(function LightSelect({
     };
   }, [open]);
 
-  // focus search when opened â€” only on non-touch devices
+  // focus search when opened €” only on non-touch devices
   useEffect(() => {
     if (open && searchRef.current) {
       const isMobile = "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -184,7 +184,7 @@ const LightSelect = memo(function LightSelect({
             "animate-in fade-in zoom-in-95 duration-100",
           ].join(" ")}
         >
-          {/* Search â€” only show if > 6 options */}
+          {/* Search €” only show if > 6 options */}
           {options.length > 6 && (
             <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-100 dark:border-white/5">
               <Search className="w-4 h-4 text-gray-400 shrink-0" />
@@ -246,9 +246,9 @@ const LightSelect = memo(function LightSelect({
   );
 });
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
    Helpers
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+   ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */
 
 const INPUT_CLS = [
   "h-12 rounded-xl",
@@ -269,9 +269,9 @@ const MAX_RETRIES = 2;
 /** Delay between retries in ms (doubles each attempt) */
 const RETRY_BASE_DELAY = 2000;
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
    Queue Status (memoised to avoid repainting form)
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+   ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */
 const QueueStatus = memo(function QueueStatus({
   queue,
   t,
@@ -361,9 +361,9 @@ const QueueStatus = memo(function QueueStatus({
   );
 });
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
    Main Form
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+   ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€ */
 export default function AddCargoForm({
   flightName,
   onBack,
@@ -371,7 +371,7 @@ export default function AddCargoForm({
 }: AddCargoFormProps) {
   const { t } = useTranslation();
 
-  // â”€â”€ Form state â”€â”€
+  // ”€”€ Form state ”€”€
   const [clientId, setClientId] = useState(() => sessionStorage.getItem('savedPrefix') || "");
   const [region, setRegion] = useState("");
   const [district, setDistrict] = useState("");
@@ -391,19 +391,19 @@ export default function AddCargoForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // â”€â”€ Mode toggles â”€â”€
+  // ”€”€ Mode toggles ”€”€
   const [fastMode, setFastMode] = useState(false);
   const [autoCamera, setAutoCamera] = useState(true);
 
-  // â”€â”€ Keep client/region toggle (default: ON â†’ saqlanadi) â”€â”€
+  // ”€”€ Keep client/region toggle (default: ON †’ saqlanadi) ”€”€
   const [keepClientRegion, setKeepClientRegion] = useState(() => {
     return sessionStorage.getItem('keepClientRegion') !== 'false';
   });
 
-  // â”€â”€ Upload queue â”€â”€
+  // ”€”€ Upload queue ”€”€
   const [uploadQueue, setUploadQueue] = useState<QueuedUpload[]>([]);
 
-  // â”€â”€ Refs â”€â”€
+  // ”€”€ Refs ”€”€
   const clientIdRef = useRef<HTMLInputElement>(null);
   const weightRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef<MultiPhotoUploadHandle>(null);
@@ -447,7 +447,7 @@ export default function AddCargoForm({
     });
   }, []);
 
-  /* â”€â”€ Memoised option lists â”€â”€ */
+  /* ”€”€ Memoised option lists ”€”€ */
   const regionOptions = useMemo<SelectOption[]>(
     () => regions.map((r) => ({ value: r.value, label: t(r.label) })),
     [t],
@@ -461,7 +461,7 @@ export default function AddCargoForm({
     [region, t],
   );
 
-  /* â”€â”€ Handlers (stable refs) â”€â”€ */
+  /* ”€”€ Handlers (stable refs) ”€”€ */
   const clearError = useCallback((key: string) => {
     setErrors((prev) => {
       if (!prev[key]) return prev;
@@ -565,7 +565,7 @@ export default function AddCargoForm({
     [clearError],
   );
 
-  /* â”€â”€ Keep toggle handler â”€â”€ */
+  /* ”€”€ Keep toggle handler ”€”€ */
   const handleKeepToggle = useCallback((checked: boolean) => {
     setKeepClientRegion(checked);
     sessionStorage.setItem('keepClientRegion', checked ? 'true' : 'false');
@@ -578,7 +578,7 @@ export default function AddCargoForm({
     }
   }, []);
 
-  /* â”€â”€ Validation â”€â”€ */
+  /* ”€”€ Validation ”€”€ */
   const validate = useCallback((): boolean => {
     const e: Record<string, string> = {};
     if (!clientId.trim())
@@ -595,7 +595,7 @@ export default function AddCargoForm({
     return Object.keys(e).length === 0;
   }, [clientId, photos, weightKg, pricePerKg, t]);
 
-  /* â”€â”€ Fast-mode camera warm-up â”€â”€ */
+  /* ”€”€ Fast-mode camera warm-up ”€”€ */
   useEffect(() => {
     if (fastMode && !prevFastRef.current) {
       cameraRef.current?.prepareStream();
@@ -603,7 +603,7 @@ export default function AddCargoForm({
     prevFastRef.current = fastMode;
   }, [fastMode]);
 
-  /* â”€â”€ Submit â”€â”€ */
+  /* ”€”€ Submit ”€”€ */
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
@@ -615,7 +615,7 @@ export default function AddCargoForm({
       ).length;
       if (activeCount >= MAX_QUEUE_SIZE) {
         toast({
-          title: "âš ï¸ Navbat to'ldi",
+          title: "š ï¸ Navbat to'ldi",
           description: `Iltimos, ${MAX_QUEUE_SIZE} ta yuklash tugashini kuting.`,
           variant: "warning",
           duration: 3000,
@@ -697,7 +697,7 @@ export default function AddCargoForm({
     ],
   );
 
-  /* â”€â”€ Background queue processor â”€â”€ */
+  /* ”€”€ Background queue processor ”€”€ */
   useEffect(() => {
     if (processingRef.current) return;
 
@@ -750,8 +750,8 @@ export default function AddCargoForm({
           ),
         );
         toast({
-          title: `âœ… ${t("cargo.messages.uploadSuccess")}`,
-          description: `${t("cargo.photoCard.client")} ${pending.clientId} â€” ${pending.photos.length} ${t("cargo.photos")}`,
+          title: `œ… ${t("cargo.messages.uploadSuccess")}`,
+          description: `${t("cargo.photoCard.client")} ${pending.clientId} €” ${pending.photos.length} ${t("cargo.photos")}`,
           variant: "success",
           duration: 2000,
         });
@@ -781,7 +781,7 @@ export default function AddCargoForm({
             const delay = RETRY_BASE_DELAY * Math.pow(2, pending.retryCount);
             toast({
               title: "ðŸ”„ Qayta urinish...",
-              description: `${pending.clientId} â€” ${pending.retryCount + 1}/${MAX_RETRIES}`,
+              description: `${pending.clientId} €” ${pending.retryCount + 1}/${MAX_RETRIES}`,
               variant: "warning",
               duration: delay,
             });
@@ -811,8 +811,8 @@ export default function AddCargoForm({
                 return;
               }
               toast({
-                title: "âš ï¸ Internet yo'q",
-                description: `${pending.clientId} â€” oflayn xotiraga saqlandi.`,
+                title: "š ï¸ Internet yo'q",
+                description: `${pending.clientId} €” oflayn xotiraga saqlandi.`,
                 variant: "warning",
                 duration: 3000,
               });
@@ -849,14 +849,14 @@ export default function AddCargoForm({
     run();
   }, [uploadQueue, fastMode, onSuccess, toast, t, safeTimeout]);
 
-  /* â”€â”€ Auto-focus clientId after photos â”€â”€ */
+  /* ”€”€ Auto-focus clientId after photos ”€”€ */
   useEffect(() => {
     if (photos.length > 0 && !clientId) {
       focusClientIdEnd();
     }
   }, [photos.length, clientId, focusClientIdEnd]);
 
-  /* â”€â”€ Permission guard â€” must be after all hooks â”€â”€ */
+  /* ”€”€ Permission guard €” must be after all hooks ”€”€ */
   const jwtClaims = getAdminJwtClaims();
   const canCreate = jwtClaims.isSuperAdmin || jwtClaims.permissions.has('flights:create');
   if (!canCreate) {
@@ -875,7 +875,7 @@ export default function AddCargoForm({
     );
   }
 
-  /* â”€â”€ Render â”€â”€ */
+  /* ”€”€ Render ”€”€ */
   return (
     <>
       <ToastRenderer />
@@ -925,7 +925,7 @@ export default function AddCargoForm({
               </div>
             </div>
 
-            {/* â”€â”€ Fast Mode â”€â”€ */}
+            {/* ”€”€ Fast Mode ”€”€ */}
             <div className="mb-8 bg-blue-50/50 dark:bg-blue-500/5 border border-blue-200 dark:border-blue-500/20 rounded-2xl p-5">
               <div className="flex flex-col gap-4">
                 <label className="flex items-center gap-4 cursor-pointer group">
@@ -972,7 +972,7 @@ export default function AddCargoForm({
               </div>
             </div>
 
-            {/* â”€â”€ Form â”€â”€ */}
+            {/* ”€”€ Form ”€”€ */}
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Photos */}
               <MultiPhotoUpload
@@ -1049,8 +1049,8 @@ export default function AddCargoForm({
                   ref={clientIdRef}
                   type="text"
                   // When the region/district prefix is locked in, the admin only
-                  // types the numeric suffix â†’ show a numpad for speed.
-                  // When the toggle is off they need to type letters too â†’ normal keyboard.
+                  // types the numeric suffix †’ show a numpad for speed.
+                  // When the toggle is off they need to type letters too †’ normal keyboard.
                   inputMode={keepClientRegion ? "numeric" : "text"}
                   value={clientId}
                   onChange={(e) => handleClientIdChange(e.target.value)}

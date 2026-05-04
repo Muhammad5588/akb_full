@@ -33,7 +33,7 @@ import type {
   RoleResponse,
 } from '../../api/services/adminManagement';
 
-// â”€â”€â”€ Hooks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Hooks ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 function useIsDesktop(): boolean {
   const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 768);
@@ -45,7 +45,7 @@ function useIsDesktop(): boolean {
   return isDesktop;
 }
 
-// â”€â”€â”€ Zod Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Zod Schemas ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 const createAdminSchema = z.object({
   client_code: z.string().min(1, "Mijoz kodini kiriting"),
@@ -69,7 +69,7 @@ type PinResetFormValues = z.infer<typeof pinResetSchema>;
 
 type DetailTab = 'info' | 'pin' | 'danger';
 
-// â”€â”€â”€ Helper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Helper ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('uz-UZ', {
@@ -77,7 +77,7 @@ function formatDate(iso: string): string {
   });
 }
 
-// â”€â”€â”€ Status Badge â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Status Badge ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 const StatusBadge = memo(({ isActive }: { isActive: boolean }) => (
   <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium ${
@@ -91,7 +91,7 @@ const StatusBadge = memo(({ isActive }: { isActive: boolean }) => (
 ));
 StatusBadge.displayName = 'StatusBadge';
 
-// â”€â”€â”€ Desktop Table Row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Desktop Table Row ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface AdminTableRowProps {
   admin: AdminAccountResponse;
@@ -123,12 +123,12 @@ const AdminTableRow = memo(({
       </div>
     </td>
     <td className="px-4 py-3 text-[13px] text-gray-600 dark:text-gray-400">
-      {admin.client?.client_code ?? 'â€”'}
+      {admin.client?.client_code ?? '€”'}
     </td>
     <td className="px-4 py-3">
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400">
         <Shield className="w-3 h-3" />
-        {admin.role_name ?? 'â€”'}
+        {admin.role_name ?? '€”'}
       </span>
     </td>
     <td className="px-4 py-3">
@@ -149,7 +149,7 @@ const AdminTableRow = memo(({
 ));
 AdminTableRow.displayName = 'AdminTableRow';
 
-// â”€â”€â”€ Mobile Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Mobile Card ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface AdminMobileCardProps {
   admin: AdminAccountResponse;
@@ -193,7 +193,7 @@ const AdminMobileCard = memo(({
     <div className="mt-3 flex flex-wrap items-center gap-2">
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400">
         <Shield className="w-3 h-3" />
-        {admin.role_name ?? 'â€”'}
+        {admin.role_name ?? '€”'}
       </span>
       <StatusBadge isActive={admin.is_active} />
       {admin.client?.client_code && (
@@ -209,7 +209,7 @@ const AdminMobileCard = memo(({
 ));
 AdminMobileCard.displayName = 'AdminMobileCard';
 
-// â”€â”€â”€ Create Admin Form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Create Admin Form ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface CreateAdminFormProps {
   roles: RoleResponse[];
@@ -229,7 +229,7 @@ const CreateAdminForm = memo(({ roles, onSuccess, onClose }: CreateAdminFormProp
     resolver: zodResolver(createAdminSchema),
   });
 
-  // Portal target for LightSelect â€” must be inside this component's DOM so
+  // Portal target for LightSelect €” must be inside this component's DOM so
   // Radix FocusScope (used by the surrounding Dialog/Drawer) does not block it.
   const [lsPortalEl, setLsPortalEl] = useState<HTMLDivElement | null>(null);
 
@@ -287,7 +287,7 @@ const CreateAdminForm = memo(({ roles, onSuccess, onClose }: CreateAdminFormProp
         <input
           {...register('pin')}
           type="password"
-          placeholder="â€¢â€¢â€¢â€¢"
+          placeholder="€¢€¢€¢€¢"
           className="w-full h-10 px-3 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.04] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 text-[13px] transition-all"
         />
         {errors.pin && (
@@ -339,7 +339,7 @@ const CreateAdminForm = memo(({ roles, onSuccess, onClose }: CreateAdminFormProp
 });
 CreateAdminForm.displayName = 'CreateAdminForm';
 
-// â”€â”€â”€ Detail Sheet â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Detail Sheet ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 interface AdminDetailSheetProps {
   admin: AdminAccountResponse | null;
@@ -362,7 +362,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
     [roles]
   );
 
-  // â”€â”€ Edit form â”€â”€
+  // ”€”€ Edit form ”€”€
   const {
     register: registerEdit,
     handleSubmit: handleEditSubmit,
@@ -377,7 +377,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
     },
   });
 
-  // â”€â”€ PIN form â”€â”€
+  // ”€”€ PIN form ”€”€
   const {
     register: registerPin,
     handleSubmit: handlePinSubmit,
@@ -406,7 +406,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
     }
   }, [onClose]);
 
-  // â”€â”€ Mutations â”€â”€
+  // ”€”€ Mutations ”€”€
   const { mutate: updateAdmin, isPending: isUpdatingAdmin } = useMutation({
     mutationFn: (values: EditAdminFormValues) =>
       updateAdminAccount(admin!.id, {
@@ -504,8 +504,8 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
                   Asosiy ma'lumotlar
                 </h3>
                 {[
-                  { label: "To'liq ism", value: admin.client?.full_name ?? 'â€”' },
-                  { label: "Mijoz kodi", value: admin.client?.client_code ?? 'â€”' },
+                  { label: "To'liq ism", value: admin.client?.full_name ?? '€”' },
+                  { label: "Mijoz kodi", value: admin.client?.client_code ?? '€”' },
                   { label: "Yaratilgan", value: formatDate(admin.created_at) },
                   {
                     label: "Muvaffaqiyatsiz urinishlar",
@@ -637,7 +637,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
                   <input
                     {...registerPin('new_pin')}
                     type="password"
-                    placeholder="â€¢â€¢â€¢â€¢"
+                    placeholder="€¢€¢€¢€¢"
                     className="w-full h-10 px-3 rounded-xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-white/[0.04] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 text-[13px] transition-all"
                   />
                   {pinErrors.new_pin && (
@@ -752,7 +752,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
           isDesktop ? 'max-w-lg' : 'w-full'
         }`}
       >
-        {/* LightSelect dropdown portal target â€” inside SheetContent so Radix
+        {/* LightSelect dropdown portal target €” inside SheetContent so Radix
             FocusScope does not intercept pointer events on the dropdown. */}
         <div ref={setLsPortalEl} />
         <SheetHeader className="px-4 py-3 border-b border-black/[0.06] dark:border-white/[0.06] flex-shrink-0">
@@ -788,7 +788,7 @@ const AdminDetailSheet = memo(({ admin, roles, isOpen, onClose }: AdminDetailShe
 });
 AdminDetailSheet.displayName = 'AdminDetailSheet';
 
-// â”€â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ”€”€”€ Main Page ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
 export default function AdminAccountsPage() {
   const isDesktop = useIsDesktop();

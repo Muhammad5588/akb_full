@@ -13,7 +13,7 @@ interface FlightsPageProps {
   onNavigate?: (page: string) => void;
 }
 
-/** Split "M123-2025" â†’ { code: "M123", year: "2025" } */
+/** Split "M123-2025" †’ { code: "M123", year: "2025" } */
 function parseFlightName(name: string): { code: string; year: string | null } {
   const idx = name.lastIndexOf('-');
   if (idx !== -1) {
@@ -64,7 +64,7 @@ export default function FlightsPage({ onSelectFlight, onLogout, onNavigate }: Fl
         localStorage.setItem('access_token', data.access_token);
         setJwtClaims(getAdminJwtClaims());
       })
-      .catch(() => { /* Non-fatal â€” continue with existing token */ });
+      .catch(() => { /* Non-fatal €” continue with existing token */ });
     return () => { cancelled = true; };
   }, []);
 
@@ -161,7 +161,7 @@ export default function FlightsPage({ onSelectFlight, onLogout, onNavigate }: Fl
       ) : (
         <div className="space-y-4">
 
-          {/* Expected cargo flights â€” shown above recent flights, blue accent */}
+          {/* Expected cargo flights €” shown above recent flights, blue accent */}
           {canViewExpectedCargo && expectedFlights.length > 0 && (
             <section>
               <p className="text-[11px] font-bold text-blue-500 dark:text-blue-400 uppercase tracking-wider mb-2 px-1">
@@ -331,7 +331,7 @@ function ExpectedFlightRow({ flight, onSelect }: {
           {year && <span className="text-[12px] font-medium text-gray-400 dark:text-gray-500">{year}</span>}
         </div>
         <span className="text-[11px] text-blue-400 dark:text-blue-500">
-          {flight.client_count} mijoz Â· {flight.track_code_count} trek kodi
+          {flight.client_count} mijoz · {flight.track_code_count} trek kodi
         </span>
       </div>
 

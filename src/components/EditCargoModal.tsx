@@ -82,7 +82,7 @@ export default function EditCargoModal({ cargo, onClose, onSuccess }: EditCargoM
         comment.trim() || undefined,
         newPhotos.length > 0 ? newPhotos : undefined
       );
-      toast({ title: `âœ… ${t('cargo.messages.updateSuccess')}`, description: t('cargo.messages.updateSuccessDescription'), variant: 'success', duration: 2000 });
+      toast({ title: `œ… ${t('cargo.messages.updateSuccess')}`, description: t('cargo.messages.updateSuccessDescription'), variant: 'success', duration: 2000 });
       onSuccess(updatedCargo.photo);
       onClose();
     } catch (error: unknown) {
@@ -93,7 +93,7 @@ export default function EditCargoModal({ cargo, onClose, onSuccess }: EditCargoM
         }
         return null;
       })() || t('cargo.messages.updateError');
-      toast({ title: `âŒ ${t('cargo.messages.updateError')}`, description: errorMessage, variant: 'error', duration: 5000 });
+      toast({ title: `Œ ${t('cargo.messages.updateError')}`, description: errorMessage, variant: 'error', duration: 5000 });
     } finally {
       setIsSubmitting(false);
     }

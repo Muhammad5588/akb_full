@@ -191,7 +191,7 @@ export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormPr
           <div className="p-7 sm:p-8">
             <AnimatePresence mode="wait">
 
-              {/* â”€â”€ STEP 1: Username â”€â”€ */}
+              {/* ”€”€ STEP 1: Username ”€”€ */}
               {step === 1 && (
                 <motion.div
                   key="step1"
@@ -278,7 +278,7 @@ export default function AdminLoginForm({ onAdminLoginSuccess }: AdminLoginFormPr
                 </motion.div>
               )}
 
-              {/* â”€â”€ STEP 2: PIN â”€â”€ */}
+              {/* ”€”€ STEP 2: PIN ”€”€ */}
               {step === 2 && (
                 <motion.div
                   key="step2"
