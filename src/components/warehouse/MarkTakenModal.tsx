@@ -1,16 +1,8 @@
-import { useState, useCallback, useId } from "react";
+import { useCallback } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  X,
-  Camera,
-  Images,
-  Loader2,
-  Trash2,
-  Truck,
-  CheckCircle2,
-} from "lucide-react";
+import { X, Loader2, Truck, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   markTakenSchema,
@@ -19,69 +11,7 @@ import {
 } from "../../schemas/warehouseSchemas";
 import type { MarkTakenFormValues } from "../../schemas/warehouseSchemas";
 import { useWarehouseQueueStore } from "../../store/useWarehouseQueueStore";
-
-// ── Image compression ─────────────────────────────────────────────────────────
-
-/** Compresses an image to max 1280px wide at 82% JPEG quality using canvas API. */
-async function compressImage(file: File): Promise<File> {
-  const MAX_WIDTH = 1280;
-  const QUALITY = 0.82;
-
-  return new Promise((resolve) => {
-    const img = new Image();
-    const objectUrl = URL.createObjectURL(file);
-
-    img.onload = () => {
-      URL.revokeObjectURL(objectUrl);
-
-      if (img.width <= MAX_WIDTH) {
-        img.src = ""; // Free memory
-        resolve(file);
-        return;
-      }
-
-      const scale = MAX_WIDTH / img.width;
-      const canvas = document.createElement("canvas");
-      canvas.width = MAX_WIDTH;
-      canvas.height = Math.round(img.height * scale);
-
-      const ctx = canvas.getContext("2d");
-      if (!ctx) { 
-        img.src = ""; 
-        resolve(file); 
-        return; 
-      }
-
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      canvas.toBlob(
-        (blob) => {
-          // Agressiv xotira tozalash (RAM ni bo'shatish)
-          canvas.width = 0;
-          canvas.height = 0;
-          img.src = "";
-
-          if (!blob) { resolve(file); return; }
-          resolve(
-            new File([blob], file.name.replace(/\.[^.]+$/, ".jpg"), {
-              type: "image/jpeg",
-              lastModified: Date.now(),
-            }),
-          );
-        },
-        "image/jpeg",
-        QUALITY,
-      );
-    };
-
-    img.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      img.src = "";
-      resolve(file);
-    };
-
-    img.src = objectUrl;
-  });
-}
+import MultiPhotoUpload from "../../components/MultiPhotoUpload";
 
 // ── Props ─────────────────────────────────────────────────────────────────────
 
@@ -105,74 +35,24 @@ export default function MarkTakenModal({
   onClose,
 }: MarkTakenModalProps) {
   const enqueue = useWarehouseQueueStore((s) => s.enqueue);
-  const [previews, setPreviews] = useState<string[]>([]);
-  const [isCompressing, setIsCompressing] = useState(false);
-
-  // Unique IDs so labels correctly bind to inputs even if multiple modals exist
-  const cameraInputId = useId();
-  const galleryInputId = useId();
 
   const {
     control,
     handleSubmit,
-    setValue,
-    watch,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<MarkTakenFormValues>({
     resolver: zodResolver(markTakenSchema),
     defaultValues: { delivery_method: undefined, photos: [], comment: "" },
   });
 
-  const photos = watch("photos") ?? [];
-
   const handleClose = useCallback(() => {
-    previews.forEach((url) => URL.revokeObjectURL(url));
-    setPreviews([]);
     reset();
     onClose();
-  }, [previews, reset, onClose]);
-
-  const handleFileChange = useCallback(
-    async (files: FileList | null) => {
-      if (!files || files.length === 0) return;
-      setIsCompressing(true);
-      try {
-        const remaining = 10 - photos.length;
-        const toProcess = Array.from(files).slice(0, remaining);
-        
-        // Dastur qotib qolmasligi va memory crash (OOM) bo'lmasligi uchun 
-        // rasmlarni parallel emas, ketma-ket siqamiz (sequential processing)
-        const compressed: File[] = [];
-        for (const file of toProcess) {
-          compressed.push(await compressImage(file));
-        }
-
-        const combined = [...photos, ...compressed];
-        setValue("photos", combined, { shouldValidate: true });
-        previews.forEach((url) => URL.revokeObjectURL(url));
-        setPreviews(combined.map((f) => URL.createObjectURL(f)));
-      } finally {
-        setIsCompressing(false);
-      }
-    },
-    [photos, previews, setValue],
-  );
-
-  const removePhoto = useCallback(
-    (index: number) => {
-      const updated = photos.filter((_, i) => i !== index);
-      setValue("photos", updated, { shouldValidate: true });
-      URL.revokeObjectURL(previews[index]);
-      setPreviews((prev) => prev.filter((_, i) => i !== index));
-    },
-    [photos, previews, setValue],
-  );
+  }, [reset, onClose]);
 
   const onSubmit = useCallback(
     async (data: MarkTakenFormValues) => {
-      previews.forEach((url) => URL.revokeObjectURL(url));
-      setPreviews([]);
       reset();
       onClose();
 
@@ -190,10 +70,8 @@ export default function MarkTakenModal({
         duration: 3000,
       });
     },
-    [previews, reset, onClose, enqueue, transactionIds, clientCode, flightName],
+    [reset, onClose, enqueue, transactionIds, clientCode, flightName],
   );
-
-  const canAddMore = photos.length < 10;
 
   return (
     <AnimatePresence>
@@ -314,112 +192,20 @@ export default function MarkTakenModal({
 
                 {/* ── Photo upload ───────────────────────────────────────── */}
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <p className="text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                      Isbotlovchi rasmlar
-                      <span className="ml-1.5 normal-case font-normal">
-                        ({photos.length}/10)
-                      </span>
-                    </p>
-                    {isCompressing && (
-                      <span className="flex items-center gap-1 text-[11px] font-medium text-orange-500">
-                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                        Siqilmoqda...
-                      </span>
+                  <Controller
+                    name="photos"
+                    control={control}
+                    render={({ field }) => (
+                      <MultiPhotoUpload
+                        label={`Isbotlovchi rasmlar (${field.value.length}/10)`}
+                        value={field.value}
+                        onChange={field.onChange}
+                        error={errors.photos?.message}
+                        maxPhotos={10}
+                        compressGallery
+                      />
                     )}
-                  </div>
-
-                  {/* Camera + Gallery — using <label> for reliable mobile camera trigger */}
-                  {canAddMore && (
-                    <div className="grid grid-cols-2 gap-2.5 mb-4">
-                      {/* Camera label — opens rear camera directly on mobile */}
-                      <label
-                        htmlFor={cameraInputId}
-                        className="flex flex-col items-center justify-center gap-2 py-5 rounded-2xl border-2 border-orange-200 dark:border-orange-500/25 bg-orange-50 dark:bg-orange-500/[0.06] text-orange-600 dark:text-orange-400 cursor-pointer active:scale-[0.97] transition-all select-none"
-                      >
-                        <Camera className="w-6 h-6" strokeWidth={1.8} />
-                        <span className="text-[13px] font-bold">Kameradan</span>
-                      </label>
-
-                      {/* Gallery label — standard file picker */}
-                      <label
-                        htmlFor={galleryInputId}
-                        className="flex flex-col items-center justify-center gap-2 py-5 rounded-2xl border-2 border-gray-200 dark:border-white/[0.08] bg-gray-50 dark:bg-white/[0.03] text-gray-600 dark:text-gray-400 cursor-pointer active:scale-[0.97] transition-all select-none"
-                      >
-                        <Images className="w-6 h-6" strokeWidth={1.8} />
-                        <span className="text-[13px] font-bold">Galereadan</span>
-                      </label>
-
-                      {/*
-                       * Camera input: capture="environment" instructs the browser to
-                       * open the rear-facing camera directly — no file picker shown.
-                       * Using `image/*` (not specific mime types) for widest iOS support.
-                       */}
-                      <input
-                        id={cameraInputId}
-                        type="file"
-                        accept="image/*"
-                        capture="environment"
-                        className="sr-only"
-                        onChange={(e) => {
-                          handleFileChange(e.target.files);
-                          // Reset input so the same photo can be retaken
-                          e.target.value = "";
-                        }}
-                      />
-
-                      {/* Gallery input: no capture attribute — shows full file picker */}
-                      <input
-                        id={galleryInputId}
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        className="sr-only"
-                        onChange={(e) => {
-                          handleFileChange(e.target.files);
-                          e.target.value = "";
-                        }}
-                      />
-                    </div>
-                  )}
-
-                  {/* Previews — 3 cols on mobile, 4 on sm+ */}
-                  {previews.length > 0 && (
-                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                      {previews.map((url, idx) => (
-                        <motion.div
-                          key={url}
-                          initial={{ opacity: 0, scale: 0.85 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          className="relative aspect-square rounded-2xl overflow-hidden border border-gray-200 dark:border-white/[0.08]"
-                        >
-                          <img
-                            src={url}
-                            alt={`Rasm ${idx + 1}`}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                          {/* Delete overlay */}
-                          <button
-                            type="button"
-                            onClick={() => removePhoto(idx)}
-                            className="absolute top-1.5 right-1.5 w-7 h-7 flex items-center justify-center rounded-full bg-black/60 text-white active:scale-90 transition-transform"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                          <span className="absolute bottom-1.5 left-1.5 bg-black/50 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-md">
-                            {idx + 1}
-                          </span>
-                        </motion.div>
-                      ))}
-                    </div>
-                  )}
-
-                  {errors.photos && (
-                    <p className="mt-2 text-[12px] text-red-500 font-medium">
-                      {errors.photos.message}
-                    </p>
-                  )}
+                  />
                 </div>
 
                 {/* ── Comment (Izoh) ─────────────────────────────────────── */}
@@ -456,13 +242,13 @@ export default function MarkTakenModal({
                 <motion.button
                   whileTap={{ scale: 0.97 }}
                   type="submit"
-                  disabled={isCompressing}
+                  disabled={isSubmitting}
                   className="w-full py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-[14px] rounded-2xl shadow-lg shadow-orange-500/25 hover:shadow-xl hover:shadow-orange-500/35 disabled:opacity-60 flex items-center justify-center gap-2 transition-all"
                 >
-                  {isCompressing ? (
+                  {isSubmitting ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      Rasmlar siqilmoqda...
+                      Jo'natilmoqda...
                     </>
                   ) : (
                     <>

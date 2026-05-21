@@ -1,22 +1,17 @@
-# Objective
+# TASK: Warehouse MarkTakenModal photo upload fix
 
-Apply the backend POS cashier-log update in the frontend by supporting the new `payment_provider`, `date_from`, and `date_to` query filters and exposing them in the POS dashboard without breaking the existing shared cashier log flow.
+## Objective
+Replace the unreliable `<input capture="environment">` camera input in `MarkTakenModal` with the proven `MultiPhotoUpload` component (used in `AddCargoForm`) that uses `getUserMedia` API and supports both camera and gallery selection reliably — especially inside Telegram WebView.
 
-# Implementation Plan
+## Implementation Plan
+- [x] Add optional `compressGallery` prop + image compression to `MultiPhotoUpload` so gallery photos are also resized before upload.
+- [x] Refactor `MarkTakenModal` to use `MultiPhotoUpload` instead of raw `<input type="file">` elements.
+- [x] Ensure `react-hook-form` integration works correctly via `Controller`.
+- [x] Verify no TypeScript or lint errors (`npm run lint` + `npm run build`).
 
-- [x] Update POS API types to include cashier-log providers, summary totals, and the `payment_provider` request parameter.
-- [x] Add POS dashboard state and query-key wiring for the cashier-log provider filter.
-- [x] Add compact provider filter controls and summary display to the cashier-log panel.
-- [x] Add date/time range controls for `date_from` and `date_to`.
-- [x] Wire date/time filters into the cashier-log query key and API request.
-- [x] Run lint/build verification and fix any TypeScript issues.
+## Walkthrough
+`MultiPhotoUpload` already handles `getUserMedia` stream lifecycle, warm-start (`fastMode`), preview grid, lightbox, and gallery selection. We extended it with gallery image compression (same canvas-based resize used in `MarkTakenModal`) behind an optional prop. Then we dropped the inline camera/gallery markup from `MarkTakenModal` and render `<MultiPhotoUpload>` inside a `Controller`, wiring `value`/`onChange` to the form's `photos` field.
 
-# Verification
-
-- `node_modules\.bin\eslint.cmd src\api\pos.ts src\pages\POSDashboard.tsx` passed.
-- `npm.cmd run build` passed when run outside the sandbox after `esbuild` hit `spawn EPERM` inside the sandbox.
-- `npm.cmd run lint` still fails on pre-existing unrelated files: `generated_districts.ts`, `src\components\CargoListPage.tsx`, and shadcn-style UI wrapper fast-refresh rules.
-
-# Walkthrough/Architecture
-
-`POSDashboard` reads cashier logs through `getCashierLog()` from `src/api/pos.ts`. The backend now accepts `payment_provider` (`cash`, `card`, `click`, `payme`, `wallet`) plus `date_from` and `date_to` ISO datetime bounds, and returns provider-level `summary`. The frontend should keep this as API state in TanStack Query by including the selected provider and date range in the query key, pass them as query parameters, and render filter controls beside the existing recent-payments log. The list remains shared across cashiers, while the filters narrow rows by provider and time range when selected.
+### Files changed
+- `src/components/MultiPhotoUpload.tsx` — added `compressGallery` prop, `isCompressing` state, canvas-based `compressImageFile` helper, wired compression into `handleGallerySelect`, and added a spinner in the label.
+- `src/components/warehouse/MarkTakenModal.tsx` — replaced all raw file-input logic with `<MultiPhotoUpload>` via `react-hook-form` `Controller`, removed unused `compressImage`, `previews`, and `useId` state.

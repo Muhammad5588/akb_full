@@ -32,6 +32,8 @@ interface MultiPhotoUploadProps {
   maxPhotos?: number;
   fastMode?: boolean;
   onCameraClose?: () => void;
+  /** Compress gallery images using canvas resize before emitting onChange */
+  compressGallery?: boolean;
 }
 
 const MultiPhotoUpload = forwardRef<MultiPhotoUploadHandle, MultiPhotoUploadProps>(
@@ -44,6 +46,7 @@ const MultiPhotoUpload = forwardRef<MultiPhotoUploadHandle, MultiPhotoUploadProp
       maxPhotos = 10,
       fastMode = false,
       onCameraClose,
+      compressGallery = false,
     },
     ref
   ) {
@@ -54,6 +57,7 @@ const MultiPhotoUpload = forwardRef<MultiPhotoUploadHandle, MultiPhotoUploadProp
     const [isCameraReady, setIsCameraReady] = useState(false);
     const [isCapturing, setIsCapturing] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+    const [isCompressing, setIsCompressing] = useState(false);
 
     // ─── Refs ──────────────────────────────────────────────────────────
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -408,21 +412,98 @@ const MultiPhotoUpload = forwardRef<MultiPhotoUploadHandle, MultiPhotoUploadProp
       };
     }, []);
 
+    // ─── Gallery compression helper ────────────────────────────────────
+
+    /**
+     * Resizes an image to MAX_CANVAS_WIDTH using canvas to reduce upload size.
+     * Returns original file if it's already smaller or if processing fails.
+     */
+    const compressImageFile = useCallback(async (file: File): Promise<File> => {
+      if (!file.type.startsWith('image/')) return file;
+
+      return new Promise<File>((resolve) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+
+        img.onload = () => {
+          URL.revokeObjectURL(url);
+
+          if (img.width <= MAX_CANVAS_WIDTH) {
+            img.src = '';
+            resolve(file);
+            return;
+          }
+
+          const scale = MAX_CANVAS_WIDTH / img.width;
+          const canvas = document.createElement('canvas');
+          canvas.width = MAX_CANVAS_WIDTH;
+          canvas.height = Math.round(img.height * scale);
+
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            img.src = '';
+            resolve(file);
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(
+            (blob) => {
+              canvas.width = 0;
+              canvas.height = 0;
+              img.src = '';
+              if (!blob) { resolve(file); return; }
+              resolve(
+                new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), {
+                  type: 'image/jpeg',
+                  lastModified: Date.now(),
+                }),
+              );
+            },
+            'image/jpeg',
+            JPEG_QUALITY,
+          );
+        };
+
+        img.onerror = () => {
+          URL.revokeObjectURL(url);
+          img.src = '';
+          resolve(file);
+        };
+
+        img.src = url;
+      });
+    }, []);
+
     // ─── Gallery select ────────────────────────────────────────────────
 
-    const handleGallerySelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleGallerySelect = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = Array.from(event.target.files || []);
-      const validFiles = files.filter((f) => f.type.startsWith('image/'));
+      let validFiles = files.filter((f) => f.type.startsWith('image/'));
 
-      if (validFiles.length > 0) {
-        const newFiles = [...value, ...validFiles].slice(0, maxPhotos);
-        onChange(newFiles);
+      if (validFiles.length === 0) {
+        if (fileInputRef.current) fileInputRef.current.value = '';
+        return;
       }
+
+      if (compressGallery) {
+        setIsCompressing(true);
+        const compressed: File[] = [];
+        // Process sequentially to avoid memory pressure
+        for (const file of validFiles) {
+          compressed.push(await compressImageFile(file));
+        }
+        validFiles = compressed;
+        setIsCompressing(false);
+      }
+
+      const newFiles = [...value, ...validFiles].slice(0, maxPhotos);
+      onChange(newFiles);
 
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
-    };
+    }, [value, maxPhotos, onChange, compressGallery, compressImageFile]);
 
     // ─── Remove photo ──────────────────────────────────────────────────
 
@@ -441,8 +522,17 @@ const MultiPhotoUpload = forwardRef<MultiPhotoUploadHandle, MultiPhotoUploadProp
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <label className="text-sm font-medium text-gray-700">{label}</label>
-          <span className="text-xs text-gray-500">
-            {value.length} / {maxPhotos}
+          <span className="text-xs text-gray-500 flex items-center gap-1.5">
+            {isCompressing ? (
+              <>
+                <div className="w-3 h-3 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                Siqilmoqda...
+              </>
+            ) : (
+              <>
+                {value.length} / {maxPhotos}
+              </>
+            )}
           </span>
         </div>
 
