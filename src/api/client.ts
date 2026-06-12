@@ -30,9 +30,17 @@ function resolveErrorMessage(status: number, detail: unknown): string {
   if (UZBEK_HTTP_ERRORS[status]) return UZBEK_HTTP_ERRORS[status];
   if (typeof detail === 'string' && detail.trim()) return detail;
   if (Array.isArray(detail) && detail.length > 0) {
-    // FastAPI validation error array — take the first message
-    const first = detail[0];
-    if (typeof first?.msg === 'string') return first.msg;
+    // FastAPI validation error array — show "field: msg" for each error
+    const messages = detail
+      .map((d: { loc?: unknown[]; msg?: string }) => {
+        const field = Array.isArray(d?.loc) && d.loc.length > 0
+          ? String(d.loc[d.loc.length - 1])
+          : null;
+        const msg = typeof d?.msg === 'string' ? d.msg : '';
+        return field && field !== 'body' ? `${field}: ${msg}` : msg;
+      })
+      .filter(Boolean);
+    if (messages.length > 0) return messages.join(' | ');
   }
   return "Serverda xatolik yuz berdi.";
 }
