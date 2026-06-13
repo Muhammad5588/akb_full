@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { API_BASE_URL } from '@/config/config';
 import { apiClient, apiClientFormData } from '../client';
 
 // ── Client Search ──────────────────────────────────────────────────────────
@@ -312,4 +314,45 @@ export async function searchTransactionsGrouped(params: SearchTransactionsParams
 export async function bulkMarkTransactionTaken(data: FormData): Promise<BulkMarkTakenResponse> {
   const response = await apiClientFormData.post<BulkMarkTakenResponse>('/api/v1/warehouse/transactions/bulk-mark-taken', data);
   return response.data;
+}
+
+export interface ExportWarehouseParams {
+  flight?: string;
+  code?: string;
+  phone?: string;
+  name?: string;
+  q?: string;
+  payment_status?: string;
+  taken_status?: string;
+}
+
+export async function exportWarehouseExcel(params: ExportWarehouseParams): Promise<void> {
+  const adminToken = localStorage.getItem('access_token');
+  const userToken = sessionStorage.getItem('access_token');
+
+  const headers: Record<string, string> = {};
+  if (adminToken) {
+    headers['X-Admin-Authorization'] = `Bearer ${adminToken}`;
+  } else if (userToken) {
+    headers['Authorization'] = `Bearer ${userToken}`;
+  }
+
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([k, v]) => {
+    if (v !== undefined && v !== '' && v !== 'all') query.set(k, v);
+  });
+
+  const response = await axios.get(
+    `${API_BASE_URL}/api/v1/warehouse/transactions/export-excel?${query.toString()}`,
+    { headers, responseType: 'blob' },
+  );
+
+  const url = URL.createObjectURL(new Blob([response.data]));
+  const a = document.createElement('a');
+  const cd = response.headers['content-disposition'] as string | undefined;
+  const match = cd?.match(/filename="([^"]+)"/);
+  a.download = match?.[1] ?? `warehouse_export.xlsx`;
+  a.href = url;
+  a.click();
+  URL.revokeObjectURL(url);
 }

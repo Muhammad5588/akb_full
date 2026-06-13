@@ -10,6 +10,7 @@ import {
   Lock,
   PackageSearch,
   Building2,
+  FileSpreadsheet,
 } from "lucide-react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -24,6 +25,7 @@ import MyActivityList from "../../components/warehouse/MyActivityList";
 import MarkTakenModal from "../../components/warehouse/MarkTakenModal";
 import WarehouseOfflineManager from "../../components/warehouse/WarehouseOfflineManager";
 import { useBroadcastChannel, type BroadcastMessage } from "../../hooks/useBroadcastChannel";
+import { exportWarehouseExcel } from "../../api/services/warehouse";
 
 // ”€”€ Types ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
@@ -91,6 +93,25 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
   const [modalClientCode, setModalClientCode] = useState("");
   const [modalFlightName, setModalFlightName] = useState("");
   const [modalIsTakenAway, setModalIsTakenAway] = useState(false);
+
+  const [isExporting, setIsExporting] = useState(false);
+  const handleExportExcel = useCallback(async () => {
+    if (isExporting) return;
+    setIsExporting(true);
+    try {
+      await exportWarehouseExcel({
+        flight: flightName || undefined,
+        q: searchQuery || undefined,
+        payment_status: paymentStatus !== "all" ? paymentStatus : undefined,
+        taken_status: takenStatus !== "all" ? takenStatus : undefined,
+      });
+      toast.success("Excel fayl yuklab olindi");
+    } catch {
+      toast.error("Excel yuklab olishda xatolik");
+    } finally {
+      setIsExporting(false);
+    }
+  }, [isExporting, flightName, searchQuery, paymentStatus, takenStatus]);
 
   // Apply theme immediately on mount and on every toggle
   useEffect(() => {
@@ -246,6 +267,16 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
                   title="Partnerlar"
                 >
                   <Building2 className="w-4 h-4" />
+                </button>
+              )}
+              {activeTab === "transactions" && (
+                <button
+                  onClick={handleExportExcel}
+                  disabled={isExporting}
+                  className="w-8 h-8 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 transition-colors disabled:opacity-40"
+                  title="Excel yuklab olish"
+                >
+                  <FileSpreadsheet className="w-4 h-4" />
                 </button>
               )}
               <button
