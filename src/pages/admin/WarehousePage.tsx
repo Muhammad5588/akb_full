@@ -127,6 +127,12 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
     else document.documentElement.classList.remove("dark");
   }, [isDark]);
 
+  const handleHardRefresh = useCallback(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("_refresh", Date.now().toString());
+    window.location.replace(url.toString());
+  }, []);
+
   // Silent token refresh on mount so permissions stay current
   useEffect(() => {
     let cancelled = false;
@@ -235,9 +241,14 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
                   <Warehouse className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-500" />
                 </div>
                 <div>
-                  <h1 className="text-[14px] sm:text-[15px] font-bold text-gray-900 dark:text-white leading-tight">
+                  <button
+                    type="button"
+                    onClick={handleHardRefresh}
+                    className="block text-left text-[14px] sm:text-[15px] font-bold text-gray-900 dark:text-white leading-tight rounded-md -mx-1 px-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    title="Sahifani qayta yuklash"
+                  >
                     Ombor
-                  </h1>
+                  </button>
                   {activeTab === "transactions" && activeData && (isFlightMode || isSearchMode) && (
                     <p className="text-[10px] sm:text-[11px] text-gray-400 dark:text-gray-500 leading-tight">
                       {activeData.total_count} ta yuk
@@ -415,4 +426,3 @@ export default function WarehousePage({ onNavigate, onLogout }: WarehousePagePro
     </div>
   );
 }
-
