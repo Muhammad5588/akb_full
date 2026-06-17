@@ -1,17 +1,15 @@
-# TASK: Warehouse MarkTakenModal photo upload fix
+# Objective
 
-## Objective
-Replace the unreliable `<input capture="environment">` camera input in `MarkTakenModal` with the proven `MultiPhotoUpload` component (used in `AddCargoForm`) that uses `getUserMedia` API and supports both camera and gallery selection reliably — especially inside Telegram WebView.
+Add Redis-controlled Eruda debugging for the warehouse page and make warehouse offline queue data recoverable from the browser console.
 
-## Implementation Plan
-- [x] Add optional `compressGallery` prop + image compression to `MultiPhotoUpload` so gallery photos are also resized before upload.
-- [x] Refactor `MarkTakenModal` to use `MultiPhotoUpload` instead of raw `<input type="file">` elements.
-- [x] Ensure `react-hook-form` integration works correctly via `Controller`.
-- [x] Verify no TypeScript or lint errors (`npm run lint` + `npm run build`).
+# Implementation Plan
 
-## Walkthrough
-`MultiPhotoUpload` already handles `getUserMedia` stream lifecycle, warm-start (`fastMode`), preview grid, lightbox, and gallery selection. We extended it with gallery image compression (same canvas-based resize used in `MarkTakenModal`) behind an optional prop. Then we dropped the inline camera/gallery markup from `MarkTakenModal` and render `<MultiPhotoUpload>` inside a `Controller`, wiring `value`/`onChange` to the form's `photos` field.
+- [x] Add backend Redis endpoints for warehouse Eruda status/toggle.
+- [x] Add frontend Eruda controller in the global entry path.
+- [x] Expose warehouse IndexedDB queue debug helpers when Eruda is enabled.
+- [x] Wire the frontend controller from `src/main.tsx`.
+- [x] Run backend and frontend verification.
 
-### Files changed
-- `src/components/MultiPhotoUpload.tsx` — added `compressGallery` prop, `isCompressing` state, canvas-based `compressImageFile` helper, wired compression into `handleGallerySelect`, and added a spinner in the label.
-- `src/components/warehouse/MarkTakenModal.tsx` — replaced all raw file-input logic with `<MultiPhotoUpload>` via `react-hook-form` `Controller`, removed unused `compressImage`, `previews`, and `useId` state.
+# Walkthrough / Architecture
+
+The frontend should not permanently ship an always-on mobile console. `src/main.tsx` will start a lightweight controller that checks a protected backend endpoint for the `warehouse` Eruda flag. The backend stores this flag in Redis with an optional TTL so Eruda can be enabled temporarily during production debugging. When enabled on `/warehouse` or `/admin/warehouse`, Eruda is dynamically imported and initialized. The same controller exposes `window.akbWarehouseDebug` helpers so IndexedDB queue data from `warehouse-offline-db` can be inspected even if the floating offline manager button is not visible.

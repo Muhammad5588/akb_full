@@ -4,9 +4,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from 'next-themes'
 import './index.css'
 import App from './App.tsx'
-// import eruda from 'eruda';
+import { initializeErudaControl } from './lib/erudaControl'
 
-// eruda.init();
+initializeErudaControl()
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
