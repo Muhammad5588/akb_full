@@ -6,7 +6,7 @@ Add an iOS-friendly hard refresh action to the Warehouse page header.
 
 - [x] Add a reload handler in `WarehousePage`.
 - [x] Make the visible "Ombor" title tappable without changing layout.
-- [ ] Run targeted frontend verification.
+- [x] Run targeted frontend verification.
 
 # Walkthrough / Architecture
 
